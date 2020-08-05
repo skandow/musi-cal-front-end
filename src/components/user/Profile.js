@@ -17,7 +17,7 @@ class Profile extends Component {
     renderThreeClosestEvents = threeClosestEvents => {
         return threeClosestEvents.map(event => {
             return (
-                <div style={{border: "2px solid green", margin: "2px", textAlign: "left"}}>
+                <div key={event.id} style={{border: "2px solid green", margin: "2px", textAlign: "left"}}>
                     <Header as='h2'>{event.title}</Header>
                     <Header as='h3'>Starts: {event.start_time}</Header>
                     <Header as='h3'>Ends: {event.end_time}</Header>
@@ -30,7 +30,7 @@ class Profile extends Component {
         console.log(this.props.user.events)
         const threeClosestEvents = this.threeClosestEvents()
         console.log(threeClosestEvents)
-        const {id, name, email, phone_number, primary_instrument_or_voice_part, secondary_instrument, image_url } = this.props.user
+        const {name, email, phone_number, primary_instrument_or_voice_part, secondary_instrument, image_url } = this.props.user
         return (
             <div className="user-profile">
                 <Image src={image_url} floated='left' style={{border: "2px solid green", margin: "0", height: "300px", width: "25%"}}/>

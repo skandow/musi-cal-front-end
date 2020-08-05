@@ -45,7 +45,7 @@ class Login extends Component {
         fetch("http://localhost:3001/api/v1/login", reqObj)
         .then((resp) => {
             if(resp.status === 401) {
-                throw Error("The username or password is incorrect")
+                throw Error("The email or password is incorrect")
             } else {
                 this.setState({
                     redirect: '/'
@@ -72,8 +72,17 @@ class Login extends Component {
             <div className="login-container" >
                 <Header textAlign="center" as='h1'>Welcome to Music-Cal!</Header>
                 <Header textAlign="center" as='h2'>A One-Stop Site for Musicians to Organize Rehearsals, Performances, & Other Events</Header>
-                <Form onSubmit={this.handleSubmit} style={{width: "25%", margin: "auto", padding: "20px", border: "2px solid red"}}>
+                <Form error onSubmit={this.handleSubmit} style={{width: "25%", margin: "auto", padding: "20px", border: "2px solid red"}}>
                     <Header textAlign="center" as='h3'>Please Sign In</Header>
+                    <div>{this.state.errorMessage ? 
+                        <div className="ui error message">
+                            <div className="content">
+                                <p>{this.state.errorMessage}</p>
+                            </div>
+                        </div>
+                    :
+                        null}
+                    </div>
                     <Form.Field>
                         <label>Email</label>
                         <input value={this.state.email} name="email" onChange={this.handleChange}/>
@@ -84,15 +93,13 @@ class Login extends Component {
                     </Form.Field>
                     <Grid>
                         <Grid.Column textAlign="center">
-                            <Button type="submit" color="red">Log In</Button>
+                            <Button type="submit" color="green">Log In</Button>
                             <br></br>
                             <br></br>
-                            <NavLink className="App-link" to="/sign_up" exact>Sign Up To Create An Account</NavLink>
+                            <Button color="blue"><NavLink style={{color: "white"}} to="/sign_up" exact>Sign Up To Create An Account</NavLink></Button>
                         </Grid.Column>
                     </Grid>
                 </Form>
-                <br></br>
-                <br></br>
                 
             </div>
         ) 

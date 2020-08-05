@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
+import { Form, Grid, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loginUser } from '../../actions/user'
-
-const API = "http://localhost:3001/api/v1/users"
 
 class SignUp extends Component {
     constructor() {
         super();
         this.state = {
-            username: '',
-            password: '',
+            name: '',
             email: '',
-            age: '',
-            gender: '',
+            password: '',
+            phone_number: '',
+            primary_instrument_or_voice_part: '',
+            secondary_instrument: '',
             image_url: '',
             errorMessage: '',
             redirect: null
@@ -28,25 +28,27 @@ class SignUp extends Component {
 
     componentWillUnmount() {
         this.setState({
-            username: '',
-            password: '',
+            name: '',
             email: '',
-            age: '',
-            gender: '',
-            image_url: ''
+            password: '',
+            phone_number: '',
+            primary_instrument_or_voice_part: '',
+            secondary_instrument: '',
+            image_url: '',
         })
     }
     
     handleSubmit = event => {
         event.preventDefault()
-        if ((this.state.username) && (this.state.password) && (this.state.email) && (this.state.gender) && (this.state.image_url)) {
-            if (parseInt(this.state.age, 10) > 18) {
+        if ((this.state.name) && (this.state.password) && (this.state.email) && (this.state.phone_number) && (this.state.primary_instrument_or_voice_part) && (this.state.image_url)) {
+            let secondary_instrument = this.state.secondary_instrument === '' ? 'none' : this.state.secondary_instrument
             const payload = { user: {
-            username: this.state.username,
-            password: this.state.password,
+            name: this.state.name,
             email: this.state.email,
-            age: parseInt(this.state.age, 10),
-            gender: this.state.gender,
+            password: this.state.password,
+            phone_number: this.state.phone_number,
+            primary_instrument_or_voice_part: this.state.primary_instrument_or_voice_part,
+            secondary_instrument: secondary_instrument,
             image_url: this.state.image_url
         }}
         const reqObj = {
@@ -57,10 +59,10 @@ class SignUp extends Component {
             body: JSON.stringify(payload)
         }
         
-        fetch(API, reqObj)
+        fetch("http://localhost:3001/api/v1/users", reqObj)
         .then((resp) => {
             if(resp.status === 406) {
-                throw Error("Usernames must be unique")
+                throw Error("E-mail must be unique")
             } else {
                 this.setState({
                     redirect: '/'
@@ -78,8 +80,6 @@ class SignUp extends Component {
             })
         })
     } else this.setState({
-        errorMessage: "You must be 18 or older to use this site."
-    })} else this.setState({
         errorMessage: "No fields can be left blank."
     })
     }
@@ -89,8 +89,10 @@ class SignUp extends Component {
             return <Redirect to={this.state.redirect} />
         }
         return (
-            <form id="sign-up" className="ui error form" onSubmit={this.handleSubmit}>
-                <h1>Enter Your Information To Create Your Account:</h1>
+            <div className="signup">
+                <Form error onSubmit={this.handleSubmit} style={{width: "40%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "20px", border: "2px solid red"}}>
+            
+                <h3 style={{textAlign: "center"}}>Create Your Account</h3>
                 {this.state.errorMessage ? 
                 <div className="ui error message">
                     <div className="content">
@@ -100,31 +102,40 @@ class SignUp extends Component {
                 :
                 null}
                 <div className="field">
-                    <label>Username:</label>
-                    <input onChange={this.handleChange} type="text" name="username" value={this.state.username} placeholder="username" />
-                </div>
-                <div className="field">
-                    <label>Password:</label>
-                    <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder="password" />
+                    <label>Name</label>
+                    <input onChange={this.handleChange} type="text" name="name" value={this.state.name} placeholder="i.e. 'John Doe'" />
                 </div>
                 <div className="field">
                     <label>Email address:</label>
-                    <input onChange={this.handleChange} type="text" name="email" value={this.state.email} placeholder="email" />
+                    <input onChange={this.handleChange} type="text" name="email" value={this.state.email} placeholder="example@example.com" />
+                </div>
+                <div className="field">
+                    <label>Password:</label>
+                    <input onChange={this.handleChange} type="password" name="password" value={this.state.password} />
                 </div> 
                 <div className="field">
-                    <label>Age:</label>
-                    <input onChange={this.handleChange} type="text" name="age" value={this.state.age} placeholder="age" />
+                    <label>Phone Number:</label>
+                    <input onChange={this.handleChange} type="text" name="phone_number" value={this.state.phone_number} placeholder="(xxx) xxx-xxxx" />
                 </div>
                 <div className="field">
-                    <label>Gender:</label>
-                    <input onChange={this.handleChange} type="text" name="gender" value={this.state.gender} placeholder="gender" />
+                    <label>Primary Instrument or Voice Part:</label>
+                    <input onChange={this.handleChange} type="text" name="primary_instrument_or_voice_part" value={this.state.primary_instrument_or_voice_part} placeholder="examples: 'trumpet', 'mezzo-soprano'" />
                 </div>
                 <div className="field">
-                    <label>Avatar_url:</label>
+                    <label>Secondary Instrument:</label>
+                    <input onChange={this.handleChange} type="text" name="secondary_instrument" value={this.state.secondary_instrument} />
+                </div>
+                <div className="field">
+                    <label>Image Url:</label>
                     <input onChange={this.handleChange} type="text" name="image_url" value={this.state.image_url} placeholder="image_url" />
                 </div>
-                <button type="submit" className="ui button">Submit</button>
-            </form>
+                <Grid>
+                    <Grid.Column textAlign="center">
+                            <Button type="submit" color="red">Submit</Button>
+                    </Grid.Column>
+                </Grid>
+            </Form>
+            </div>
         )
     }
 }
