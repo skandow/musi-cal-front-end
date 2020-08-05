@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom'
+import {BrowserRouter as Router,
+Route} from 'react-router-dom'
 import './App.css';
 import {connect} from 'react-redux'
 import { loginUser } from './actions/user'
+import Login from './components/login/Login'
+import SignUp from './components/login/SignUp'
+import Profile from './components/user/Profile'
+import UserContainer from './containers/UserContainer'
 
 class App extends Component {
   state = {
@@ -24,6 +29,8 @@ class App extends Component {
         fetch('http://localhost:3001/api/v1/profile', reqObj)
         .then(resp => resp.json())
         .then(data => {
+          console.log(this.props)
+          console.log(data.user.data.attributes)
           this.props.loginUser(data.user.data.attributes)
     })
   }
@@ -31,15 +38,29 @@ class App extends Component {
 
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />
-  }
   return (
+  <Router>
     <div className="App">
-      A user is logged in.
+      <div>
+      {this.props.user ?
+      <div>
+        <UserContainer />
+        <Route exact path="/" component={Profile} />
+        {/* // <Route exact path="/notes" render={() => <NotesContainer notes={this.props.user.notes} />} />
+        // <Route exact path="/profile/edit" render={() => <EditUserForm user={this.props.user} />} />
+        // <Route exact path="/notes/new" component={NewNoteForm} />
+        // {this.renderNoteRoutes()}
+        // {this.renderNoteEditRoutes()} */}
+      </div>
+      :
+      <div>
+      <Login />
+      <Route exact path="/sign_up" component={SignUp} />
+      </div>}
+      </div>
     </div>
-  );
-  }
+    </Router>)
+}
 }
 
 const mapStateToProps = state => {

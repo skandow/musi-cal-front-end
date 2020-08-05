@@ -56,7 +56,6 @@ class Login extends Component {
         .then(data => {
             localStorage.setItem("token", data.jwt)
             this.props.loginUser(data.user.data.attributes)
-            console.log("A user has logged in")
         })
         .catch(error => {
             this.setState({
@@ -66,6 +65,9 @@ class Login extends Component {
     }
 
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        }
         return (
             <div className="login-container" >
                 <Header textAlign="center" as='h1'>Welcome to Music-Cal!</Header>

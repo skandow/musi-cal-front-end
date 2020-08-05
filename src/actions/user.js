@@ -12,8 +12,8 @@ export const editUser = user => {
     }
 }
 
-export const deleteUser = () => {
+export const logoutUser = () => {
     return {
-        type: "DELETE_USER"
+        type: "LOGOUT_USER"
     }
 }
