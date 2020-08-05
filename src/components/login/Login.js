@@ -70,9 +70,11 @@ class Login extends Component {
         }
         return (
             <div className="login-container" >
-                <Header textAlign="center" as='h1'>Welcome to Music-Cal!</Header>
-                <Header textAlign="center" as='h2'>A One-Stop Site for Musicians to Organize Rehearsals, Performances, & Other Events</Header>
-                <Form error onSubmit={this.handleSubmit} style={{width: "25%", margin: "auto", padding: "20px", border: "2px solid red"}}>
+                <div className="login-header" style={{border: "5px solid green", marginBottom: "5px", padding: "10px", backgroundColor: "PowderBlue"}}>
+                    <Header textAlign="center" as='h1'>Welcome to Music-Cal!</Header>
+                    <Header textAlign="center" as='h2'>A One-Stop Site for Musicians to Organize Rehearsals, Performances, & Other Events</Header>
+                </div>
+                <Form error onSubmit={this.handleSubmit} style={{width: "25%", margin: "auto", padding: "20px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
                     <Header textAlign="center" as='h3'>Please Sign In</Header>
                     <div>{this.state.errorMessage ? 
                         <div className="ui error message">

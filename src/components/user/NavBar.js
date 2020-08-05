@@ -13,23 +13,26 @@ const UserNavBar = props => {
 
   return (
     <div>
-        <Menu style={{border: "5px solid green"}} fluid widths={10} inverted color="red">
+        <Menu style={{border: "5px groove green"}} fluid widths={8} inverted color="red">
             <Menu.Item>
                 Musi-Cal
             </Menu.Item>
-            <Menu.Item style={{border: "1px solid white"}} link position='right'>
-                <NavLink to="/" exact>My Profile</NavLink>
+            <Menu.Item style={{border: "5px outset white"}} link position='right'>
+                <NavLink style={{color: "black"}} to="/" exact>My Profile</NavLink>
             </Menu.Item>
-            <Menu.Item style={{border: "1px solid white"}} link>
-                <NavLink to="/profile/edit" exact>Edit My Profile</NavLink>
+            <Menu.Item style={{border: "5px outset white"}} link>
+                <NavLink style={{color: "black"}} to="/profile/edit" exact>Edit My Profile</NavLink>
             </Menu.Item>
-            <Menu.Item style={{border: "1px solid white"}} link>
-                <NavLink to="/notes" exact>My Notes</NavLink>
+            <Menu.Item style={{border: "5px outset white"}} link>
+                <NavLink style={{color: "black"}} to="/notes" exact>My Ensembles</NavLink>
             </Menu.Item>
-            <Menu.Item style={{border: "1px solid white"}} link>
-                <NavLink to="/notes/new" exact>Create a New Note</NavLink>
+            <Menu.Item style={{border: "5px outset white"}} link>
+                <NavLink style={{color: "black"}} to="/notes/new" exact>My Events</NavLink>
             </Menu.Item>
-            <Menu.Item style={{border: "1px solid white"}} link>
+            <Menu.Item style={{border: "5px outset white"}} link>
+                <NavLink style={{color: "black"}} to="/notes/new" exact>My Admin Page</NavLink>
+            </Menu.Item>
+            <Menu.Item style={{border: "5px outset white"}} link>
                 <NavLink to="/" exact onClick={handleLogOut}>Log Out</NavLink>
             </Menu.Item>
             
