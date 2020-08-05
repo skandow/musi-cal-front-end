@@ -16,7 +16,6 @@ class Profile extends Component {
 
     renderThreeClosestEvents = threeClosestEvents => {
         return threeClosestEvents.map(event => {
-
             return (
                 <div style={{border: "2px solid green", margin: "2px", textAlign: "left"}}>
                     <Header as='h2'>{event.title}</Header>
