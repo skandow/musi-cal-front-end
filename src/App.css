@@ -1,5 +1,10 @@
+body {
+  background: rgb(143,140,140);
+background: radial-gradient(circle, rgba(143,140,140,1) 0%, rgba(194,189,194,1) 58%, rgba(239,238,240,0.9682247899159664) 100%) !important;
+}
+
 .App {
-  text-align: center;
+  text-align: center; 
 }
 
 .App-logo {
