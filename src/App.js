@@ -7,6 +7,7 @@ import { loginUser } from './actions/user'
 import Login from './components/login/Login'
 import SignUp from './components/login/SignUp'
 import Profile from './components/user/Profile'
+import EditUserForm from './components/user/EditUserForm'
 import UserContainer from './containers/UserContainer'
 
 class App extends Component {
@@ -38,6 +39,7 @@ class App extends Component {
 
 
   render() {
+    console.log("back to app")
   return (
   <Router>
     <div className="App">
@@ -46,16 +48,22 @@ class App extends Component {
       <div>
         <UserContainer />
         <Route exact path="/" component={Profile} />
-        {/* // <Route exact path="/notes" render={() => <NotesContainer notes={this.props.user.notes} />} />
-        // <Route exact path="/profile/edit" render={() => <EditUserForm user={this.props.user} />} />
-        // <Route exact path="/notes/new" component={NewNoteForm} />
+        {/* // <Route exact path="/notes" render={() => <NotesContainer notes={this.props.user.notes} />} /> */}
+        <Route exact path="/profile/edit" component={EditUserForm} />
+        {/* // <Route exact path="/notes/new" component={NewNoteForm} />
         // {this.renderNoteRoutes()}
         // {this.renderNoteEditRoutes()} */}
       </div>
       :
       <div>
+        <div>
+      {localStorage.getItem("token") ? 
+      null:
+      <div>
       <Login />
       <Route exact path="/sign_up" component={SignUp} />
+      </div>}
+        </div>
       </div>}
       </div>
     </div>
