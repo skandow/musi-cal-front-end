@@ -2,32 +2,54 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { Image, Header, Button } from 'semantic-ui-react'
+import { loadEnsembles } from '../../actions/ensembles'
+import { loginUser } from '../../actions/user'
 
 class MyAdmin extends Component {
     state = {
         redirect: null
     }
 
+    deleteEnsemble = id => {
+        const URL = "http://localhost:3001/ensembles/" + id 
+        const token = localStorage.getItem("token")
+        this.setState({
+            redirect: "/admin"
+        })
+        const reqObj = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        fetch(URL, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.loginUser(data.user.data.attributes)
+            this.props.loadEnsembles(data.user.data.attributes.admin_for)
+        })
+    }
+
     renderAdminedEnsembles = () => {
         return this.props.ensembles.map(ensemble => {
             const profileLink = `ensembles/${ensemble.id}`
+            const editLink = `ensembles/${ensemble.id}/edit`
             return (
                 <div key={ensemble.id}>
                     <Image src={ensemble.image_url} floated='left' style={{border: "10px ridge blue", margin: "0", height: "300px", width: "25%"}}/>
                     <div style={{border: "10px ridge blue", display: "inline-block", width: "75%", height: "300px", padding: "5px", textAlign: "left"}}>
-                    <Header as="h1"><NavLink to={profileLink} exact>{ensemble.name} Profile</NavLink></Header>
-                        <Header as='h2'>{ensemble.website}</Header>
-                        <Header as='h2'>{ensemble.phone_number}</Header>
+                    <Header as="h1"><NavLink className="App-link" to={profileLink} exact>{ensemble.name} Profile</NavLink>
+                        <span style={{float: "right"}}>
+                            <NavLink className="App-link" to={editLink} exact>Edit</NavLink> |
+                            <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteEnsemble(ensemble.id)}>Delete</span>
+                        </span>
+                    </Header>
+                    <Header as='h2'>{ensemble.website}</Header>
+                    <Header as='h2'>{ensemble.phone_number}</Header>
                     </div>
                 </div>
             )
-        })
-    }
-
-    goToNewEnsembleForm = () => {
-        console.log("This button was clicked")
-        this.setState({
-            redirect: '/ensembles/new'
         })
     }
      
@@ -51,4 +73,9 @@ const mapStateToProps = state => {
     ensembles: state.ensembles }
 }
 
-export default connect(mapStateToProps)(MyAdmin)
+const mapDispatchToProps = {
+    loginUser,
+    loadEnsembles
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyAdmin)

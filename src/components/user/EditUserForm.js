@@ -3,6 +3,7 @@ import { Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { editUser, logoutUser } from '../../actions/user'
+import { clearEnsembles } from '../../actions/ensembles'
 
 class EditUserForm extends Component {
     constructor() {
@@ -103,6 +104,7 @@ class EditUserForm extends Component {
         .then(resp => resp.json())
         .then(data => {
             this.props.logoutUser()
+            this.props.clearEnsembles()
         })
     }
     
@@ -162,7 +164,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     editUser,
-    logoutUser
+    logoutUser,
+    clearEnsembles
 }
   
 export default connect(mapStateToProps, mapDispatchToProps)(EditUserForm)

@@ -2,12 +2,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { logoutUser } from '../../actions/user'
+import { clearEnsembles } from '../../actions/ensembles'
 import { Menu } from 'semantic-ui-react'
 
 const UserNavBar = props => {
 
   const handleLogOut = () => {
     props.logoutUser();
+    props.clearEnsembles();
     localStorage.removeItem('token')
   }
 
@@ -42,7 +44,8 @@ const UserNavBar = props => {
 };
 
 const mapDispatchToProps = {
-    logoutUser
+    logoutUser,
+    clearEnsembles
 }
 
 export default connect(null, mapDispatchToProps)(UserNavBar)
