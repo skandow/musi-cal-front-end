@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loginUser } from '../../actions/user'
+import { loadEnsembles } from '../../actions/ensembles'
 
 
 class Login extends Component {
@@ -56,6 +57,7 @@ class Login extends Component {
         .then(data => {
             localStorage.setItem("token", data.jwt)
             this.props.loginUser(data.user.data.attributes)
+            this.props.loadEnsembles(data.user.data.attributes.admin_for)
         })
         .catch(error => {
             this.setState({
@@ -110,7 +112,8 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = {
-    loginUser
+    loginUser,
+    loadEnsembles
 }
   
 export default connect(null, mapDispatchToProps)(Login)
