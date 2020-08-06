@@ -13,6 +13,8 @@ import UserContainer from './containers/UserContainer'
 import MyAdmin from './components/user/MyAdmin'
 import Ensembles from './components/ensembles/Ensembles'
 import Ensemble from './components/ensembles/Ensemble'
+import NewEnsembleForm from './components/ensembles/NewEnsembleForm'
+import EditEnsembleForm from './components/ensembles/EditEnsembleForm'
 
 class App extends Component {
   state = {
@@ -25,11 +27,11 @@ class App extends Component {
     })
   }
 
-  // renderEnsembleEditRoutes = () => {
-  //   return this.props.user.ensembles.map(ensemble => {
-  //     return <Route key={ensemble.id} exact path={`/ensembles/${ensemble.id}/edit`} render={() => <EditEnsemble ensemble={ensemble} />} />
-  //   })
-  // }
+  renderEnsembleEditRoutes = () => {
+    return this.props.user.ensembles.map(ensemble => {
+      return <Route key={ensemble.id} exact path={`/ensembles/${ensemble.id}/edit`} render={() => <EditEnsembleForm ensemble={ensemble} />} />
+    })
+  }
 
   componentDidMount() {
     const token = localStorage.getItem("token")
@@ -55,6 +57,7 @@ class App extends Component {
 
 
   render() {
+    console.log("Going to app again")
     console.log(this.props.user, this.props.ensembles)
   return (
   <Router>
@@ -68,8 +71,9 @@ class App extends Component {
         <Route exact path="/profile/edit" component={EditUserForm} />
         <Route exact path="/admin" component={MyAdmin} />
         <Route exact path='/ensembles' component={Ensembles} />
+        <Route exact path='/ensembles/new' component={NewEnsembleForm}/>
         {this.renderEnsembleRoutes()}
-        {/* // {this.renderNoteEditRoutes()} */}
+        {this.renderEnsembleEditRoutes()}
       </div>
       :
       <div>
