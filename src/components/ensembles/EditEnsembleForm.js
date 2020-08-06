@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import { Form, Grid, Button } from 'semantic-ui-react'
+import { Form, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loadEnsembles } from '../../actions/ensembles'
 import { loginUser } from '../../actions/user'
 
 class EditEnsembleForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             name: this.props.ensemble.name,
             email_contact: this.props.ensemble.email_contact,
@@ -34,6 +34,27 @@ class EditEnsembleForm extends Component {
             website: '',
             description: '',
             image_url: '',
+        })
+    }
+
+    deleteEnsemble = id => {
+        const URL = "http://localhost:3001/ensembles/" + id 
+        const token = localStorage.getItem("token")
+        this.setState({
+            redirect: "/admin"
+        })
+        const reqObj = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        fetch(URL, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.loginUser(data.user.data.attributes)
+            this.props.loadEnsembles(data.user.data.attributes.admin_for)
         })
     }
     
@@ -67,7 +88,6 @@ class EditEnsembleForm extends Component {
         fetch(URL, reqObj)
         .then((resp) => resp.json())
         .then(data => {
-            console.log(data)
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
             this.setState({
@@ -122,11 +142,8 @@ class EditEnsembleForm extends Component {
                     <label>Description:</label>
                     <textarea onChange={this.handleChange} type="text" rows="10" name="description" value={this.state.description} placeholder="Give a description of the ensemble here."></textarea>
                 </div>
-                <Grid>
-                    <Grid.Column textAlign="center">
-                            <Button type="submit" color="green">Update</Button>
-                    </Grid.Column>
-                </Grid>
+                <Button type="submit" color="green">Update</Button>
+                <button type="button" className="ui button red delete" style={{float: "right"}} onClick={() => this.deleteEnsemble(this.props.ensemble.id)}>Delete This Ensemble</button>
             </Form>
             </div>
         )
