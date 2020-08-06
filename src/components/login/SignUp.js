@@ -3,6 +3,7 @@ import { Form, Grid, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loginUser } from '../../actions/user'
+import { loadEnsembles } from '../../actions/ensembles'
 
 class SignUp extends Component {
     constructor() {
@@ -73,6 +74,7 @@ class SignUp extends Component {
         .then(data => {
             localStorage.setItem("token", data.jwt)
             this.props.loginUser(data.user.data.attributes)
+            this.props.loadEnsembles(data.user.data.attributes.admin_for)
         })
         .catch(error => {
             this.setState({
@@ -141,7 +143,8 @@ class SignUp extends Component {
 }
 
 const mapDispatchToProps = {
-    loginUser
+    loginUser,
+    loadEnsembles
 }
   
 export default connect(null, mapDispatchToProps)(SignUp)

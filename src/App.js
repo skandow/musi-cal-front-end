@@ -4,16 +4,32 @@ Route} from 'react-router-dom'
 import './App.css';
 import {connect} from 'react-redux'
 import { loginUser } from './actions/user'
+import { loadEnsembles } from './actions/ensembles'
 import Login from './components/login/Login'
 import SignUp from './components/login/SignUp'
 import Profile from './components/user/Profile'
 import EditUserForm from './components/user/EditUserForm'
 import UserContainer from './containers/UserContainer'
+import MyAdmin from './components/user/MyAdmin'
+import Ensembles from './components/ensembles/Ensembles'
+import Ensemble from './components/ensembles/Ensemble'
 
 class App extends Component {
   state = {
     redirect: null
   }
+
+  renderEnsembleRoutes = () => {
+    return this.props.user.ensembles.map(ensemble => {
+      return <Route key={ensemble.id} exact path={`/ensembles/${ensemble.id}`} render={() => <Ensemble ensemble={ensemble} />} />
+    })
+  }
+
+  // renderEnsembleEditRoutes = () => {
+  //   return this.props.user.ensembles.map(ensemble => {
+  //     return <Route key={ensemble.id} exact path={`/ensembles/${ensemble.id}/edit`} render={() => <EditEnsemble ensemble={ensemble} />} />
+  //   })
+  // }
 
   componentDidMount() {
     const token = localStorage.getItem("token")
@@ -30,16 +46,16 @@ class App extends Component {
         fetch('http://localhost:3001/api/v1/profile', reqObj)
         .then(resp => resp.json())
         .then(data => {
-          console.log(this.props)
           console.log(data.user.data.attributes)
           this.props.loginUser(data.user.data.attributes)
+          this.props.loadEnsembles(data.user.data.attributes.admin_for)
     })
   }
 }
 
 
   render() {
-    console.log("back to app")
+    console.log(this.props.user, this.props.ensembles)
   return (
   <Router>
     <div className="App">
@@ -50,9 +66,10 @@ class App extends Component {
         <Route exact path="/" component={Profile} />
         {/* // <Route exact path="/notes" render={() => <NotesContainer notes={this.props.user.notes} />} /> */}
         <Route exact path="/profile/edit" component={EditUserForm} />
-        {/* // <Route exact path="/notes/new" component={NewNoteForm} />
-        // {this.renderNoteRoutes()}
-        // {this.renderNoteEditRoutes()} */}
+        <Route exact path="/admin" component={MyAdmin} />
+        <Route exact path='/ensembles' component={Ensembles} />
+        {this.renderEnsembleRoutes()}
+        {/* // {this.renderNoteEditRoutes()} */}
       </div>
       :
       <div>
@@ -72,11 +89,13 @@ class App extends Component {
 }
 
 const mapStateToProps = state => {
-  return {user: state.user}
+  return {user: state.user,
+  ensembles: state.ensembles}
 }
 
 const mapDispatchToProps = {
-  loginUser
+  loginUser,
+  loadEnsembles
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

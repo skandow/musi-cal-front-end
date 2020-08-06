@@ -24,13 +24,13 @@ const UserNavBar = props => {
                 <NavLink style={{color: "black"}} to="/profile/edit" exact>Edit My Profile</NavLink>
             </Menu.Item>
             <Menu.Item style={{border: "5px outset white"}} link>
-                <NavLink style={{color: "black"}} to="/notes" exact>My Ensembles</NavLink>
+                <NavLink style={{color: "black"}} to="/ensembles" exact>My Ensembles</NavLink>
             </Menu.Item>
             <Menu.Item style={{border: "5px outset white"}} link>
                 <NavLink style={{color: "black"}} to="/notes/new" exact>My Events</NavLink>
             </Menu.Item>
             <Menu.Item style={{border: "5px outset white"}} link>
-                <NavLink style={{color: "black"}} to="/notes/new" exact>My Admin Page</NavLink>
+                <NavLink style={{color: "black"}} to="/admin" exact>My Admin Page</NavLink>
             </Menu.Item>
             <Menu.Item style={{border: "5px outset white"}} link>
                 <NavLink to="/" exact onClick={handleLogOut}>Log Out</NavLink>
