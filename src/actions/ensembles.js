@@ -19,7 +19,7 @@ export const editEnsemble = ensemble => {
     }
 }
 
-export const deleteNote = id => {
+export const deleteEnsemble = id => {
     return {
         type: "DELETE_ENSEMBLE",
         id

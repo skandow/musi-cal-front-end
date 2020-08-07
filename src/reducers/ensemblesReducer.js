@@ -5,7 +5,6 @@ export default function ensemblesReducer(
             case "LOAD_ENSEMBLES":
                 return action.ensembles
             case "ADD_ENSEMBLE":
-                console.log(action.ensemble)
                 return [...state, action.ensemble];
             case "EDIT_ENSEMBLE":
                 return state.map(ensemble => {
