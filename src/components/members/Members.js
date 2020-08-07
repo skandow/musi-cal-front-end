@@ -4,46 +4,48 @@ import { connect } from 'react-redux'
 import { Image, Header, Button } from 'semantic-ui-react'
 import { loadEnsembles } from '../../actions/ensembles'
 import { loginUser } from '../../actions/user'
+import { loadMembers } from '../../actions/members'
 
 class Members extends Component {
     state = {
         redirect: null
     }
 
-    // deleteEnsemble = id => {
-    //     const URL = "http://localhost:3001/ensembles/" + id 
-    //     const token = localStorage.getItem("token")
-    //     this.setState({
-    //         redirect: "/admin"
-    //     })
-    //     const reqObj = {
-    //         method: "DELETE",
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             "Authorization": `Bearer ${token}`
-    //         }
-    //     }
-    //     fetch(URL, reqObj)
-    //     .then(resp => resp.json())
-    //     .then(data => {
-    //         this.props.loginUser(data.user.data.attributes)
-    //         this.props.loadEnsembles(data.user.data.attributes.admin_for)
-    //     })
-    // }
+    deleteMember = id => {
+        const URL = "http://localhost:3001/memberships/" + id 
+        const token = localStorage.getItem("token")
+        this.setState({
+            redirect: `/ensembles/${this.props.ensemble.id}/members`
+        })
+        const reqObj = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        fetch(URL, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.loginUser(data.user.data.attributes)
+            this.props.loadEnsembles(data.user.data.attributes.admin_for)
+            this.props.loadMembers(data.user.data.attributes.admined_members)
+        })
+    }
 
     renderMembers = () => {
         return this.props.members.map(member => {
             // const profileLink = `ensembles/${ensemble.id}`
-            // const editLink = `ensembles/${ensemble.id}/edit`
+            const editLink = `/ensembles/${member.ensemble_id}/members/${member.id}/edit`
             return (
                 <div key={member.id}>
                     <Image src={member.image_url} floated='left' style={{border: "10px ridge green", margin: "0", height: "300px", width: "25%"}}/>
                     <div style={{border: "10px ridge green", display: "inline-block", width: "75%", height: "300px", padding: "5px", textAlign: "left"}}>
                     <Header as="h1"> {member.user}
-                        {/* <span style={{float: "right"}}>
+                        <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editLink} exact>Edit</NavLink> |
-                            <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteEnsemble(ensemble.id)}>Delete</span>
-                        </span> */}
+                            <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteMember(member.id)}>Delete</span>
+                        </span>
                     </Header>
                     <Header as='h2'>Email: {member.email}</Header>
                     <Header as='h2'>Phone Number: {member.phone_number}</Header>
@@ -56,11 +58,12 @@ class Members extends Component {
     }
      
     render() {
-        console.log(this.props.members, this.props.ensemble)
+        const newMemberFormLink = `/ensembles/${this.props.ensemble.id}/members/new`
+        console.log(newMemberFormLink)
         return (
             <div className="members-page">
                 <div style={{margin: "5px", marginBottom: "20px"}}>
-                    <Button floated="left" color="green" style={{display: "inline-block"}}><NavLink style={{color: "white"}} to='ensembles/new' exact>Add a Member to This Ensemble</NavLink></Button>
+                    <Button floated="left" color="green" style={{display: "inline-block"}}><NavLink style={{color: "white"}} to={newMemberFormLink} exact>Add a Member to This Ensemble</NavLink></Button>
                     <Header id="admin-header" as='h1'>{this.props.ensemble.name} Members</Header>
                 </div>
                 <div>
@@ -78,7 +81,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     loginUser,
-    loadEnsembles
+    loadEnsembles,
+    loadMembers
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Members)
