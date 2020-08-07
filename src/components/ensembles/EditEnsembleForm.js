@@ -39,6 +39,7 @@ class EditEnsembleForm extends Component {
     }
 
     deleteEnsemble = id => {
+        if (window.confirm("Are you sure you want to delete this ensemble?")) {
         const URL = "http://localhost:3001/ensembles/" + id 
         const token = localStorage.getItem("token")
         this.setState({
@@ -58,7 +59,7 @@ class EditEnsembleForm extends Component {
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
             this.props.loadMembers(data.user.data.attributes.admined_members)
         })
-    }
+    }}
     
     handleSubmit = event => {
         event.preventDefault()

@@ -87,6 +87,7 @@ class EditUserForm extends Component {
     }
 
     deleteUser = () => {
+        if (window.confirm("Are you sure you want to delete this user?")) {
         const URL = "http://localhost:3001/api/v1/users/" + this.props.user.id 
         const token = localStorage.getItem("token")
         localStorage.removeItem('token')
@@ -106,7 +107,7 @@ class EditUserForm extends Component {
             this.props.logoutUser()
             this.props.clearEnsembles()
         })
-    }
+    }}
     
     render() {
         console.log(this.state.redirect)

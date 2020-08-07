@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Grid, Button } from 'semantic-ui-react'
+import { Form, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loadEnsembles } from '../../actions/ensembles'
@@ -48,6 +48,7 @@ class EditMemberForm extends Component {
     }
 
     deleteMember = id => {
+        if (window.confirm("Are you sure you want to delete this member?")) {
         const URL = "http://localhost:3001/memberships/" + id 
         const token = localStorage.getItem("token")
         this.setState({
@@ -67,7 +68,7 @@ class EditMemberForm extends Component {
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
             this.props.loadMembers(data.user.data.attributes.admined_members)
         })
-    }
+    }}
     
     handleSubmit = event => {
         event.preventDefault()

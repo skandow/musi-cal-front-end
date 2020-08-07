@@ -10,8 +10,8 @@ class Ensembles extends Component {
             const profileLink = `ensembles/${ensemble.id}`
             return (
                 <div key={ensemble.id}>
-                    <Image src={ensemble.image_url} floated='left' style={{border: "10px ridge blue", margin: "0", height: "300px", width: "25%"}}/>
-                    <div style={{border: "10px ridge blue", display: "inline-block", width: "75%", height: "300px", padding: "5px", textAlign: "left"}}>
+                    <Image src={ensemble.image_url} style={{border: "10px ridge blue", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
+                    <div style={{border: "10px ridge blue", width: "55%", display: "inline-block", height: "300px", padding: "5px", textAlign: "left"}}>
                         <Header as="h1"><NavLink to={profileLink} exact>{ensemble.name} Profile</NavLink></Header>
                         <Header as='h2'>{ensemble.website}</Header>
                         <Header as='h2'>Email Contact: {ensemble.email_contact} </Header>

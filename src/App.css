@@ -51,6 +51,10 @@ span.delete:hover {
   color: yellow
 }
 
+.ui.image {
+  vertical-align: top !important
+}
+
 #admin-header {
   text-align: left !important;
   margin-left: 610px !important

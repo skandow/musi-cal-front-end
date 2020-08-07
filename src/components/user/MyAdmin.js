@@ -11,6 +11,7 @@ class MyAdmin extends Component {
     }
 
     deleteEnsemble = id => {
+        if (window.confirm("Are you sure you want to delete this ensemble?")) {
         const URL = "http://localhost:3001/ensembles/" + id 
         const token = localStorage.getItem("token")
         this.setState({
@@ -29,7 +30,7 @@ class MyAdmin extends Component {
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
         })
-    }
+    }}
 
     renderAdminedEnsembles = () => {
         return this.props.ensembles.map(ensemble => {
@@ -39,8 +40,8 @@ class MyAdmin extends Component {
             const newMemberLink = `ensembles/${ensemble.id}/members/new`
             return (
                 <div key={ensemble.id}>
-                    <Image src={ensemble.image_url} floated='left' style={{border: "10px ridge blue", margin: "0", height: "300px", width: "25%"}}/>
-                    <div style={{border: "10px ridge blue", display: "inline-block", width: "75%", height: "300px", padding: "5px", textAlign: "left"}}>
+                    <Image src={ensemble.image_url} style={{border: "10px ridge blue", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
+                    <div style={{border: "10px ridge blue", display: "inline-block", width: "55%", height: "300px", padding: "5px", textAlign: "left"}}>
                     <Header as="h1"><NavLink className="App-link" to={profileLink} exact>{ensemble.name} Profile</NavLink>
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editLink} exact>Edit</NavLink> |
