@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loginUser } from '../../actions/user'
 import { loadEnsembles } from '../../actions/ensembles'
+import { loadMembers } from '../../actions/members'
 
 
 class Login extends Component {
@@ -58,6 +59,7 @@ class Login extends Component {
             localStorage.setItem("token", data.jwt)
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
+            this.props.loadMembers(data.user.data.attributes.admined_members)
         })
         .catch(error => {
             this.setState({
@@ -113,7 +115,8 @@ class Login extends Component {
 
 const mapDispatchToProps = {
     loginUser,
-    loadEnsembles
+    loadEnsembles,
+    loadMembers
 }
   
 export default connect(null, mapDispatchToProps)(Login)

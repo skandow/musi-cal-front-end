@@ -35,6 +35,7 @@ class MyAdmin extends Component {
         return this.props.ensembles.map(ensemble => {
             const profileLink = `ensembles/${ensemble.id}`
             const editLink = `ensembles/${ensemble.id}/edit`
+            const membersLink = `ensembles/${ensemble.id}/members`
             return (
                 <div key={ensemble.id}>
                     <Image src={ensemble.image_url} floated='left' style={{border: "10px ridge blue", margin: "0", height: "300px", width: "25%"}}/>
@@ -44,6 +45,12 @@ class MyAdmin extends Component {
                             <NavLink className="App-link" to={editLink} exact>Edit</NavLink> |
                             <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteEnsemble(ensemble.id)}>Delete</span>
                         </span>
+                    </Header>
+                    <Header as="h1"><NavLink className="App-link" to={membersLink} exact>{ensemble.name} Members</NavLink>
+                        {/* <span style={{float: "right"}}>
+                            <NavLink className="App-link" to={editLink} exact>Edit</NavLink> |
+                            <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteEnsemble(ensemble.id)}>Delete</span>
+                        </span> */}
                     </Header>
                     <Header as='h2'>{ensemble.website}</Header>
                     <Header as='h2'>{ensemble.phone_number}</Header>
