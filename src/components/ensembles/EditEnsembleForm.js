@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loadEnsembles } from '../../actions/ensembles'
 import { loginUser } from '../../actions/user'
+import { loadMembers } from '../../actions/members'
 
 class EditEnsembleForm extends Component {
     constructor(props) {
@@ -55,6 +56,7 @@ class EditEnsembleForm extends Component {
         .then(data => {
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
+            this.props.loadMembers(data.user.data.attributes.admined_members)
         })
     }
     
@@ -152,7 +154,8 @@ class EditEnsembleForm extends Component {
 
 const mapDispatchToProps = {
     loginUser,
-    loadEnsembles
+    loadEnsembles,
+    loadMembers
 }
   
 export default connect(null, mapDispatchToProps)(EditEnsembleForm)

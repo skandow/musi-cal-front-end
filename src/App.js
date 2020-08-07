@@ -17,6 +17,8 @@ import Ensemble from './components/ensembles/Ensemble'
 import NewEnsembleForm from './components/ensembles/NewEnsembleForm'
 import EditEnsembleForm from './components/ensembles/EditEnsembleForm'
 import Members from './components/members/Members'
+import NewMemberForm from './components/members/NewMemberForm'
+import EditMemberForm from './components/members/EditMemberForm';
 
 class App extends Component {
   state = {
@@ -38,6 +40,18 @@ class App extends Component {
   renderEnsembleMemberPages = () => {
     return this.props.ensembles.map(ensemble => {
       return <Route key={ensemble.id} exact path={`/ensembles/${ensemble.id}/members`} render={() => <Members ensemble={ensemble} members={this.thisEnsemblesMembers(ensemble.id)} />} />
+    })
+  }
+
+  renderNewMemberForms = () => {
+    return this.props.ensembles.map(ensemble => {
+      return <Route key={ensemble.id} exact path={`/ensembles/${ensemble.id}/members/new`} render={() => <NewMemberForm ensemble={ensemble} />} />
+    })
+  }
+
+  renderEditMemberForms = () => {
+    return this.props.members.map(member => {
+      return <Route key={member.id} exact path={`/ensembles/${member.ensemble_id}/members/${member.id}/edit`} render={() => <EditMemberForm member={member} />} />
     })
   }
 
@@ -88,6 +102,8 @@ class App extends Component {
         {this.renderEnsembleRoutes()}
         {this.renderEnsembleEditRoutes()}
         {this.renderEnsembleMemberPages()}
+        {this.renderNewMemberForms()}
+        {this.renderEditMemberForms()}
       </div>
       :
       <div>
