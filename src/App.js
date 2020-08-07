@@ -18,7 +18,8 @@ import NewEnsembleForm from './components/ensembles/NewEnsembleForm'
 import EditEnsembleForm from './components/ensembles/EditEnsembleForm'
 import Members from './components/members/Members'
 import NewMemberForm from './components/members/NewMemberForm'
-import EditMemberForm from './components/members/EditMemberForm';
+import EditMemberForm from './components/members/EditMemberForm'
+import Events from './components/events/Events';
 
 class App extends Component {
   state = {
@@ -98,6 +99,7 @@ class App extends Component {
         <Route exact path="/profile/edit" component={EditUserForm} />
         <Route exact path="/admin" component={MyAdmin} />
         <Route exact path='/ensembles' component={Ensembles} />
+        <Route exact path='/my_events' component={Events} />
         <Route exact path='/ensembles/new' component={NewEnsembleForm}/>
         {this.renderEnsembleRoutes()}
         {this.renderEnsembleEditRoutes()}

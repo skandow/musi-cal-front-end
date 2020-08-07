@@ -12,6 +12,7 @@ class Members extends Component {
     }
 
     deleteMember = id => {
+        if (window.confirm("Are you sure you want to delete this member?")) {
         const URL = "http://localhost:3001/memberships/" + id 
         const token = localStorage.getItem("token")
         this.setState({
@@ -31,7 +32,7 @@ class Members extends Component {
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
             this.props.loadMembers(data.user.data.attributes.admined_members)
         })
-    }
+    }}
 
     renderMembers = () => {
         return this.props.members.map(member => {
@@ -39,8 +40,8 @@ class Members extends Component {
             const editLink = `/ensembles/${member.ensemble_id}/members/${member.id}/edit`
             return (
                 <div key={member.id}>
-                    <Image src={member.image_url} floated='left' style={{border: "10px ridge green", margin: "0", height: "300px", width: "25%"}}/>
-                    <div style={{border: "10px ridge green", display: "inline-block", width: "75%", height: "300px", padding: "5px", textAlign: "left"}}>
+                    <Image src={member.image_url} style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
+                    <div style={{border: "10px ridge green", display: "inline-block", width: "55%", height: "300px", padding: "5px", textAlign: "left"}}>
                     <Header as="h1"> {member.user}
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editLink} exact>Edit</NavLink> |

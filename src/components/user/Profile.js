@@ -17,7 +17,7 @@ class Profile extends Component {
     renderThreeClosestEvents = threeClosestEvents => {
         return threeClosestEvents.map(event => {
             return (
-                <div key={event.id} style={{border: "10px outset red", margin: "2px", padding: "5px", textAlign: "left"}}>
+                <div key={event.id} style={{border: "10px outset red", margin: "auto", padding: "5px", width: "80%", textAlign: "left"}}>
                     <Header as='h2'>{event.title}</Header>
                     <Header as='h3'>Starts: {event.start_time}</Header>
                     <Header as='h3'>Ends: {event.end_time}</Header>
@@ -33,8 +33,8 @@ class Profile extends Component {
         const {name, email, phone_number, primary_instrument_or_voice_part, secondary_instrument, image_url } = this.props.user
         return (
             <div className="user-profile">
-                <Image src={image_url} floated='left' style={{border: "10px ridge green", margin: "0", height: "300px", width: "25%"}}/>
-                <div style={{border: "10px ridge green", display: "inline-block", float: "left", height: "300px", width: "75%", textAlign: "left", padding: "2px"}}>
+                <Image src={image_url} style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
+                <div style={{border: "10px ridge green", display: "inline-block", height: "300px", width: "55%", textAlign: "left", padding: "2px"}}>
                     <Header as='h1'>{name}</Header>
                     <Header as='h2'>Email: {email}</Header>
                     <Header as='h2'>Phone Number: {phone_number}</Header>
@@ -42,7 +42,7 @@ class Profile extends Component {
                     <Header as='h2'>Secondary Instrument: {secondary_instrument}</Header>
                 </div>
                 <div>
-                    <Header as="h1" textAlign="left">Upcoming Events:</Header>
+                    <Header as="h1" textAlign="left" style={{marginLeft: "150px"}}>Upcoming Events:</Header>
                     <div>
                         {this.renderThreeClosestEvents(threeClosestEvents)}
                     </div>

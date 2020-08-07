@@ -15,7 +15,7 @@ const UserNavBar = props => {
 
   return (
     <div>
-        <Menu style={{border: "5px groove green"}} fluid widths={8} inverted color="red">
+        <Menu style={{border: "5px groove green", marginBottom: "10px"}} fluid widths={8} inverted color="red">
             <Menu.Item>
                 Musi-Cal
             </Menu.Item>
@@ -29,7 +29,7 @@ const UserNavBar = props => {
                 <NavLink style={{color: "black"}} to="/ensembles" exact>My Ensembles</NavLink>
             </Menu.Item>
             <Menu.Item style={{border: "5px outset white"}} link>
-                <NavLink style={{color: "black"}} to="/notes/new" exact>My Events</NavLink>
+                <NavLink style={{color: "black"}} to="/my_events" exact>My Events</NavLink>
             </Menu.Item>
             <Menu.Item style={{border: "5px outset white"}} link>
                 <NavLink style={{color: "black"}} to="/admin" exact>My Admin Page</NavLink>
