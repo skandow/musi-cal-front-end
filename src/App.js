@@ -19,7 +19,8 @@ import EditEnsembleForm from './components/ensembles/EditEnsembleForm'
 import Members from './components/members/Members'
 import NewMemberForm from './components/members/NewMemberForm'
 import EditMemberForm from './components/members/EditMemberForm'
-import Events from './components/events/Events';
+import Events from './components/events/Events'
+import Event from './components/events/Event';
 
 class App extends Component {
   state = {
@@ -56,8 +57,20 @@ class App extends Component {
     })
   }
 
+  renderEnsembleEventPages = () => {
+    return this.props.user.events.map(event => {
+      const ensemble = this.props.user.ensembles.find(ensemble => ensemble.id === event.ensemble_id)
+      return <Route key={event.id} exact path={`/ensembles/${event.ensemble_id}/events/${event.id}`} render={() => <Event ensemble={ensemble} event={event} />} />
+    })
+  }
+    
+
   thisEnsemblesMembers = id => {
     return this.props.members.filter(member => member.ensemble_id === id)
+  }
+
+  thisEnsemblesEvents = id => {
+    return this.props.user.events.filter(event => event.ensemble_id === id)
   }
 
   componentDidMount() {
@@ -87,6 +100,10 @@ class App extends Component {
   render() {
     console.log("Going to app again")
     console.log(this.props.user, this.props.ensembles)
+    if (this.props.user) {
+      console.log(this.renderEnsembleEventPages())
+      console.log(this.renderEnsembleMemberPages())
+    }
   return (
   <Router>
     <div className="App">
@@ -106,6 +123,7 @@ class App extends Component {
         {this.renderEnsembleMemberPages()}
         {this.renderNewMemberForms()}
         {this.renderEditMemberForms()}
+        {this.renderEnsembleEventPages()}
       </div>
       :
       <div>
