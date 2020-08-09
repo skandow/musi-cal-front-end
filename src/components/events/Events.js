@@ -7,7 +7,7 @@ class Events extends Component {
 
     renderEvents = sortedEvents => {
         return sortedEvents.map(event => {
-            const eventLink = `ensembles/${event.ensemble_id}/events/${event.id}`
+            const eventLink = `/ensembles/${event.ensemble_id}/events/${event.id}`
             return (
                 <div key={event.id}>
                     <div style={{border: "10px ridge red", display: "inline-block", width: "75%", height: "200px", padding: "5px", textAlign: "left"}}>
