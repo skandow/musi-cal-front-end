@@ -34,10 +34,12 @@ class MyAdmin extends Component {
 
     renderAdminedEnsembles = () => {
         return this.props.ensembles.map(ensemble => {
-            const profileLink = `ensembles/${ensemble.id}`
-            const editLink = `ensembles/${ensemble.id}/edit`
-            const membersLink = `ensembles/${ensemble.id}/members`
-            const newMemberLink = `ensembles/${ensemble.id}/members/new`
+            const profileLink = `/ensembles/${ensemble.id}`
+            const editLink = `/ensembles/${ensemble.id}/edit`
+            const membersLink = `/ensembles/${ensemble.id}/members`
+            const newMemberLink = `/ensembles/${ensemble.id}/members/new`
+            const eventsLink = `/ensembles/${ensemble.id}/events`
+            const newEventLink = `/ensembles/${ensemble.id}/events/new`
             return (
                 <div key={ensemble.id}>
                     <Image src={ensemble.image_url} style={{border: "10px ridge blue", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
@@ -51,6 +53,11 @@ class MyAdmin extends Component {
                     <Header as="h1"><NavLink className="App-link" to={membersLink} exact>{ensemble.name} Members</NavLink>
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={newMemberLink} exact>Add Member</NavLink> 
+                        </span>
+                    </Header>
+                    <Header as="h1"><NavLink className="App-link" to={eventsLink} exact>{ensemble.name} Events</NavLink>
+                        <span style={{float: "right"}}>
+                            <NavLink className="App-link" to={newEventLink} exact>Add Event</NavLink> 
                         </span>
                     </Header>
                     <Header as='h2'>{ensemble.website}</Header>

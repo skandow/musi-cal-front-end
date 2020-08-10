@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom'
 import { loadEnsembles } from '../../actions/ensembles'
 import { loginUser } from '../../actions/user'
 import { loadMembers } from '../../actions/members'
+import { loadEvents } from '../../actions/events'
 
 class EditEnsembleForm extends Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class EditEnsembleForm extends Component {
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
             this.props.loadMembers(data.user.data.attributes.admined_members)
+            this.props.loadEvents(data.user.data.attributes.admined_events)
         })
     }}
     
@@ -156,7 +158,8 @@ class EditEnsembleForm extends Component {
 const mapDispatchToProps = {
     loginUser,
     loadEnsembles,
-    loadMembers
+    loadMembers,
+    loadEvents
 }
   
 export default connect(null, mapDispatchToProps)(EditEnsembleForm)
