@@ -75,8 +75,6 @@ class SignUp extends Component {
         .then(data => {
             localStorage.setItem("token", data.jwt)
             this.props.loginUser(data.user.data.attributes)
-            this.props.loadEnsembles(data.user.data.attributes.admin_for)
-            this.props.loadMembers(data.user.data.attributes.admined_members)
         })
         .catch(error => {
             this.setState({
@@ -145,9 +143,7 @@ class SignUp extends Component {
 }
 
 const mapDispatchToProps = {
-    loginUser,
-    loadEnsembles,
-    loadMembers
+    loginUser
 }
   
 export default connect(null, mapDispatchToProps)(SignUp)

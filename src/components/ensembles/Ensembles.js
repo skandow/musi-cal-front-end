@@ -8,6 +8,7 @@ class Ensembles extends Component {
     renderEnsembles = () => {
         return this.props.user.ensembles.map(ensemble => {
             const profileLink = `ensembles/${ensemble.id}`
+            const eventsLink = `${profileLink}/events`
             return (
                 <div key={ensemble.id}>
                     <Image src={ensemble.image_url} style={{border: "10px ridge blue", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
@@ -16,7 +17,7 @@ class Ensembles extends Component {
                         <Header as='h2'>{ensemble.website}</Header>
                         <Header as='h2'>Email Contact: {ensemble.email_contact} </Header>
                         <Header as='h2'>Phone Number: {ensemble.phone_number}</Header>
-                        <Header as='h2'>See Upcoming Ensemble Events</Header>
+                        <Header as='h2'><NavLink to ={eventsLink} exact>See Upcoming Ensemble Events</NavLink></Header>
                     </div>
                 </div>
             )

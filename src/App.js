@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import { loginUser } from './actions/user'
 import { loadEnsembles } from './actions/ensembles'
 import { loadMembers } from './actions/members'
+import { loadEvents } from './actions/events'
 import Login from './components/login/Login'
 import SignUp from './components/login/SignUp'
 import Profile from './components/user/Profile'
@@ -20,7 +21,10 @@ import Members from './components/members/Members'
 import NewMemberForm from './components/members/NewMemberForm'
 import EditMemberForm from './components/members/EditMemberForm'
 import Events from './components/events/Events'
-import Event from './components/events/Event';
+import Event from './components/events/Event'
+import EnsembleEvents from './components/events/EnsembleEvents'
+import NewEventForm from './components/events/NewEventForm'
+import EditEventForm from './components/events/EditEventForm';
 
 class App extends Component {
   state = {
@@ -57,10 +61,29 @@ class App extends Component {
     })
   }
 
-  renderEnsembleEventPages = () => {
+  renderEventPages = () => {
     return this.props.user.events.map(event => {
       const ensemble = this.props.user.ensembles.find(ensemble => ensemble.id === event.ensemble_id)
       return <Route key={event.id} exact path={`/ensembles/${event.ensemble_id}/events/${event.id}`} render={() => <Event ensemble={ensemble} event={event} />} />
+    })
+  }
+
+  renderEnsembleEventPages = () => {
+    return this.props.user.ensembles.map(ensemble => {
+      const thisEnsemblesEvents = this.thisEnsemblesEvents(ensemble.id)
+      return <Route key={ensemble.id} exact path ={`/ensembles/${ensemble.id}/events`} render={() => <EnsembleEvents ensemble={ensemble} events={thisEnsemblesEvents} />} />
+    })
+  }
+
+  renderNewEventForms = () => {
+    return this.props.ensembles.map(ensemble => {
+      return <Route key={ensemble.id} exact path={`/ensembles/${ensemble.id}/events/new`} render={() => <NewEventForm ensemble={ensemble} />} />
+    })
+  }
+
+  renderEditEventForms = () => {
+    return this.props.events.map(event => {
+      return <Route key={event.id} exact path={`/ensembles/${event.ensemble_id}/events/${event.id}/edit`} render={() => <EditEventForm event={event} />} />
     })
   }
     
@@ -92,6 +115,7 @@ class App extends Component {
           this.props.loginUser(data.user.data.attributes)
           this.props.loadEnsembles(data.user.data.attributes.admin_for)
           this.props.loadMembers(data.user.data.attributes.admined_members)
+          this.props.loadEvents(data.user.data.attributes.admined_events)
     })
   }
 }
@@ -123,7 +147,10 @@ class App extends Component {
         {this.renderEnsembleMemberPages()}
         {this.renderNewMemberForms()}
         {this.renderEditMemberForms()}
+        {this.renderEventPages()}
         {this.renderEnsembleEventPages()}
+        {this.renderNewEventForms()}
+        {this.renderEditEventForms()}
       </div>
       :
       <div>
@@ -145,13 +172,15 @@ class App extends Component {
 const mapStateToProps = state => {
   return {user: state.user,
   ensembles: state.ensembles,
-  members: state.members}
+  members: state.members,
+  events: state.events}
 }
 
 const mapDispatchToProps = {
   loginUser,
   loadEnsembles,
-  loadMembers
+  loadMembers,
+  loadEvents
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -21,8 +21,10 @@ class Events extends Component {
     }
 
     sortedEvents = () => {
-        const events = this.props.user.events 
-        const sortedEvents = events.slice().sort((a, b) => {
+        const events = this.props.user.events
+        const date = new Date()
+        const futureEvents = events.filter(event => new Date(event.end_time) > date) 
+        const sortedEvents = futureEvents.slice().sort((a, b) => {
             const dateA = new Date(a.start_time)
             const dateB = new Date(b.start_time)
             return dateA - dateB
