@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import {Calendar, Views, momentLocalizer} from 'react-big-calendar'
+import moment from 'moment'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { connect } from 'react-redux'
 import { Image, Header } from 'semantic-ui-react'
 
@@ -25,9 +28,20 @@ class Profile extends Component {
             )
         })
     }
+
+    setDates = () => {
+        return this.props.user.events.map(event => {
+            return {
+                start: new Date(event.start_time),
+                end: new Date(event.end_time),
+                title: event.title,
+                allDay: false,
+                resource: event }
+        })
+    }
      
     render() {
-        console.log(this.props.user.events)
+        const localizer = momentLocalizer(moment)
         const threeClosestEvents = this.threeClosestEvents()
         console.log(threeClosestEvents)
         const {name, email, phone_number, primary_instrument_or_voice_part, secondary_instrument, image_url } = this.props.user
@@ -42,9 +56,10 @@ class Profile extends Component {
                     <Header as='h2'>Secondary Instrument: {secondary_instrument}</Header>
                 </div>
                 <div>
-                    <Header as="h1" textAlign="left" style={{marginLeft: "150px"}}>Upcoming Events:</Header>
-                    <div>
-                        {this.renderThreeClosestEvents(threeClosestEvents)}
+                    <Header as="h1" textAlign="left" style={{marginLeft: "150px", padding: "0"}}>Upcoming Events:</Header>
+                    <div style={{border: "10px ridge red", width: "80%", margin: "auto"}}>
+                        <Calendar style={{width: "50%", verticalAlign: "top", height: "460px", display: "inline-flex"}} localizer={localizer} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
+                        <div style={{width: "50%", display: "inline-block", height: "500px"}}>{this.renderThreeClosestEvents(threeClosestEvents)}</div>
                     </div>
                 </div>
             </div>                 
