@@ -1,16 +1,55 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { NavLink, Redirect } from 'react-router-dom'
 import { Header } from 'semantic-ui-react'
+import { loginUser } from '../../actions/user'
+import { loadEvents } from '../../actions/events'
 
 class Event extends Component {
+    state = {
+        redirect: null
+    }
+
+    deleteEvent = id => {
+        if (window.confirm("Are you sure you want to delete this event?")) {
+        const URL = "http://localhost:3001/events/" + id 
+        const token = localStorage.getItem("token")
+        this.setState({
+            redirect: `/ensembles/${this.props.event.ensemble_id}/events`
+        })
+        const reqObj = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        fetch(URL, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.loginUser(data.user.data.attributes)
+            this.props.loadEvents(data.user.data.attributes.admined_events)
+        })
+    }}
      
     render() {
-        
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        }
         const {title, start_time, end_time, place, description, mandatory } = this.props.event
+        const adminedEvent = this.props.events.find(adminedEvent => adminedEvent.id === this.props.event.id)
+        const editEventLink = `ensembles/${this.props.event.ensemble_id}/events/${this.props.event.id}/edit`
         return (
             <div className="event-profile">
                 <div style={{border: "10px ridge red", display: "inline-block", height: "300px", width: "80%", textAlign: "left", padding: "2px"}}>
-                    <Header as='h1'>{title}</Header>
+                    <Header as='h1'>{title}
+                    {adminedEvent ?
+                        <span style={{float: "right"}}>
+                            <NavLink className="App-link" to={editEventLink} exact>Edit</NavLink> |
+                            <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteEvent(this.props.event.id)}>Delete</span>
+                        </span>
+                    :
+                    null}</Header>
                     <Header as='h2'>Location: {place}</Header>
                     <Header as='h2'>Start Time: {start_time} </Header>
                     <Header as='h2'>End Time: {end_time}</Header>
@@ -28,7 +67,13 @@ class Event extends Component {
 }
 
 const mapStateToProps = state => {
-    return { user: state.user }
+    return { user: state.user,
+    events: state.events }
 }
 
-export default connect(mapStateToProps)(Event)
+const mapDispatchToProps = {
+    loginUser,
+    loadEvents
+} 
+
+export default connect(mapStateToProps, mapDispatchToProps)(Event)

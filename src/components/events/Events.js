@@ -5,11 +5,35 @@ import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { connect } from 'react-redux'
 import { Header } from 'semantic-ui-react'
+import { loginUser } from '../../actions/user'
+import { loadEvents } from '../../actions/events'
 
 class Events extends Component {
     state = {
         redirect: null
     }
+
+    deleteEvent = id => {
+        if (window.confirm("Are you sure you want to delete this event?")) {
+        const URL = "http://localhost:3001/events/" + id 
+        const token = localStorage.getItem("token")
+        this.setState({
+            redirect: `/ensembles/${this.props.event.ensemble_id}/events`
+        })
+        const reqObj = {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        fetch(URL, reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+            this.props.loginUser(data.user.data.attributes)
+            this.props.loadEvents(data.user.data.attributes.admined_events)
+        })
+    }}
 
     renderEvents = (sortedEvents) => {
         return sortedEvents.map(event => {
@@ -19,7 +43,7 @@ class Events extends Component {
             return (
                 <div key={event.id}>
                     <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "200px", padding: "5px", textAlign: "left"}}>
-                        <Header as="h1"><NavLink to={eventLink} exact>{event.title}</NavLink></Header>
+                        <Header as="h1"><NavLink className="App-link" to={eventLink} exact>{event.title}</NavLink></Header>
                         <Header as='h3'>Starts: {event.start_time}</Header>
                         <Header as='h3'>Ends: {event.end_time}</Header>
                         {adminedEvent ?
@@ -94,4 +118,9 @@ const mapStateToProps = state => {
     events: state.events }
 }
 
-export default connect(mapStateToProps)(Events)
+const mapDispatchToProps = {
+    loginUser,
+    loadEvents
+} 
+
+export default connect(mapStateToProps, mapDispatchToProps)(Events)

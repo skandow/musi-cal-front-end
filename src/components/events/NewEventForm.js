@@ -119,8 +119,6 @@ class NewEventForm extends Component {
     }
     
     render() {
-        console.log(this.state.start_time)
-        console.log(this.state.end_time)
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
         }

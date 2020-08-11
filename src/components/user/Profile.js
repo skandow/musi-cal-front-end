@@ -26,8 +26,8 @@ class Profile extends Component {
         return threeClosestEvents.map(event => {
             const eventLink = `/ensembles/${event.ensemble_id}/events/${event.id}`
             return (
-                <div key={event.id} style={{border: "10px outset red", margin: "auto", padding: "5px", width: "80%", textAlign: "left"}}>
-                    <Header as='h2'><NavLink to={eventLink} exact>{event.title}</NavLink></Header>
+                <div key={event.id} style={{border: "10px outset red", margin: "auto", padding: "5px", width: "100%", textAlign: "left"}}>
+                    <Header as='h2'><NavLink className="App-link" to={eventLink} exact>{event.title}</NavLink></Header>
                     <Header as='h3'>Starts: {event.start_time}</Header>
                     <Header as='h3'>Ends: {event.end_time}</Header>
                 </div>
@@ -73,10 +73,12 @@ class Profile extends Component {
                     <Header as='h2'>Secondary Instrument: {secondary_instrument}</Header>
                 </div>
                 <div>
-                    <Header as="h1" textAlign="left" style={{marginLeft: "150px", padding: "0"}}>Upcoming Events:</Header>
-                    <div style={{border: "10px ridge red", width: "80%", margin: "auto"}}>
-                        <Calendar style={{width: "50%", verticalAlign: "top", height: "460px", display: "inline-flex"}} localizer={localizer} onDoubleClickEvent={this.navToEvent} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
-                        <div style={{width: "50%", display: "inline-block", height: "500px"}}>{this.renderThreeClosestEvents(threeClosestEvents)}</div>
+                    <Header as="h1" textAlign="left" style={{marginLeft: "150px", padding: "0"}}>Calendar:</Header>
+                    <div style={{border: "10px ridge red", width: "80%", margin: "auto", height: "500px"}}>
+                        <Calendar style={{width: "50%", verticalAlign: "top", height: "100%", display: "inline-flex"}} localizer={localizer} onDoubleClickEvent={this.navToEvent} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
+                        <div style={{width: "50%", display: "inline-block"}}>
+                            <span style={{float: "left"}}><strong>Upcoming Events:</strong></span><br></br>
+                        {this.renderThreeClosestEvents(threeClosestEvents)}</div>
                     </div>
                 </div>
             </div>                 
