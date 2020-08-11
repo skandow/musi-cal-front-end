@@ -62,8 +62,11 @@ class Profile extends Component {
         const threeClosestEvents = this.threeClosestEvents()
         console.log(threeClosestEvents)
         const {name, email, phone_number, primary_instrument_or_voice_part, secondary_instrument, image_url } = this.props.user
+        const unconfirmedEvents = this.props.user.user_events.filter(event => event.attending === "undeclared").length 
+        console.log(unconfirmedEvents)
         return (
             <div className="user-profile">
+                <div style={{width: "80%", margin: "auto"}}>
                 <Image src={image_url} style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
                 <div style={{border: "10px ridge green", display: "inline-block", height: "300px", width: "55%", textAlign: "left", padding: "2px"}}>
                     <Header as='h1'>{name}</Header>
@@ -71,6 +74,11 @@ class Profile extends Component {
                     <Header as='h2'>Phone Number: {phone_number}</Header>
                     <Header as='h2'>Primary Instrument or Voice Part: {primary_instrument_or_voice_part}</Header>
                     <Header as='h2'>Secondary Instrument: {secondary_instrument}</Header>
+                </div>
+                <div style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "20%", verticalAlign: "top"}}>
+                    <Header as="h2">You have {unconfirmedEvents === 0 ? "no" : unconfirmedEvents} events that require attendance confirmation. 
+                    <br></br><br></br>Go to <NavLink className="App-link" to="/my_events" exact>My Events</NavLink> to confirm attendance.</Header>
+                </div>
                 </div>
                 <div>
                     <Header as="h1" textAlign="left" style={{marginLeft: "150px", padding: "0"}}>Calendar:</Header>
