@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { Image, Header, Button } from 'semantic-ui-react'
 import { loadEnsembles } from '../../actions/ensembles'
 import { loginUser } from '../../actions/user'
+import { loadMembers } from '../../actions/members'
+import { loadEvents } from '../../actions/events'
 
 class MyAdmin extends Component {
     state = {
@@ -29,6 +31,8 @@ class MyAdmin extends Component {
         .then(data => {
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
+            this.props.loadMembers(data.user.data.attributes.admined_members)
+            this.props.loadEvents(data.user.data.attributes.admined_events)
         })
     }}
 
@@ -90,7 +94,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     loginUser,
-    loadEnsembles
+    loadEnsembles,
+    loadMembers,
+    loadEvents
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyAdmin)

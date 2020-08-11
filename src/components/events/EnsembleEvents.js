@@ -20,7 +20,7 @@ class EnsembleEvents extends Component {
             return (
                 <div key={event.id}>
                     <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "200px", padding: "5px", textAlign: "left"}}>
-                        <Header as="h1"><NavLink to={eventLink} exact>{event.title}</NavLink>
+                        <Header as="h1"><NavLink className="App-link" to={eventLink} exact>{event.title}</NavLink>
                         </Header>
                         <Header as='h3'>Starts: {event.start_time}</Header>
                         <Header as='h3'>Ends: {event.end_time}</Header>
