@@ -1,21 +1,39 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
+import {Calendar, momentLocalizer} from 'react-big-calendar'
+import moment from 'moment'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { connect } from 'react-redux'
 import { Header } from 'semantic-ui-react'
 
 class Events extends Component {
+    state = {
+        redirect: null
+    }
 
-    renderEvents = sortedEvents => {
+    renderEvents = (sortedEvents) => {
         return sortedEvents.map(event => {
             const eventLink = `/ensembles/${event.ensemble_id}/events/${event.id}`
+            const adminedEvent = this.props.events.find(adminedEvent => adminedEvent.id === event.id)
+            const editEventLink = `${eventLink}/edit`
             return (
                 <div key={event.id}>
-                    <div style={{border: "10px ridge red", display: "inline-block", width: "75%", height: "200px", padding: "5px", textAlign: "left"}}>
+                    <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "200px", padding: "5px", textAlign: "left"}}>
                         <Header as="h1"><NavLink to={eventLink} exact>{event.title}</NavLink></Header>
                         <Header as='h3'>Starts: {event.start_time}</Header>
                         <Header as='h3'>Ends: {event.end_time}</Header>
+                        {adminedEvent ?
+                        <Header as='h3'> 
+                        <span style={{float: "right"}}>
+                            <NavLink className="App-link" to={editEventLink} exact>Edit</NavLink> |
+                            <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteEvent(event.id)}>Delete</span>
+                        </span>
+                        </Header>
+                        :
+                        null}
                     </div>
                 </div>
+                
             )
         })
     }
@@ -31,16 +49,40 @@ class Events extends Component {
         })
         return sortedEvents
     } 
+
+    setDates = () => {
+        return this.props.user.events.map(event => {
+            return {
+                start: new Date(event.start_time),
+                end: new Date(event.end_time),
+                title: event.title,
+                allDay: false,
+                resource: event }
+        })
+    }
+
+    navToEvent = event => {
+        console.log("This event was clicked.", event.resource)
+        const eventLink = `ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
+        this.setState({
+            redirect: eventLink
+        })
+    }
      
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        }
         const sortedEvents = this.sortedEvents()
+        const localizer = momentLocalizer(moment)
         return (
             <div className="events-page">
                 <div style={{margin: "5px", marginBottom: "20px"}}>
                     <Header id="ensembles-header" as='h1'>My Events</Header>
                 </div>
-                <div>
-                    {this.renderEvents(sortedEvents)}
+                <div style={{border: "10px ridge red", width: "80%", margin: "auto"}}>
+                    <Calendar style={{width: "50%", verticalAlign: "top", height: "460px", display: "inline-flex"}} localizer={localizer} onDoubleClickEvent={this.navToEvent} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
+                    <div style={{width: "50%", display: "inline-block", height: "500px", overflow: "auto"}}>{this.renderEvents(sortedEvents)}</div>
                 </div>
             </div>                 
         )
@@ -48,7 +90,8 @@ class Events extends Component {
 }
 
 const mapStateToProps = state => {
-    return { user: state.user }
+    return { user: state.user,
+    events: state.events }
 }
 
 export default connect(mapStateToProps)(Events)

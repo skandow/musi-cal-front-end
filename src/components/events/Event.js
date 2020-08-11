@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Image, Header } from 'semantic-ui-react'
+import { Header } from 'semantic-ui-react'
 
 class Event extends Component {
      

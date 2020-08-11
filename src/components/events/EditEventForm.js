@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Grid, Button } from 'semantic-ui-react'
+import { Form, Button } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { connect } from 'react-redux'
