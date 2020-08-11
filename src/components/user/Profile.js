@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
-import {Calendar, Views, momentLocalizer} from 'react-big-calendar'
+import { NavLink, Redirect } from 'react-router-dom'
+import {Calendar, momentLocalizer} from 'react-big-calendar'
 import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { connect } from 'react-redux'
 import { Image, Header } from 'semantic-ui-react'
 
 class Profile extends Component {
+
+    state = {
+        redirect: null
+    }
 
     threeClosestEvents = () => {
         const events = this.props.user.events 
@@ -19,9 +24,10 @@ class Profile extends Component {
 
     renderThreeClosestEvents = threeClosestEvents => {
         return threeClosestEvents.map(event => {
+            const eventLink = `/ensembles/${event.ensemble_id}/events/${event.id}`
             return (
                 <div key={event.id} style={{border: "10px outset red", margin: "auto", padding: "5px", width: "80%", textAlign: "left"}}>
-                    <Header as='h2'>{event.title}</Header>
+                    <Header as='h2'><NavLink to={eventLink} exact>{event.title}</NavLink></Header>
                     <Header as='h3'>Starts: {event.start_time}</Header>
                     <Header as='h3'>Ends: {event.end_time}</Header>
                 </div>
@@ -39,8 +45,19 @@ class Profile extends Component {
                 resource: event }
         })
     }
+
+    navToEvent = event => {
+        console.log("This event was clicked.", event.resource)
+        const eventLink = `ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
+        this.setState({
+            redirect: eventLink
+        })
+    }
      
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        }
         const localizer = momentLocalizer(moment)
         const threeClosestEvents = this.threeClosestEvents()
         console.log(threeClosestEvents)
@@ -58,7 +75,7 @@ class Profile extends Component {
                 <div>
                     <Header as="h1" textAlign="left" style={{marginLeft: "150px", padding: "0"}}>Upcoming Events:</Header>
                     <div style={{border: "10px ridge red", width: "80%", margin: "auto"}}>
-                        <Calendar style={{width: "50%", verticalAlign: "top", height: "460px", display: "inline-flex"}} localizer={localizer} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
+                        <Calendar style={{width: "50%", verticalAlign: "top", height: "460px", display: "inline-flex"}} localizer={localizer} onDoubleClickEvent={this.navToEvent} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
                         <div style={{width: "50%", display: "inline-block", height: "500px"}}>{this.renderThreeClosestEvents(threeClosestEvents)}</div>
                     </div>
                 </div>

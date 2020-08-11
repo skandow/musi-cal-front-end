@@ -3,8 +3,6 @@ import { Form, Grid, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loginUser } from '../../actions/user'
-import { loadEnsembles } from '../../actions/ensembles'
-import { loadMembers } from '../../actions/members'
 
 class SignUp extends Component {
     constructor() {

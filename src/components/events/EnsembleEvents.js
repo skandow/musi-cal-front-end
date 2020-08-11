@@ -1,11 +1,17 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
+import {Calendar, momentLocalizer} from 'react-big-calendar'
+import moment from 'moment'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 import { connect } from 'react-redux'
 import { Header, Button } from 'semantic-ui-react'
 import { loginUser } from '../../actions/user'
 import { loadEvents } from '../../actions/events'
 
 class EnsembleEvents extends Component {
+    state = {
+        redirect: null
+    }
 
     renderEvents = (sortedEvents, adminedEnsemble) => {
         return sortedEvents.map(event => {
@@ -13,18 +19,21 @@ class EnsembleEvents extends Component {
             const editEventLink = `${eventLink}/edit`
             return (
                 <div key={event.id}>
-                    <div style={{border: "10px ridge red", display: "inline-block", width: "75%", height: "200px", padding: "5px", textAlign: "left"}}>
+                    <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "200px", padding: "5px", textAlign: "left"}}>
                         <Header as="h1"><NavLink to={eventLink} exact>{event.title}</NavLink>
-                        {adminedEnsemble ? 
+                        </Header>
+                        <Header as='h3'>Starts: {event.start_time}</Header>
+                        <Header as='h3'>Ends: {event.end_time}</Header>
+                        {adminedEnsemble ?
+                        <Header as='h3'> 
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editEventLink} exact>Edit</NavLink> |
                             <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteEvent(event.id)}>Delete</span>
                         </span>
+                        </Header>
                         :
                         null}
-                        </Header>
-                        <Header as='h3'>Starts: {event.start_time}</Header>
-                        <Header as='h3'>Ends: {event.end_time}</Header>
+                        
                     </div>
                 </div>
             )
@@ -64,9 +73,31 @@ class EnsembleEvents extends Component {
         })
         return sortedEvents
     } 
+
+    setDates = () => {
+        return this.props.events.map(event => {
+            return {
+                start: new Date(event.start_time),
+                end: new Date(event.end_time),
+                title: event.title,
+                allDay: false,
+                resource: event }
+        })
+    }
+
+    navToEvent = event => {
+        const eventLink = `ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
+        this.setState({
+            redirect: eventLink
+        })
+    }
      
     render() {
+        if (this.state.redirect) {
+            return <Redirect to={this.state.redirect} />
+        }
         const sortedEvents = this.sortedEvents()
+        const localizer = momentLocalizer(moment)
         const adminedEnsemble = this.props.ensembles.find(ensemble => ensemble.id === this.props.ensemble.id)
         const newEventLink = `/ensembles/${this.props.ensemble.id}/events/new`
         return (
@@ -78,8 +109,11 @@ class EnsembleEvents extends Component {
                     null}
                     <Header id="ensembles-header" as='h1'>{this.props.ensemble.name} Events</Header>
                 </div>
-                <div>
-                    {this.renderEvents(sortedEvents, adminedEnsemble)}
+                <div style={{width: "80%", margin: "auto", border: "10px ridge red"}}>
+                <Calendar style={{width: "50%", verticalAlign: "top", height: "460px", display: "inline-flex"}} localizer={localizer} onDoubleClickEvent={this.navToEvent} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
+                    <div style={{width: "50%", display: "inline-block", height: "500px", overflow: "auto"}}>
+                        {this.renderEvents(sortedEvents, adminedEnsemble)}
+                    </div>
                 </div>
             </div>                 
         )
