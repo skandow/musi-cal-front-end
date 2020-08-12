@@ -17,9 +17,6 @@ class Events extends Component {
         if (window.confirm("Are you sure you want to delete this event?")) {
         const URL = "http://localhost:3001/events/" + id 
         const token = localStorage.getItem("token")
-        this.setState({
-            redirect: `/ensembles/${this.props.event.ensemble_id}/events`
-        })
         const reqObj = {
             method: "DELETE",
             headers: {
@@ -36,7 +33,6 @@ class Events extends Component {
     }}
 
     confirmAttendance = event => {
-        console.log(event.target.name, event.target.value)
         const URL = "http://localhost:3001/user_events/" + event.target.name 
         const token = localStorage.getItem("token")
         const payload = { user_event: {
@@ -76,7 +72,6 @@ class Events extends Component {
             const adminedEvent = this.props.events.find(adminedEvent => adminedEvent.id === event.id)
             const editEventLink = `${eventLink}/edit`
             const userEvent = this.props.user.user_events.find(user_event => user_event.event_id === event.id)
-            console.log(userEvent)
             return (
                 <div key={event.id}>
                     <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "200px", padding: "5px", textAlign: "left"}}>
@@ -125,7 +120,6 @@ class Events extends Component {
     }
 
     navToEvent = event => {
-        console.log("This event was clicked.", event.resource)
         const eventLink = `ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
         this.setState({
             redirect: eventLink

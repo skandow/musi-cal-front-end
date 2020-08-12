@@ -38,7 +38,8 @@ class Event extends Component {
         }
         const {title, start_time, end_time, place, description, mandatory } = this.props.event
         const adminedEvent = this.props.events.find(adminedEvent => adminedEvent.id === this.props.event.id)
-        const editEventLink = `ensembles/${this.props.event.ensemble_id}/events/${this.props.event.id}/edit`
+        const editEventLink = `/ensembles/${this.props.event.ensemble_id}/events/${this.props.event.id}/edit`
+        const plannedAttendanceLink = `/ensembles/${this.props.event.ensemble_id}/events/${this.props.event.id}/planned_attendance` 
         return (
             <div className="event-profile">
                 <div style={{border: "10px ridge red", display: "inline-block", height: "300px", width: "80%", textAlign: "left", padding: "2px"}}>
@@ -53,7 +54,12 @@ class Event extends Component {
                     <Header as='h2'>Location: {place}</Header>
                     <Header as='h2'>Start Time: {start_time} </Header>
                     <Header as='h2'>End Time: {end_time}</Header>
-                    <Header as='h2'>Mandatory?: {mandatory ? "Yes" : "No"}</Header>
+                    <Header as='h2'>Mandatory?: {mandatory ? "Yes" : "No"}
+                    {adminedEvent ?
+                        <NavLink style={{float: "right"}} className="App-link" to={plannedAttendanceLink} exact>See this event's planned attendance roster.</NavLink>
+                    :
+                    null}</Header>
+                    
                 </div>
                 <div>
                     <Header as="h1" textAlign="left" style={{marginLeft: "150px"}}>Description:</Header>

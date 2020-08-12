@@ -45,16 +45,10 @@ class EditEventForm extends Component {
     }
 
     handleEndChange = date => {
-        if (date < this.state.start_time) {
-            this.setState({
-                errorMessage: "The end time must be after the start time."
-            })
-        } else {
         this.setState({
             end_time: date,
             errorMessage: ""
         })}
-    }
 
     mandatoryOrNot = () => {
         this.setState({
@@ -100,12 +94,18 @@ class EditEventForm extends Component {
         const token = localStorage.getItem("token")
         const URL = "http://localhost:3001/events/" + this.props.event.id
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: "2-digit"}
-        
+        const start_date = new Date(this.state.start_time)
+        const end_date = new Date(this.state.end_time)
+            if (end_date < start_date) {
+                this.setState({
+                    errorMessage: "The end time must be after the start date."
+                })
+            } else {
         let title = this.state.title === '' ? this.props.event.title : this.state.title 
         let start_time = this.state.start_time === this.props.event.start_time ? this.props.event.start_time : this.state.start_time.toLocaleDateString("en-US", options)
         let end_time = this.state.end_time === this.props.event.end_time ? this.props.event.end_time : this.state.end_time.toLocaleDateString("en-US", options)
         let place = this.state.place === '' ? this.props.event.place : this.state.place    
-        let description = this.state.description === '' ? this.props.event.description : this.state.dsecription
+        let description = this.state.description === '' ? this.props.event.description : this.state.description
             const payload = { event: {
             title: title,
             start_time: start_time,
@@ -137,7 +137,7 @@ class EditEventForm extends Component {
                 errorMessage: error.message
             })
         })
-    } 
+    } }
     
     render() {
         if (this.state.redirect) {

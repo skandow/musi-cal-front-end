@@ -62,7 +62,6 @@ class NewEnsembleForm extends Component {
         fetch("http://localhost:3001/ensembles", reqObj)
         .then((resp) => resp.json())
         .then(data => {
-            console.log(data)
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
             this.props.loadMembers(data.user.data.attributes.admined_members)

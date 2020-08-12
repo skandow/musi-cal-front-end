@@ -76,8 +76,8 @@ class Login extends Component {
         }
         return (
             <div className="login-container" >
-                <div className="login-header" style={{border: "5px solid green", marginBottom: "5px", padding: "10px", backgroundColor: "PowderBlue"}}>
-                    <Header textAlign="center" as='h1'>Welcome to Music-Cal!</Header>
+                <div className="login-header" style={{border: "5px solid green", width: "80%", margin: "auto", marginBottom: "5px", padding: "10px", backgroundColor: "PowderBlue"}}>
+                    <Header textAlign="center" as='h1'>Welcome to Musi-Cal!</Header>
                     <Header textAlign="center" as='h2'>A One-Stop Site for Musicians to Organize Rehearsals, Performances, & Other Events</Header>
                 </div>
                 <Form error onSubmit={this.handleSubmit} style={{width: "25%", margin: "auto", padding: "20px", border: "5px inset red", backgroundColor: "PowderBlue"}}>

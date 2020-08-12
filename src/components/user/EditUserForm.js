@@ -110,7 +110,6 @@ class EditUserForm extends Component {
     }}
     
     render() {
-        console.log(this.state.redirect)
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
         }

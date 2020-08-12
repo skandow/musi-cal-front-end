@@ -45,15 +45,9 @@ class NewEventForm extends Component {
     }
 
     handleEndChange = date => {
-        if (date < this.state.start_time) {
-            this.setState({
-                errorMessage: "The end time must be after the start time."
-            })
-        } else {
         this.setState({
             end_time: date,
-            errorMessage: ""
-        })}
+        })
     }
 
     mandatoryOrNot = () => {
@@ -78,7 +72,16 @@ class NewEventForm extends Component {
         const token = localStorage.getItem("token")
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: "2-digit"}
         
-        if ((this.state.title) && (this.state.start_time) && (this.state.end_time) && (this.state.place) && (this.state.description)) {
+        if ((this.state.start_time) && (this.state.end_time)) {
+            const start_date = new Date(this.state.start_time)
+            const end_date = new Date(this.state.end_time)
+            if (end_date < start_date) {
+                console.log("fail")
+                this.setState({
+                    errorMessage: "The end time must be after the start date."
+                })
+            } else {
+            if ((this.state.title) && (this.state.place) && (this.state.description)) {
             const payload = { event: {
             ensemble_id: this.props.ensemble.id,
             title: this.state.title,
@@ -100,10 +103,10 @@ class NewEventForm extends Component {
         fetch("http://localhost:3001/events", reqObj)
         .then((resp) => resp.json())
         .then(data => {
-            console.log(data)
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
             this.props.loadMembers(data.user.data.attributes.admined_members)
+            this.props.loadEvents(data.user.data.attributes.admined_events)
             this.setState({
                 redirect: `/ensembles/${this.props.ensemble.id}/events`
             })
@@ -115,8 +118,11 @@ class NewEventForm extends Component {
         })
     } else this.setState({
         errorMessage: "No fields can be left blank."
-    })
-    }
+    })}
+    } else {
+        this.setState({
+            errorMessage: "No fields can be left blank."
+    })}}
     
     render() {
         if (this.state.redirect) {
@@ -153,7 +159,7 @@ class NewEventForm extends Component {
                 </div>
                 <div className="field">
                     <label>Description:</label>
-                    <textarea onChange={this.handleChange} type="text" rows="10" name="description" value={this.state.description} placeholder="Give a description of the ensemble here."></textarea>
+                    <textarea onChange={this.handleChange} type="text" rows="10" name="description" value={this.state.description} placeholder="Give a description of the event here."></textarea>
                 </div>
                 <div className="field">
                     <div className="ui checkbox">
