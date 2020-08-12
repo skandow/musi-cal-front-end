@@ -47,7 +47,6 @@ class Profile extends Component {
     }
 
     navToEvent = event => {
-        console.log("This event was clicked.", event.resource)
         const eventLink = `ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
         this.setState({
             redirect: eventLink
@@ -60,10 +59,8 @@ class Profile extends Component {
         }
         const localizer = momentLocalizer(moment)
         const threeClosestEvents = this.threeClosestEvents()
-        console.log(threeClosestEvents)
         const {name, email, phone_number, primary_instrument_or_voice_part, secondary_instrument, image_url } = this.props.user
         const unconfirmedEvents = this.props.user.user_events.filter(event => event.attending === "undeclared").length 
-        console.log(unconfirmedEvents)
         return (
             <div className="user-profile">
                 <div style={{width: "80%", margin: "auto"}}>

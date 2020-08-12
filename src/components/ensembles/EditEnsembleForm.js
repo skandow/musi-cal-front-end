@@ -71,16 +71,18 @@ class EditEnsembleForm extends Component {
         let email_contact = this.state.email_contact === '' ? this.props.ensemble.email_contact : this.state.email_contact
         let phone_number = this.state.phone_number === '' ? this.props.ensemble.phone_number : this.state.phone_number
         let website = this.state.website === '' ? this.props.ensemble.website : this.state.website    
-        let description = this.state.description === '' ? this.props.ensemble.description : this.state.dsecription
+        let description = this.state.description === '' ? this.props.ensemble.description : this.state.description
         let image_url = this.state.image_url === '' ? this.props.ensemble.image_url : this.state.image_url
+        console.log(description)
         const payload = { ensemble: {
             name: name,
             email_contact: email_contact,
             website: website,
             phone_number: phone_number,
-            description:description,
+            description: description,
             image_url: image_url
         }}
+        console.log(payload)
         const reqObj = {
             method: "PATCH",
             headers: {
@@ -110,6 +112,7 @@ class EditEnsembleForm extends Component {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
         }
+        console.log(this.state.description)
         return (
             <div className="edit-ensemble">
                 <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>

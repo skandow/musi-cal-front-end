@@ -3,7 +3,6 @@ export default function userReducer(
     action) {
         switch (action.type) {
             case "LOGIN_USER":
-                console.log(action.user)
                 return action.user;
             case "EDIT_USER":
                 return action.user

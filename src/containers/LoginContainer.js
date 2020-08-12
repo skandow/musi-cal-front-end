@@ -7,7 +7,7 @@ class LoginContainer extends Component {
     render() {
         return (
             <div className="login-container">
-                <Header as='h1'>Welcome to Music-Cal!</Header>
+                <Header style={{width: "80%"}} as='h1'>Welcome to Musi-Cal!</Header>
                 <Header as='h2'>A One-Stop Site for Musicians to Organize Rehearsals, Performances, & Other Events</Header>
                 <NavLink className="App-link ui button" to="/login" exact>Log In</NavLink> 
                 <br></br>

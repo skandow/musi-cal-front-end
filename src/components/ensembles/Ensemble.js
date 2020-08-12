@@ -43,6 +43,7 @@ class Ensemble extends Component {
         const {name, email_contact, website, phone_number, description, image_url } = this.props.ensemble
         const adminedEnsemble = this.props.ensembles.find(ensemble => ensemble.id === this.props.ensemble.id)
         const editLink = `/ensembles/${this.props.ensemble.id}/edit`
+        const eventsLink = `/ensembles/${this.props.ensemble.id}/events`
         return (
             <div className="ensemble-profile">
                 <Image src={image_url} style={{border: "10px ridge blue", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
@@ -59,7 +60,7 @@ class Ensemble extends Component {
                     <Header as='h2'>Website: {website}</Header>
                     <Header as='h2'>Email Contact: {email_contact} </Header>
                     <Header as='h2'>Phone Number: {phone_number}</Header>
-                    <Header as='h2'>See Upcoming Ensemble Events</Header>
+                    <Header as='h2'><NavLink className="App-link" to={eventsLink} exact>See Upcoming Ensemble Events</NavLink></Header>
                 </div>
                 <div>
                     <Header as="h1" textAlign="left" style={{marginLeft: "150px"}}>Description:</Header>

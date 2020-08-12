@@ -25,6 +25,7 @@ import Event from './components/events/Event'
 import EnsembleEvents from './components/events/EnsembleEvents'
 import NewEventForm from './components/events/NewEventForm'
 import EditEventForm from './components/events/EditEventForm';
+import EventAttendancePlanned from './components/events/EventAttendancePlanned';
 
 class App extends Component {
   state = {
@@ -86,6 +87,16 @@ class App extends Component {
       return <Route key={event.id} exact path={`/ensembles/${event.ensemble_id}/events/${event.id}/edit`} render={() => <EditEventForm event={event} />} />
     })
   }
+
+  renderPlannedAttendancePages = () => {
+    return this.props.events.map(event => {
+      const thisEventsUsers = this.props.user.admined_user_events.filter(userEvent => userEvent.event_id === event.id)
+      const sortedUsers = thisEventsUsers.slice().sort((a, b) => {
+        return a.id - b.id
+    })
+      return <Route key={event.id} exact path={`/ensembles/${event.ensemble_id}/events/${event.id}/planned_attendance`} render={() => <EventAttendancePlanned event={event} thisEventsUsers={sortedUsers} />} />
+    })
+  }
     
 
   thisEnsemblesMembers = id => {
@@ -111,7 +122,6 @@ class App extends Component {
         fetch('http://localhost:3001/api/v1/profile', reqObj)
         .then(resp => resp.json())
         .then(data => {
-          console.log(data.user.data.attributes)
           this.props.loginUser(data.user.data.attributes)
           this.props.loadEnsembles(data.user.data.attributes.admin_for)
           this.props.loadMembers(data.user.data.attributes.admined_members)
@@ -122,12 +132,6 @@ class App extends Component {
 
 
   render() {
-    console.log("Going to app again")
-    console.log(this.props.user, this.props.ensembles)
-    if (this.props.user) {
-      console.log(this.renderEnsembleEventPages())
-      console.log(this.renderEnsembleMemberPages())
-    }
   return (
   <Router>
     <div className="App">
@@ -136,7 +140,6 @@ class App extends Component {
       <div>
         <UserContainer />
         <Route exact path="/" component={Profile} />
-        {/* // <Route exact path="/notes" render={() => <NotesContainer notes={this.props.user.notes} />} /> */}
         <Route exact path="/profile/edit" component={EditUserForm} />
         <Route exact path="/admin" component={MyAdmin} />
         <Route exact path='/ensembles' component={Ensembles} />
@@ -151,6 +154,7 @@ class App extends Component {
         {this.renderEnsembleEventPages()}
         {this.renderNewEventForms()}
         {this.renderEditEventForms()}
+        {this.renderPlannedAttendancePages()}
       </div>
       :
       <div>
