@@ -15,7 +15,7 @@ const UserNavBar = props => {
 
   return (
     <div>
-        <Menu style={{border: "5px groove green", marginBottom: "10px"}} fluid widths={8} inverted color="red">
+        <Menu style={{border: "5px groove green"}} fluid widths={8} inverted color="red">
             <Menu.Item>
                 Musi-Cal
             </Menu.Item>

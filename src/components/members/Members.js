@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { Image, Header, Button } from 'semantic-ui-react'
+import { Image, Header, Button, Menu, Input } from 'semantic-ui-react'
 import { loadEnsembles } from '../../actions/ensembles'
 import { loginUser } from '../../actions/user'
 import { loadMembers } from '../../actions/members'
 
 class Members extends Component {
     state = {
-        redirect: null
+        redirect: null,
+        showSearchBar: false,
+        name_search: '',
+        performing_role_search: '',
+        administrative_role_search: ''
     }
 
     deleteMember = id => {
@@ -34,9 +38,30 @@ class Members extends Component {
         })
     }}
 
+    onChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value 
+        })
+    }
+
+    renderSearchBar = () => {
+        this.setState({
+            showSearchBar: !this.state.showSearchBar
+        })
+    }
+
     renderMembers = () => {
-        return this.props.members.map(member => {
-            // const profileLink = `ensembles/${ensemble.id}`
+        let filteredMembers = this.props.members 
+        if (this.state.name_search) {
+            filteredMembers = filteredMembers.filter(member => member.user.toLowerCase().includes(this.state.name_search.toLowerCase()))
+        }
+        if (this.state.performing_role_search) {
+            filteredMembers = filteredMembers.filter(member => member.performing_roles.toLowerCase().includes(this.state.performing_role_search.toLowerCase()))
+        }
+        if (this.state.administrative_role_search) {
+            filteredMembers = filteredMembers.filter(member => member.administrative_roles.toLowerCase().includes(this.state.administrative_role_search.toLowerCase()))
+        }
+        return filteredMembers.map(member => {
             const editLink = `/ensembles/${member.ensemble_id}/members/${member.id}/edit`
             return (
                 <div key={member.id}>
@@ -60,12 +85,32 @@ class Members extends Component {
      
     render() {
         const newMemberFormLink = `/ensembles/${this.props.ensemble.id}/members/new`
-        console.log(newMemberFormLink)
         return (
             <div className="members-page">
+                    <div>
+                        {this.state.showSearchBar ?
+                    <Menu style={{border: "5px groove green"}} fluid widths={4} inverted color="blue">
+                        <Menu.Item style={{textAlign: "right", width: "10%"}}>
+                            Search By
+                        </Menu.Item>
+                        <Menu.Item style={{border: "5px outset white", padding: "10px"}} className="search" position='right'>
+                            Name: <Input onChange={this.onChange} style={{padding: "5px", width: "80%"}} name="name_search" className="icon" icon="search" />
+                        </Menu.Item>
+                        <Menu.Item style={{border: "5px outset white"}} className="search">
+                            Performing Role: <Input onChange={this.onChange} style={{padding: "5px", width: "80%"}} name="performing_role_search" className="icon" icon="search" />
+                        </Menu.Item>
+                        <Menu.Item style={{border: "5px outset white"}} className="search">
+                            Administrative Role: <Input onChange={this.onChange} style={{padding: "5px", width: "80%"}} name="administrative_role_search" className="icon" icon="search" />
+                        </Menu.Item>
+            
+                    </Menu>
+                    :
+                    null}
+                    </div>
                 <div style={{margin: "5px", marginBottom: "20px"}}>
                     <Button floated="left" color="green" style={{display: "inline-block"}}><NavLink style={{color: "white"}} to={newMemberFormLink} exact>Add a Member to This Ensemble</NavLink></Button>
-                    <Header id="admin-header" as='h1'>{this.props.ensemble.name} Members</Header>
+                    <Header id="admin-header" style={{display: "inline-block", margin: "auto"}} as='h1'>{this.props.ensemble.name} Members</Header>
+                    <Button floated="right" onClick={this.renderSearchBar} color="blue" style={{display: "inline-block"}}>{this.state.showSearchBar ? "Hide Search Bar" : "Search for a Member"}</Button>
                 </div>
                 <div>
                     {this.renderMembers()}
