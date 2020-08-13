@@ -25,7 +25,7 @@ class EventAttendancePlanned extends Component {
     render() {
         return (
             <div className="planned-attendance-sheet">
-                <Header as="h1">Planned Attendance for {this.props.event.title}</Header>
+                <Header as="h1">Planned Attendance for: <br></br> {this.props.event.title} - {this.props.ensembleName}</Header>
                 <Header as="h2">{this.props.event.start_time}</Header>
                 <table style={{width: "40%", margin: "auto"}} className="ui celled table">
                     <thead>

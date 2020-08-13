@@ -91,10 +91,11 @@ class App extends Component {
   renderPlannedAttendancePages = () => {
     return this.props.events.map(event => {
       const thisEventsUsers = this.props.user.admined_user_events.filter(userEvent => userEvent.event_id === event.id)
+      const ensembleName = (this.props.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name
       const sortedUsers = thisEventsUsers.slice().sort((a, b) => {
         return a.id - b.id
     })
-      return <Route key={event.id} exact path={`/ensembles/${event.ensemble_id}/events/${event.id}/planned_attendance`} render={() => <EventAttendancePlanned event={event} thisEventsUsers={sortedUsers} />} />
+      return <Route key={event.id} exact path={`/ensembles/${event.ensemble_id}/events/${event.id}/planned_attendance`} render={() => <EventAttendancePlanned event={event} ensembleName={ensembleName} thisEventsUsers={sortedUsers} />} />
     })
   }
     
