@@ -56,7 +56,7 @@ span.delete:hover {
 }
 
 #admin-header {
-  text-align: left !important
+  margin: "auto"
 }
 
 .search {
