@@ -42,6 +42,7 @@ class MyAdmin extends Component {
             const editLink = `/ensembles/${ensemble.id}/edit`
             const membersLink = `/ensembles/${ensemble.id}/members`
             const newMemberLink = `/ensembles/${ensemble.id}/members/new`
+            const emailMembersLink = `/ensembles/${ensemble.id}/members/email`
             const eventsLink = `/ensembles/${ensemble.id}/events`
             const newEventLink = `/ensembles/${ensemble.id}/events/new`
             return (
@@ -56,7 +57,8 @@ class MyAdmin extends Component {
                     </Header>
                     <Header as="h1"><NavLink className="App-link" to={membersLink} exact>{ensemble.name} Members</NavLink>
                         <span style={{float: "right"}}>
-                            <NavLink className="App-link" to={newMemberLink} exact>Add Member</NavLink> 
+                            <NavLink className="App-link" to={newMemberLink} exact>Add Member</NavLink> |
+                            <NavLink className="App-link" to={emailMembersLink} exact>Email</NavLink>
                         </span>
                     </Header>
                     <Header as="h1"><NavLink className="App-link" to={eventsLink} exact>{ensemble.name} Events</NavLink>
