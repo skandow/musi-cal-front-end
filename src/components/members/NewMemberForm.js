@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Grid, Button, Menu, Input } from 'semantic-ui-react'
+import { Form, Grid, Button, Menu, Input, Image, Header } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loadEnsembles } from '../../actions/ensembles'
@@ -21,7 +21,10 @@ class NewMemberForm extends Component {
             email_search: '',
             redirect: null,
             showSearchBar: false,
-            search: false
+            showResultsButton: false,
+            showResults: false,
+            search_results: null,
+            noResults: false
         }
     }
 
@@ -60,8 +63,47 @@ class NewMemberForm extends Component {
     }
 
     search = () => {
-        
-    }
+        let nameSearch = null 
+        let emailSearch = null 
+        const token = localStorage.getItem("token")
+        if (this.state.name_search) {
+            nameSearch = this.state.name_search
+        } 
+        if (this.state.email_search) {
+            emailSearch = this.state.email_search
+        }
+        if ((!nameSearch) && (!emailSearch)) {
+            this.setState({
+                errorMessage: "You must enter at least one search parameter"
+            })
+        } else {
+        const payload = {
+            nameSearch: nameSearch,
+            emailSearch: emailSearch 
+        }
+        const reqObj = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(payload)
+        }
+        fetch("http://localhost:3001/api/v1/search", reqObj)
+        .then((resp) => resp.json())
+        .then(json => {
+            if (json.error){
+                this.setState({
+                    noResults: true,
+                    showResultsButton: false,
+                    showResults: false
+                })
+            } else {
+            this.setState({
+                results: json,
+                noResults: false,
+                showResultsButton: true})
+    }})}}
     
     handleSubmit = event => {
         event.preventDefault()
@@ -106,6 +148,30 @@ class NewMemberForm extends Component {
         errorMessage: "The email field can't be left blank."
     })
 }
+
+    toggleShowResults = () => {
+        this.setState({
+            showResults: !this.state.showResults
+        })
+    }
+
+    renderResults = () => {
+        if (!this.state.results.error) {
+        const topResults = this.state.results.slice(0, 5)
+        return topResults.map(result => {
+            return (
+                <div key={result.id} style={{width: "80%", margin: "auto"}}>
+                    <Image src={result.image_url} style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
+                <div style={{border: "10px ridge green", display: "inline-block", height: "300px", width: "55%", textAlign: "left", padding: "2px"}}>
+                    <Header as='h1'>{result.name}</Header>
+                    <Header as='h2'>Email: {result.email}</Header>
+                    <Header as='h2'>Phone Number: {result.phone_number}</Header>
+                    <Header as='h2'>Primary Instrument or Voice Part: {result.primary_instrument_or_voice_part}</Header>
+                    <Header as='h2'>Secondary Instrument: {result.secondary_instrument}</Header>
+                </div>
+                </div>)
+        })
+    }}
     
     render() {
         if (this.state.redirect) {
@@ -115,25 +181,26 @@ class NewMemberForm extends Component {
             <div className="new-member">
                 <div>
                         {this.state.showSearchBar ?
-                    <Menu style={{border: "5px groove green"}} fluid widths={4} inverted color="blue">
-                        <Menu.Item style={{textAlign: "right", width: "10%"}}>
+                    <Menu style={{border: "5px groove green"}} inverted color="blue">
+                        <Menu.Item style={{textAlign: "right", width: "8%"}}>
                             <Button onClick={this.search}>Search</Button>
                         </Menu.Item>
-                        <Menu.Item style={{border: "5px outset white", padding: "10px"}} className="search" position='right'>
-                            Name: <Input onChange={this.onChange} style={{padding: "5px", width: "80%"}} name="name_search" className="icon" icon="search" />
+                        <Menu.Item style={{border: "5px outset white", padding: "10px", width: "40%"}} position='right'>
+                            Name: <Input onChange={this.handleChange} style={{padding: "5px", width: "80%"}} name="name_search" value={this.state.name_search} className="icon" icon="search" />
                         </Menu.Item>
-                        <Menu.Item style={{border: "5px outset white"}} className="search">
-                            Email: <Input onChange={this.onChange} style={{padding: "5px", width: "80%"}} name="performing_role_search" className="icon" icon="search" />
+                        <Menu.Item style={{border: "5px outset white", width: "40%"}}>
+                            Email: <Input onChange={this.handleChange} style={{padding: "5px", width: "80%"}} name="email_search" value={this.state.email_search} className="icon" icon="search" />
                         </Menu.Item>
-                        <Menu.Item style={{border: "5px outset white"}} className="search">
-                            {this.state.search ? "The search has happened" : null}
+                        <Menu.Item style={{border: "5px outset white", width: "12%"}}>
+                            <Header style={{color: "red", margin: "auto"}} as="h4">{this.state.noResults ? "No Results" : null}</Header>
+                            {this.state.showResultsButton ? <Button onClick={this.toggleShowResults}>{this.state.showResults ? "Hide" : "Show"} Results</Button> : null}
                         </Menu.Item>
             
                     </Menu>
                     :
                     null}
                     </div>
-                    <Button onClick={this.renderSearchBar} color="blue" float="left">Open Search Bar To Find Users</Button>
+                    <Button onClick={this.renderSearchBar} style={{marginTop: "5px"}} color="blue" float="left">Open Search Bar To Find Users</Button>
                 <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
             
                 <h3 style={{textAlign: "center"}}>Please Enter the Following Information to Add a Member to This Ensemble</h3>
@@ -183,6 +250,14 @@ class NewMemberForm extends Component {
                     </Grid.Column>
                 </Grid>
             </Form>
+            <br></br>
+            {this.state.showResults ?
+                <div className="results">
+                    <Header as="h2">Top Results:</Header>
+                    {this.renderResults()}
+                </div>
+                :
+                null}
             </div>
         )
     }
