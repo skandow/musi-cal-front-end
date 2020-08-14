@@ -33,6 +33,7 @@ class Events extends Component {
     }}
 
     confirmAttendance = event => {
+        console.log(event.target)
         const URL = "http://localhost:3001/user_events/" + event.target.name 
         const token = localStorage.getItem("token")
         const payload = { user_event: {
@@ -62,7 +63,9 @@ class Events extends Component {
                 
             </div>)
         } else {
-            return (<Header as="h3">Attendance Status: You will {userEvent.attending === "yes" ? null : "not"} be attending this event.</Header>)
+            return (<div>
+                <Header as="h3">Attendance Status: You will {userEvent.attending === "yes" ? null : "not"} be attending this event.<Button onClick={this.confirmAttendance} value="undeclared" name={userEvent.id} style={{display: 'inline-block', margin: "5px"}} size='tiny' color="yellow">Edit</Button></Header>
+                </div>)
         } 
     }
 
@@ -75,7 +78,7 @@ class Events extends Component {
             const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name
             return (
                 <div key={event.id}>
-                    <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "260px", padding: "5px", textAlign: "left"}}>
+                    <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "280px", padding: "5px", textAlign: "left"}}>
                         <Header as="h1"><NavLink className="App-link" to={eventLink} exact>{event.title}</NavLink></Header>
                         <Header as="h2">Ensemble: {ensembleName}</Header>
                         <Header as='h3'>Starts: {event.start_time}</Header>
