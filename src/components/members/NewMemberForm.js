@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, Grid, Button } from 'semantic-ui-react'
+import { Form, Grid, Button, Menu, Input } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loadEnsembles } from '../../actions/ensembles'
@@ -17,7 +17,11 @@ class NewMemberForm extends Component {
             show_performing_roles: false,
             show_administrative_roles: false,
             errorMessage: '',
-            redirect: null
+            name_search: '',
+            email_search: '',
+            redirect: null,
+            showSearchBar: false,
+            search: false
         }
     }
 
@@ -47,6 +51,16 @@ class NewMemberForm extends Component {
             performing_roles: '',
             administrative_roles: '',
         })
+    }
+
+    renderSearchBar = () => {
+        this.setState({
+            showSearchBar: !this.state.showSearchBar
+        })
+    }
+
+    search = () => {
+        
     }
     
     handleSubmit = event => {
@@ -99,6 +113,27 @@ class NewMemberForm extends Component {
         }
         return (
             <div className="new-member">
+                <div>
+                        {this.state.showSearchBar ?
+                    <Menu style={{border: "5px groove green"}} fluid widths={4} inverted color="blue">
+                        <Menu.Item style={{textAlign: "right", width: "10%"}}>
+                            <Button onClick={this.search}>Search</Button>
+                        </Menu.Item>
+                        <Menu.Item style={{border: "5px outset white", padding: "10px"}} className="search" position='right'>
+                            Name: <Input onChange={this.onChange} style={{padding: "5px", width: "80%"}} name="name_search" className="icon" icon="search" />
+                        </Menu.Item>
+                        <Menu.Item style={{border: "5px outset white"}} className="search">
+                            Email: <Input onChange={this.onChange} style={{padding: "5px", width: "80%"}} name="performing_role_search" className="icon" icon="search" />
+                        </Menu.Item>
+                        <Menu.Item style={{border: "5px outset white"}} className="search">
+                            {this.state.search ? "The search has happened" : null}
+                        </Menu.Item>
+            
+                    </Menu>
+                    :
+                    null}
+                    </div>
+                    <Button onClick={this.renderSearchBar} color="blue" float="left">Open Search Bar To Find Users</Button>
                 <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
             
                 <h3 style={{textAlign: "center"}}>Please Enter the Following Information to Add a Member to This Ensemble</h3>
