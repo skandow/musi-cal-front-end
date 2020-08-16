@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {BrowserRouter as Router,
 Route} from 'react-router-dom'
 import './App.css';
+import { Header } from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import { loginUser } from './actions/user'
 import { loadEnsembles } from './actions/ensembles'
@@ -30,7 +31,8 @@ import EmailMembers from './components/members/EmailMembers';
 
 class App extends Component {
   state = {
-    redirect: null
+    redirect: null,
+    showFooter: false
   }
 
   renderEnsembleRoutes = () => {
@@ -123,7 +125,8 @@ class App extends Component {
     const token = localStorage.getItem("token")
     if (!token) {
       this.setState({
-        redirect: '/login'
+        redirect: '/login',
+        showFooter: true
     })} else {
       const reqObj = {
         method: "GET",
@@ -138,6 +141,9 @@ class App extends Component {
           this.props.loadEnsembles(data.user.data.attributes.admin_for)
           this.props.loadMembers(data.user.data.attributes.admined_members)
           this.props.loadEvents(data.user.data.attributes.admined_events)
+          this.setState({
+            showFooter: true
+          })
     })
   }
 }
@@ -181,6 +187,10 @@ class App extends Component {
         </div>
       </div>}
       </div>
+      {this.state.showFooter ?
+      <div className="App-footer">
+        <Header as="h4">©2020 - Developed by Steven Kandow</Header></div>
+        : null}
     </div>
     </Router>)
 }
