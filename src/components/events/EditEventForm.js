@@ -8,6 +8,7 @@ import { loadEnsembles } from '../../actions/ensembles'
 import { loginUser } from '../../actions/user'
 import { loadMembers } from '../../actions/members'
 import { loadEvents } from '../../actions/events'
+import EditSearch from './EditSearch'
 
 class EditEventForm extends Component {
     constructor(props) {
@@ -17,6 +18,8 @@ class EditEventForm extends Component {
             start_time: new Date(this.props.event.start_time),
             end_time: new Date(this.props.event.end_time),
             place: this.props.event.place,
+            lat: this.props.event.lat,
+            lng: this.props.event.lng,
             description: this.props.event.description,
             mandatory: this.props.event.mandatory,
             errorMessage: '',
@@ -53,6 +56,14 @@ class EditEventForm extends Component {
     mandatoryOrNot = () => {
         this.setState({
             mandatory: !this.state.mandatory
+        })
+    }
+
+    handlePlaceSelection = (address, lat, lng) => {
+        this.setState({
+            place: address,
+            lat: lat,
+            lng: lng
         })
     }
 
@@ -111,6 +122,8 @@ class EditEventForm extends Component {
             start_time: start_time,
             end_time: end_time,
             place: place,
+            lat: this.state.lat,
+            lng: this.state.lng,
             description: description,
             mandatory: this.state.mandatory
         }}
@@ -144,6 +157,7 @@ class EditEventForm extends Component {
             return <Redirect to={this.state.redirect} />
         }
         const checked = this.state.mandatory
+        console.log(this.state.place, this.state.lat, this.state.lng)
         return (
             <div className="new-event">
                 <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
@@ -171,7 +185,7 @@ class EditEventForm extends Component {
                 </div> 
                 <div className="field">
                     <label>Location:</label>
-                    <input onChange={this.handleChange} type="text" name="place" value={this.state.place} />
+                    <EditSearch address={this.state.place} handlePlaceSelection={this.handlePlaceSelection}></EditSearch>
                 </div>
                 <div className="field">
                     <label>Description:</label>

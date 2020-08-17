@@ -8,6 +8,7 @@ import { loadEnsembles } from '../../actions/ensembles'
 import { loginUser } from '../../actions/user'
 import { loadMembers } from '../../actions/members'
 import { loadEvents } from '../../actions/events'
+import Search from './Search'
 
 class NewEventForm extends Component {
     constructor(props) {
@@ -17,6 +18,8 @@ class NewEventForm extends Component {
             start_time: null,
             end_time: null,
             place: '',
+            lat: null,
+            lng: null,
             description: '',
             mandatory: false,
             errorMessage: '',
@@ -42,6 +45,14 @@ class NewEventForm extends Component {
             errorMessage: "",
             start_time: date
         })}
+    }
+
+    handlePlaceSelection = (address, lat, lng) => {
+        this.setState({
+            place: address,
+            lat: lat,
+            lng: lng
+        })
     }
 
     handleEndChange = date => {
@@ -76,7 +87,6 @@ class NewEventForm extends Component {
             const start_date = new Date(this.state.start_time)
             const end_date = new Date(this.state.end_time)
             if (end_date < start_date) {
-                console.log("fail")
                 this.setState({
                     errorMessage: "The end time must be after the start date."
                 })
@@ -88,6 +98,8 @@ class NewEventForm extends Component {
             start_time: this.state.start_time.toLocaleDateString("en-US", options),
             end_time: this.state.end_time.toLocaleDateString("en-US", options),
             place: this.state.place,
+            lat: this.state.lat,
+            lng: this.state.lng,
             description: this.state.description,
             mandatory: this.state.mandatory
         }}
@@ -128,6 +140,7 @@ class NewEventForm extends Component {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
         }
+        console.log(this.state)
         return (
             <div className="new-event">
                 <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
@@ -155,7 +168,8 @@ class NewEventForm extends Component {
                 </div> 
                 <div className="field">
                     <label>Location:</label>
-                    <input onChange={this.handleChange} type="text" name="place" value={this.state.place} placeholder="i.e. 'Shell Auditorium'" />
+                    <Search handlePlaceSelection={this.handlePlaceSelection}></Search>
+                    {/* <input onChange={this.handleChange} type="text" name="place" value={this.state.place} placeholder="i.e. 'Shell Auditorium'" /> */}
                 </div>
                 <div className="field">
                     <label>Description:</label>

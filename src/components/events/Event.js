@@ -4,6 +4,8 @@ import { NavLink, Redirect } from 'react-router-dom'
 import { Header } from 'semantic-ui-react'
 import { loginUser } from '../../actions/user'
 import { loadEvents } from '../../actions/events'
+import EventMap from './EventMap'
+
 
 class Event extends Component {
     state = {
@@ -33,6 +35,7 @@ class Event extends Component {
     }}
      
     render() {
+        console.log(this.props.event.lat, this.props.event.lng)
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
         }
@@ -43,7 +46,11 @@ class Event extends Component {
         const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === this.props.event.ensemble_id)).name
         return (
             <div className="event-profile">
-                <div style={{border: "10px ridge red", display: "inline-block", height: "300px", width: "80%", textAlign: "left", padding: "2px"}}>
+                <div style={{border: "10px ridge red", display: "inline-block", height: "300px", width: "80%", textAlign: "left"}}>
+                    <div style={{width: "40%", display: "inline-block"}}>
+                        <EventMap lat={this.props.event.lat} lng={this.props.event.lng}></EventMap>
+                    </div>
+                    <div style={{width: "60%", display: "inline-block", verticalAlign: "top", borderLeft: "10px ridge red", height: "100%", overflow: "auto"}}>
                     <Header as='h1'>{title} - {ensembleName}
                     {adminedEvent ?
                         <span style={{float: "right"}}>
@@ -60,7 +67,7 @@ class Event extends Component {
                         <NavLink style={{float: "right"}} className="App-link" to={plannedAttendanceLink} exact>See this event's planned attendance roster.</NavLink>
                     :
                     null}</Header>
-                    
+                    </div>
                 </div>
                 <div>
                     <Header as="h1" textAlign="left" style={{marginLeft: "150px"}}>Description:</Header>
