@@ -10,6 +10,13 @@ import rootReducer from './reducers/rootReducer';
 
 const store = createStore(rootReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
 
+const head = document.getElementsByTagName("head")[0]
+const script = document.createElement('script')
+script.type = 'text/javascript'
+
+script.src = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+head.appendChild(script)
+
 ReactDOM.render(
   <Provider store={store}>
     <Router>
