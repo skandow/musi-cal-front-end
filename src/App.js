@@ -28,7 +28,8 @@ import NewEventForm from './components/events/NewEventForm'
 import EditEventForm from './components/events/EditEventForm';
 import EventAttendancePlanned from './components/events/EventAttendancePlanned'
 import EmailMembers from './components/members/EmailMembers'
-import AttendanceSheet from './components/events/AttendanceSheet';
+import AttendanceSheet from './components/events/AttendanceSheet'
+import PastEvents from './components/events/PastEvents';
 
 class App extends Component {
   state = {
@@ -77,6 +78,13 @@ class App extends Component {
     return this.props.user.ensembles.map(ensemble => {
       const thisEnsemblesEvents = this.thisEnsemblesEvents(ensemble.id)
       return <Route key={ensemble.id} exact path ={`/ensembles/${ensemble.id}/events`} render={() => <EnsembleEvents ensemble={ensemble} events={thisEnsemblesEvents} />} />
+    })
+  }
+
+  renderEnsemblePastEventPages = () => {
+    return this.props.user.ensembles.map(ensemble => {
+      const thisEnsemblesEvents = this.thisEnsemblesEvents(ensemble.id)
+      return <Route key={ensemble.id} exact path ={`/ensembles/${ensemble.id}/events/completed`} render={() => <PastEvents ensemble={ensemble} events={thisEnsemblesEvents} />} />
     })
   }
 
@@ -162,6 +170,7 @@ class App extends Component {
 
 
   render() {
+    console.log("back to app")
   return (
   <Router>
     <div className="App">
@@ -187,6 +196,7 @@ class App extends Component {
         {this.renderPlannedAttendancePages()}
         {this.renderEmailPages()}
         {this.renderAttendanceSheets()}
+        {this.renderEnsemblePastEventPages()}
       </div>
       :
       <div>

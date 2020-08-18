@@ -104,6 +104,7 @@ class EnsembleEvents extends Component {
         const localizer = momentLocalizer(moment)
         const adminedEnsemble = this.props.ensembles.find(ensemble => ensemble.id === this.props.ensemble.id)
         const newEventLink = `/ensembles/${this.props.ensemble.id}/events/new`
+        const pastEventsLink = `/ensembles/${this.props.ensemble.id}/events/completed`
         return (
             <div className="events-page">
                 <div style={{margin: "5px", marginBottom: "20px"}}>
@@ -111,7 +112,11 @@ class EnsembleEvents extends Component {
                     <Button floated="left" color="green" style={{display: "inline-block"}}><NavLink style={{color: "white"}} to={newEventLink} exact>Add an Event to This Ensemble</NavLink></Button>
                     :
                     null}
-                    <Header id="ensembles-header" as='h1'>{this.props.ensemble.name} Events</Header>
+                    <Header id="ensembles-header" style={{display: "inline-block"}} as='h1'>{this.props.ensemble.name} Events</Header>
+                    {adminedEnsemble ?
+                    <Button color="blue" floated="right" style={{display: "inline-block"}}><NavLink style={{color: "white"}} to={pastEventsLink} exact>See Past Events for This Ensemble</NavLink></Button>
+                    :
+                    null}
                 </div>
                 <div style={{width: "80%", margin: "auto", border: "10px ridge red"}}>
                 <Calendar style={{width: "50%", verticalAlign: "top", height: "460px", display: "inline-flex"}} localizer={localizer} onDoubleClickEvent={this.navToEvent} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
