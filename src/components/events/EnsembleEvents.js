@@ -18,22 +18,22 @@ class EnsembleEvents extends Component {
             const eventLink = `/ensembles/${event.ensemble_id}/events/${event.id}`
             const editEventLink = `${eventLink}/edit`
             const plannedAttendanceLink = `${eventLink}/planned_attendance`
+            const attendanceLink = `/ensembles/${event.ensemble_id}/events/${event.id}/attendance`
             return (
                 <div key={event.id}>
-                    <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "200px", padding: "5px", textAlign: "left"}}>
+                    <div style={{border: "10px ridge red", display: "inline-block", width: "100%", maxHeight: "250px", padding: "5px", textAlign: "left"}}>
                         <Header as="h1"><NavLink className="App-link" to={eventLink} exact>{event.title}</NavLink>
                         </Header>
                         <Header as='h3'>Starts: {event.start_time}</Header>
                         <Header as='h3'>Ends: {event.end_time}</Header>
                         {adminedEnsemble ?
                         <div>
-                        <Header as='h3'> 
+                        <Header as='h3'><NavLink className="App-link" to={plannedAttendanceLink} exact>See this event's planned attendance roster.</NavLink></Header>
+                        <Header as="h3"><NavLink className="App-link" to={attendanceLink} exact>Take Attendance</NavLink>
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editEventLink} exact>Edit</NavLink> |
                             <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteEvent(event.id)}>Delete</span>
-                        </span>
-                        </Header>
-                        <Header as='h3'><NavLink className="App-link" to={plannedAttendanceLink} exact>See this event's planned attendance roster.</NavLink></Header>
+                        </span></Header>
                         </div>
                         :
                         null}

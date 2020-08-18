@@ -35,7 +35,6 @@ class Event extends Component {
     }}
      
     render() {
-        console.log(this.props.event.lat, this.props.event.lng)
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
         }
