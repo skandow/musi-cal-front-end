@@ -48,7 +48,7 @@ class Profile extends Component {
     }
 
     navToEvent = event => {
-        const eventLink = `ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
+        const eventLink = `/ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
         this.setState({
             redirect: eventLink
         })

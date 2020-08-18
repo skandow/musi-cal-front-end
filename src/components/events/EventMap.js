@@ -1,7 +1,7 @@
 import React from 'react'
 import { GoogleMap, Marker } from '@react-google-maps/api' 
 
-const mapContainerStyle = {height: "69vh"}
+const mapContainerStyle = {height: "40vh"}
 
 const options = {
     disableDefaultUI: true,
