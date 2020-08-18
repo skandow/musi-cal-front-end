@@ -27,7 +27,8 @@ import EnsembleEvents from './components/events/EnsembleEvents'
 import NewEventForm from './components/events/NewEventForm'
 import EditEventForm from './components/events/EditEventForm';
 import EventAttendancePlanned from './components/events/EventAttendancePlanned'
-import EmailMembers from './components/members/EmailMembers';
+import EmailMembers from './components/members/EmailMembers'
+import AttendanceSheet from './components/events/AttendanceSheet';
 
 class App extends Component {
   state = {
@@ -99,6 +100,17 @@ class App extends Component {
         return a.id - b.id
     })
       return <Route key={event.id} exact path={`/ensembles/${event.ensemble_id}/events/${event.id}/planned_attendance`} render={() => <EventAttendancePlanned event={event} ensembleName={ensembleName} thisEventsUsers={sortedUsers} />} />
+    })
+  }
+
+  renderAttendanceSheets = () => {
+    return this.props.events.map(event => {
+      const thisEventsUsers = this.props.user.admined_user_events.filter(userEvent => userEvent.event_id === event.id)
+      const ensembleName = (this.props.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name
+      const sortedUsers = thisEventsUsers.slice().sort((a, b) => {
+        return a.id - b.id
+    })
+      return <Route key={event.id} exact path={`/ensembles/${event.ensemble_id}/events/${event.id}/attendance`} render={() => <AttendanceSheet event={event} ensembleName={ensembleName} thisEventsUsers={sortedUsers} />} />
     })
   }
 
@@ -174,6 +186,7 @@ class App extends Component {
         {this.renderEditEventForms()}
         {this.renderPlannedAttendancePages()}
         {this.renderEmailPages()}
+        {this.renderAttendanceSheets()}
       </div>
       :
       <div>
