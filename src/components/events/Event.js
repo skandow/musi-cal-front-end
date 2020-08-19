@@ -45,6 +45,7 @@ class Event extends Component {
         const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === this.props.event.ensemble_id)).name
         return (
             <div className="event-profile">
+                <Header style={{marginTop: "10px"}} as="h1">Information for {title}</Header>
                 <div style={{border: "10px ridge red", display: "inline-block", height: "300px", width: "80%", textAlign: "left"}}>
                     <div style={{width: "40%", display: "inline-block"}}>
                         <EventMap lat={this.props.event.lat} lng={this.props.event.lng}></EventMap>
@@ -70,8 +71,8 @@ class Event extends Component {
                 </div>
                 <div>
                     <Header as="h1" textAlign="left" style={{marginLeft: "150px"}}>Description:</Header>
-                    <div style={{border: "10px ridge red", display: "inline-block", height: "300px", width: "80%", textAlign: "left", padding: "2px"}}>
-                        {description}
+                    <div style={{border: "10px ridge red", display: "inline-block", whiteSpace: "pre-line", minHeight: "100px", width: "80%", textAlign: "left", padding: "2px"}}>
+                        <Header as='h4'>{description}</Header>
                     </div>
                 </div>
             </div>                 

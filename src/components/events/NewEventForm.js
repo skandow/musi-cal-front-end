@@ -140,7 +140,6 @@ class NewEventForm extends Component {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
         }
-        console.log(this.state)
         return (
             <div className="new-event">
                 <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
@@ -169,7 +168,6 @@ class NewEventForm extends Component {
                 <div className="field">
                     <label>Location:</label>
                     <Search handlePlaceSelection={this.handlePlaceSelection}></Search>
-                    {/* <input onChange={this.handleChange} type="text" name="place" value={this.state.place} placeholder="i.e. 'Shell Auditorium'" /> */}
                 </div>
                 <div className="field">
                     <label>Description:</label>

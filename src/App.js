@@ -103,7 +103,7 @@ class App extends Component {
   renderPlannedAttendancePages = () => {
     return this.props.events.map(event => {
       const thisEventsUsers = this.props.user.admined_user_events.filter(userEvent => userEvent.event_id === event.id)
-      const ensembleName = (this.props.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name
+      let ensembleName = (this.props.ensembles.find(ensemble => ensemble.id === event.ensemble_id)) ? (this.props.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name : null
       const sortedUsers = thisEventsUsers.slice().sort((a, b) => {
         return a.id - b.id
     })
@@ -114,7 +114,7 @@ class App extends Component {
   renderAttendanceSheets = () => {
     return this.props.events.map(event => {
       const thisEventsUsers = this.props.user.admined_user_events.filter(userEvent => userEvent.event_id === event.id)
-      const ensembleName = (this.props.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name
+      let ensembleName = (this.props.ensembles.find(ensemble => ensemble.id === event.ensemble_id)) ? (this.props.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name : null
       const sortedUsers = thisEventsUsers.slice().sort((a, b) => {
         return a.id - b.id
     })
@@ -170,7 +170,6 @@ class App extends Component {
 
 
   render() {
-    console.log("back to app")
   return (
   <Router>
     <div className="App">

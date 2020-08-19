@@ -78,7 +78,7 @@ class MyAdmin extends Component {
         return (
             <div className="admin-page">
                 <div style={{margin: "5px", marginBottom: "20px"}}>
-                    <Header id="admin-header" as='h1'>My Admin Page</Header>
+                    <Header style={{marginTop: "10px"}} id="admin-header" as='h1'>My Admin Page</Header>
                     <Button color="green" style={{display: "inline-block"}}><NavLink style={{color: "white"}} to='ensembles/new' exact>Create a New Music Ensemble</NavLink></Button>
                 </div>
                 <div>

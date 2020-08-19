@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Button, Grid } from 'semantic-ui-react'
 import { Redirect } from 'react-router-dom'
 import emailjs from 'emailjs-com'
 
@@ -65,7 +65,11 @@ class EmailMembers extends Component {
                     <label>Body:</label>
                     <textarea onChange={this.handleChange} type="text" rows="10" name="body" value={this.state.body} placeholder="Write your email here."></textarea>
                 </div>
-                <Button type="submit" color="green">Submit Email</Button>
+                <Grid>
+                    <Grid.Column textAlign="center">
+                            <Button type="submit" color="green">Submit Email</Button>
+                    </Grid.Column>
+                </Grid>
             </Form>
             </div>
         )

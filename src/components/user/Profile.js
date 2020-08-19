@@ -37,7 +37,10 @@ class Profile extends Component {
     }
 
     setDates = () => {
-        return this.props.user.events.map(event => {
+        const events = this.props.user.events
+        const date = new Date()
+        const futureEvents = events.filter(event => new Date(event.end_time) > date) 
+        return futureEvents.map(event => {
             return {
                 start: new Date(event.start_time),
                 end: new Date(event.end_time),
@@ -64,6 +67,7 @@ class Profile extends Component {
         const unconfirmedEvents = this.props.user.user_events.filter(event => event.attending === "undeclared").length 
         return (
             <div className="user-profile">
+                <Header style={{marginTop: "10px"}} as="h1">Welcome!</Header>
                 <div style={{width: "80%", margin: "auto"}}>
                 <Image src={image_url} style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
                 <div style={{border: "10px ridge green", display: "inline-block", height: "300px", width: "55%", textAlign: "left", padding: "2px"}}>

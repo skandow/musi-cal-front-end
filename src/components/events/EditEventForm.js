@@ -157,7 +157,6 @@ class EditEventForm extends Component {
             return <Redirect to={this.state.redirect} />
         }
         const checked = this.state.mandatory
-        console.log(this.state.place, this.state.lat, this.state.lng)
         return (
             <div className="new-event">
                 <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>

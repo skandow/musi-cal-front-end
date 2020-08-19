@@ -200,7 +200,7 @@ class NewMemberForm extends Component {
                     :
                     null}
                     </div>
-                    <Button onClick={this.renderSearchBar} style={{marginTop: "5px"}} color="blue" float="left">Open Search Bar To Find Users</Button>
+                    <Button onClick={this.renderSearchBar} style={{marginTop: "5px"}} color="blue" float="left">{this.state.showSearchBar ? "Close" : "Open"} Search Bar To Find Users</Button>
                 <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
             
                 <h3 style={{textAlign: "center"}}>Please Enter the Following Information to Add a Member to This Ensemble</h3>

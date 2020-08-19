@@ -58,13 +58,14 @@ class Events extends Component {
         if (userEvent.attending === "undeclared") {
             return (<div>
                 <Header as="h3">Will you be attending this event?
-                <Button onClick={this.confirmAttendance} style={{marginLeft: "10px"}} value="yes" name={userEvent.id} size='tiny' color="green">Yes</Button>
-                <Button onClick={this.confirmAttendance} value="no" name={userEvent.id} size='tiny' color="red">No</Button></Header>
+                <Button onClick={this.confirmAttendance} value="no" name={userEvent.id} floated="right" size='tiny' color="red">No</Button>
+                <Button onClick={this.confirmAttendance} style={{marginLeft: "10px"}} floated="right" value="yes" name={userEvent.id} size='tiny' color="green">Yes</Button>
+                </Header>
                 
             </div>)
         } else {
             return (<div>
-                <Header as="h3">Attendance Status: You will {userEvent.attending === "yes" ? null : "not"} be attending this event.<Button onClick={this.confirmAttendance} value="undeclared" name={userEvent.id} style={{display: 'inline-block', margin: "5px"}} size='tiny' color="yellow">Edit</Button></Header>
+                <Header as="h3">Attendance Status: You will {userEvent.attending === "yes" ? null : "not"} be attending this event.<Button onClick={this.confirmAttendance} value="undeclared" floated="right" name={userEvent.id} style={{display: 'inline-block', margin: "5px"}} size='tiny' color="yellow">Edit</Button></Header>
                 </div>)
         } 
     }
@@ -92,6 +93,7 @@ class Events extends Component {
                         :
                         null}
                         <Header as='h3'>Ends: {event.end_time}</Header>
+                        <hr style={{backgroundColor: "red", height: "2px"}} />
                         {this.renderAttendanceStatus(userEvent)}
                         
                     </div>
@@ -114,7 +116,10 @@ class Events extends Component {
     } 
 
     setDates = () => {
-        return this.props.user.events.map(event => {
+        const events = this.props.user.events
+        const date = new Date()
+        const futureEvents = events.filter(event => new Date(event.end_time) > date) 
+        return futureEvents.map(event => {
             return {
                 start: new Date(event.start_time),
                 end: new Date(event.end_time),
@@ -125,7 +130,7 @@ class Events extends Component {
     }
 
     navToEvent = event => {
-        const eventLink = `ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
+        const eventLink = `/ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
         this.setState({
             redirect: eventLink
         })
@@ -139,7 +144,7 @@ class Events extends Component {
         const localizer = momentLocalizer(moment)
         return (
             <div className="events-page">
-                <div style={{margin: "5px", marginBottom: "20px"}}>
+                <div style={{margin: "5px", marginTop: "10px", marginBottom: "20px"}}>
                     <Header id="ensembles-header" as='h1'>My Events</Header>
                 </div>
                 <div style={{border: "10px ridge red", width: "80%", margin: "auto"}}>

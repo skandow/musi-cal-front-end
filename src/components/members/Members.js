@@ -19,9 +19,6 @@ class Members extends Component {
         if (window.confirm("Are you sure you want to delete this member?")) {
         const URL = "http://localhost:3001/memberships/" + id 
         const token = localStorage.getItem("token")
-        this.setState({
-            redirect: `/ensembles/${this.props.ensemble.id}/members`
-        })
         const reqObj = {
             method: "DELETE",
             headers: {
