@@ -71,7 +71,7 @@ class Ensembles extends Component {
         }
         return (
             <div className="ensembles-page">
-                <div style={{margin: "5px", marginBottom: "20px"}}>
+                <div style={{margin: "5px", marginTop: "10px", marginBottom: "20px"}}>
                     <Header id="ensembles-header" as='h1'>My Ensembles</Header>
                 </div>
                 <div>

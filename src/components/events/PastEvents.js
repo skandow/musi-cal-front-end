@@ -37,7 +37,7 @@ class PastEvents extends Component {
         const sortedEvents = this.sortedEvents()
         return (
             <div className="past-events-page">
-                <Header as="h1">Past Events for {this.props.ensemble.name}</Header>
+                <Header style={{marginTop: "10px"}} as="h1">Past Events for {this.props.ensemble.name}</Header>
                 <div style={{margin: "5px", marginBottom: "20px"}}>
                         {this.renderEvents(sortedEvents)}
                 </div>

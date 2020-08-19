@@ -3,6 +3,10 @@ import { Form, Grid, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { loginUser } from '../../actions/user'
+import { loadEnsembles } from '../../actions/ensembles'
+import { loadMembers } from '../../actions/members'
+import { loadEvents } from '../../actions/events'
+
 
 class SignUp extends Component {
     constructor() {
@@ -141,7 +145,10 @@ class SignUp extends Component {
 }
 
 const mapDispatchToProps = {
-    loginUser
+    loginUser,
+    loadEnsembles,
+    loadMembers,
+    loadEvents
 }
   
 export default connect(null, mapDispatchToProps)(SignUp)

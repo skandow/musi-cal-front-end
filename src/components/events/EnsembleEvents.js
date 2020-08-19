@@ -48,9 +48,6 @@ class EnsembleEvents extends Component {
         if (window.confirm("Are you sure you want to delete this event?")) {
         const URL = "http://localhost:3001/events/" + id 
         const token = localStorage.getItem("token")
-        this.setState({
-            redirect: `/ensembles/${this.props.ensemble.id}/events`
-        })
         const reqObj = {
             method: "DELETE",
             headers: {
@@ -79,7 +76,10 @@ class EnsembleEvents extends Component {
     } 
 
     setDates = () => {
-        return this.props.events.map(event => {
+        const events = this.props.events
+        const date = new Date()
+        const futureEvents = events.filter(event => new Date(event.end_time) > date) 
+        return futureEvents.map(event => {
             return {
                 start: new Date(event.start_time),
                 end: new Date(event.end_time),
@@ -90,7 +90,7 @@ class EnsembleEvents extends Component {
     }
 
     navToEvent = event => {
-        const eventLink = `ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
+        const eventLink = `/ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
         this.setState({
             redirect: eventLink
         })
@@ -107,7 +107,7 @@ class EnsembleEvents extends Component {
         const pastEventsLink = `/ensembles/${this.props.ensemble.id}/events/completed`
         return (
             <div className="events-page">
-                <div style={{margin: "5px", marginBottom: "20px"}}>
+                <div style={{margin: "5px", marginTop: "10px", marginBottom: "20px"}}>
                     {adminedEnsemble ?
                     <Button floated="left" color="green" style={{display: "inline-block"}}><NavLink style={{color: "white"}} to={newEventLink} exact>Add an Event to This Ensemble</NavLink></Button>
                     :
