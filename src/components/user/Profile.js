@@ -14,7 +14,9 @@ class Profile extends Component {
 
     threeClosestEvents = () => {
         const events = this.props.user.events 
-        const sortedEvents = events.slice().sort((a, b) => {
+        const date = new Date()
+        const futureEvents = events.filter(event => new Date(event.end_time) > date) 
+        const sortedEvents = futureEvents.slice().sort((a, b) => {
             const dateA = new Date(a.start_time)
             const dateB = new Date(b.start_time)
             return dateA - dateB
@@ -64,26 +66,31 @@ class Profile extends Component {
         const localizer = momentLocalizer(moment)
         const threeClosestEvents = this.threeClosestEvents()
         const {name, email, phone_number, primary_instrument_or_voice_part, secondary_instrument, image_url } = this.props.user
-        const unconfirmedEvents = this.props.user.user_events.filter(event => event.attending === "undeclared").length 
+        const unconfirmedUserEvents = this.props.user.user_events.filter(event => event.attending === "undeclared")
+        const mappedEvents = unconfirmedUserEvents.map(user_event => {
+            return this.props.user.events.find(event => event.id === user_event.event_id)
+        })
+        const date = new Date()
+        const unconfirmedEvents = mappedEvents.filter(event => new Date(event.end_time) > date).length
         return (
             <div className="user-profile">
                 <Header style={{marginTop: "10px"}} as="h1">Welcome!</Header>
                 <div style={{width: "80%", margin: "auto"}}>
                 <Image src={image_url} style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
-                <div style={{border: "10px ridge green", display: "inline-block", height: "300px", width: "55%", textAlign: "left", padding: "2px"}}>
+                <div style={{border: "10px ridge green", display: "inline-block", height: "300px", width: "55%", textAlign: "left", padding: "5px"}}>
                     <Header as='h1'>{name}</Header>
                     <Header as='h2'>Email: {email}</Header>
                     <Header as='h2'>Phone Number: {phone_number}</Header>
                     <Header as='h2'>Primary Instrument or Voice Part: {primary_instrument_or_voice_part}</Header>
                     <Header as='h2'>Secondary Instrument: {secondary_instrument}</Header>
                 </div>
-                <div style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "20%", verticalAlign: "top"}}>
-                    <Header as="h2">You have {unconfirmedEvents === 0 ? "no" : unconfirmedEvents} events that require attendance confirmation. 
-                    <br></br><br></br>Go to <NavLink className="App-link" to="/my_events" exact>My Events</NavLink> to confirm attendance.</Header>
+                <div style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "20%", verticalAlign: "top", padding: "5px"}}>
+                    <Header as="h2">You have {unconfirmedEvents === 0 ? "no" : unconfirmedEvents} {unconfirmedEvents === 1 ? "event" : "events"} that require attendance confirmation. 
+                    <hr style={{backgroundColor: "green", height: "2px"}}/>Go to <NavLink className="App-link" to="/my_events" exact>My Events</NavLink> to confirm attendance.</Header>
                 </div>
                 </div>
                 <div>
-                    <Header as="h1" textAlign="left" style={{marginLeft: "150px", padding: "0"}}>Calendar:</Header>
+                    <Header as="h1" textAlign="left" style={{marginLeft: "150px", marginTop: "20px", padding: "0"}}>Calendar:</Header>
                     <div style={{border: "10px ridge red", width: "80%", margin: "auto", height: "500px"}}>
                         <Calendar style={{width: "50%", verticalAlign: "top", height: "100%", display: "inline-flex"}} localizer={localizer} onDoubleClickEvent={this.navToEvent} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
                         <div style={{width: "50%", height: "100%", display: "inline-block"}}>

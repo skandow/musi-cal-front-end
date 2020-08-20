@@ -65,7 +65,7 @@ class Events extends Component {
             </div>)
         } else {
             return (<div>
-                <Header as="h3">Attendance Status: You will {userEvent.attending === "yes" ? null : "not"} be attending this event.<Button onClick={this.confirmAttendance} value="undeclared" floated="right" name={userEvent.id} style={{display: 'inline-block', margin: "5px"}} size='tiny' color="yellow">Edit</Button></Header>
+                <Header as="h3">Attendance Status: You {userEvent.attending === "yes" ? "will" : "won't"} be attending this event.<Button onClick={this.confirmAttendance} value="undeclared" floated="right" size='mini' name={userEvent.id} style={{display: 'inline-block'}} color="yellow">Edit</Button></Header>
                 </div>)
         } 
     }
@@ -79,8 +79,8 @@ class Events extends Component {
             const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name
             return (
                 <div key={event.id}>
-                    <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "280px", padding: "5px", textAlign: "left"}}>
-                        <Header as="h1"><NavLink className="App-link" to={eventLink} exact>{event.title}</NavLink></Header>
+                    <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "260px", padding: "5px", textAlign: "left"}}>
+                        <Header as="h2"><NavLink className="App-link" to={eventLink} exact>{event.title}</NavLink></Header>
                         <Header as="h2">Ensemble: {ensembleName}</Header>
                         <Header as='h3'>Starts: {event.start_time}</Header>
                         {adminedEvent ?

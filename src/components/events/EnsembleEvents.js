@@ -28,7 +28,8 @@ class EnsembleEvents extends Component {
                         <Header as='h3'>Ends: {event.end_time}</Header>
                         {adminedEnsemble ?
                         <div>
-                        <Header as='h3'><NavLink className="App-link" to={plannedAttendanceLink} exact>See this event's planned attendance roster.</NavLink></Header>
+                            <hr style={{backgroundColor: "red", height: "2px"}} />
+                        <Header style={{marginTop: "0px"}} as='h3'><NavLink className="App-link" to={plannedAttendanceLink} exact>See this event's planned attendance roster.</NavLink></Header>
                         <Header as="h3"><NavLink className="App-link" to={attendanceLink} exact>Take Attendance</NavLink>
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editEventLink} exact>Edit</NavLink> |
@@ -119,7 +120,7 @@ class EnsembleEvents extends Component {
                     null}
                 </div>
                 <div style={{width: "80%", margin: "auto", border: "10px ridge red"}}>
-                <Calendar style={{width: "50%", verticalAlign: "top", height: "460px", display: "inline-flex"}} localizer={localizer} onDoubleClickEvent={this.navToEvent} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
+                <Calendar style={{width: "50%", verticalAlign: "top", height: "500px", display: "inline-flex"}} localizer={localizer} onDoubleClickEvent={this.navToEvent} events={this.setDates()} startAccessor="start" endAccessor="end" scrollToTime={new Date(1970, 1, 1, 8)}></Calendar>
                     <div style={{width: "50%", display: "inline-block", height: "500px", overflow: "auto"}}>
                         {this.renderEvents(sortedEvents, adminedEnsemble)}
                     </div>

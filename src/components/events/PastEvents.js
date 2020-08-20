@@ -9,7 +9,7 @@ class PastEvents extends Component {
             const attendanceLink = `/ensembles/${event.ensemble_id}/events/${event.id}/attendance`
             return (
                 <div key={event.id}>
-                    <div style={{border: "10px ridge red", display: "inline-block", width: "80%", maxHeight: "250px", padding: "5px", textAlign: "left"}}>
+                    <div style={{border: "10px ridge red", display: "inline-block", width: "40%", maxHeight: "250px", textAlign: "left", padding: "5px"}}>
                         <Header as="h1">{event.title}
                         </Header>
                         <Header as='h3'>Started: {event.start_time}</Header>

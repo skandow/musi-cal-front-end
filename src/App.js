@@ -173,7 +173,7 @@ class App extends Component {
   return (
   <Router>
     <div className="App">
-      <div>
+      <div className="App-body">
       {this.props.user ?
       <div>
         <UserContainer />

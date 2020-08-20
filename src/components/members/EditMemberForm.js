@@ -116,7 +116,7 @@ class EditMemberForm extends Component {
         const checked = this.state.admin
         return (
             <div className="new-member">
-                <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
+                <Form error onSubmit={this.handleSubmit} style={{width: "55%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
             
                 <h3 style={{textAlign: "center"}}>Please Enter the Following Information to Add a Member to This Ensemble</h3>
                 {this.state.errorMessage ? 
