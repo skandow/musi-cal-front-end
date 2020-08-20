@@ -113,8 +113,8 @@ class NewEnsembleForm extends Component {
                     <input onChange={this.handleChange} type="text" name="phone_number" value={this.state.phone_number} placeholder="(xxx) xxx-xxxx" />
                 </div>
                 <div className="field">
-                    <label>Image_Url:</label>
-                    <input onChange={this.handleChange} type="text" name="image_url" value={this.state.image_url} placeholder="image_url"/>
+                    <label>Image URL:</label>
+                    <input onChange={this.handleChange} type="text" name="image_url" value={this.state.image_url} placeholder="image url"/>
                 </div>
                 <div className="field">
                     <label>Description:</label>

@@ -49,19 +49,19 @@ class MyAdmin extends Component {
                 <div key={ensemble.id}>
                     <Image src={ensemble.image_url} style={{border: "10px ridge blue", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
                     <div style={{border: "10px ridge blue", display: "inline-block", width: "55%", height: "300px", padding: "5px", textAlign: "left"}}>
-                    <Header as="h1"><NavLink className="App-link" to={profileLink} exact>{ensemble.name} Profile</NavLink>
+                    <Header as="h2"><NavLink className="App-link" to={profileLink} exact>{ensemble.name} Profile</NavLink>
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editLink} exact>Edit</NavLink> |
                             <span className="delete" style={{color: "red", cursor: "pointer"}} onClick={() => this.deleteEnsemble(ensemble.id)}>Delete</span>
                         </span>
                     </Header>
-                    <Header as="h1"><NavLink className="App-link" to={membersLink} exact>{ensemble.name} Members</NavLink>
+                    <Header as="h2"><NavLink className="App-link" to={membersLink} exact>{ensemble.name} Members</NavLink>
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={newMemberLink} exact>Add Member</NavLink> |
                             <NavLink className="App-link" to={emailMembersLink} exact>Email</NavLink>
                         </span>
                     </Header>
-                    <Header as="h1"><NavLink className="App-link" to={eventsLink} exact>{ensemble.name} Events</NavLink>
+                    <Header as="h2"><NavLink className="App-link" to={eventsLink} exact>{ensemble.name} Events</NavLink>
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={newEventLink} exact>Add Event</NavLink> 
                         </span>

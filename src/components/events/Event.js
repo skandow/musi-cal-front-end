@@ -47,11 +47,11 @@ class Event extends Component {
             <div className="event-profile">
                 <Header style={{marginTop: "10px"}} as="h1">Information for {title}</Header>
                 <div style={{border: "10px ridge red", display: "inline-block", height: "300px", width: "80%", textAlign: "left"}}>
-                    <div style={{width: "40%", display: "inline-block"}}>
+                    <div style={{width: "30%", display: "inline-block"}}>
                         <EventMap lat={this.props.event.lat} lng={this.props.event.lng}></EventMap>
                     </div>
-                    <div style={{width: "60%", display: "inline-block", verticalAlign: "top", borderLeft: "10px ridge red", height: "100%", overflow: "auto"}}>
-                    <Header as='h1'>{title} - {ensembleName}
+                    <div style={{width: "70%", display: "inline-block", verticalAlign: "top", borderLeft: "10px ridge red", height: "100%", overflow: "auto", padding: "2px"}}>
+                    <Header as='h2'>{title} - {ensembleName}
                     {adminedEvent ?
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editEventLink} exact>Edit</NavLink> |
@@ -70,8 +70,8 @@ class Event extends Component {
                     </div>
                 </div>
                 <div>
-                    <Header as="h1" textAlign="left" style={{marginLeft: "150px"}}>Description:</Header>
-                    <div style={{border: "10px ridge red", display: "inline-block", whiteSpace: "pre-line", minHeight: "100px", width: "80%", textAlign: "left", padding: "2px"}}>
+                    <Header as="h1" textAlign="left" style={{marginLeft: "150px", marginTop: "20px"}}>Description:</Header>
+                    <div style={{border: "10px ridge red", display: "inline-block", whiteSpace: "pre-line", minHeight: "100px", width: "80%", textAlign: "left", padding: "5px"}}>
                         <Header as='h4'>{description}</Header>
                     </div>
                 </div>

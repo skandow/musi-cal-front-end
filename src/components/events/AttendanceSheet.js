@@ -8,16 +8,19 @@ class AttendanceSheet extends Component {
     renderDataRows = () => {
         return this.props.thisEventsUsers.map(user => {
             let color
+            let backgroundColor
             let message
             let buttonMessage
             let id
             if (user.attended === false) {
-                color = "red"
+                backgroundColor = "red"
+                color = "white"
                 message = "absent"
                 buttonMessage = "Mark Present"
                 id = "present"
             } else {
-                color = "green"
+                backgroundColor = "green"
+                color = "black"
                 message = "present"
                 buttonMessage = "Mark Absent"
                 id = "absent"
@@ -25,7 +28,7 @@ class AttendanceSheet extends Component {
             return (
                 <tr key={user.id}>
                     <td>{user.name}</td>
-                    <td style={{backgroundColor: `${color}`}}>{message}</td>
+                    <td style={{color: `${color}`, backgroundColor: `${backgroundColor}`}}>{message}</td>
                     <td><Button id={id} name={user.id} onClick={this.changeAttendance}>{buttonMessage}</Button></td>
                 </tr>
             ) 
@@ -55,9 +58,10 @@ class AttendanceSheet extends Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             <div className="attendance-sheet">
-                <Header as="h1">Attendance for: <br></br> {this.props.event.title} - {this.props.ensembleName}</Header>
+                <Header style={{marginTop: "10px"}} as="h1">Attendance for: <br></br> {this.props.event.title} - {this.props.ensembleName}</Header>
                 <Header as="h2">{this.props.event.start_time}</Header>
                 <table style={{width: "40%", margin: "auto"}} className="ui celled table">
                     <thead>

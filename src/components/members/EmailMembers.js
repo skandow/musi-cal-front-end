@@ -55,7 +55,7 @@ class EmailMembers extends Component {
         }
         return (
             <div className="email-form">
-                <Form onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
+                <Form onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", marginBottom: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
                 <h3 style={{textAlign: "center"}}>Please Enter the Content of Your Email</h3>
                 <div className="field">
                     <label>Subject:</label>
@@ -63,7 +63,7 @@ class EmailMembers extends Component {
                 </div>
                 <div className="field">
                     <label>Body:</label>
-                    <textarea onChange={this.handleChange} type="text" rows="10" name="body" value={this.state.body} placeholder="Write your email here."></textarea>
+                    <textarea onChange={this.handleChange} type="text" rows="15" name="body" value={this.state.body} placeholder="Write your email here."></textarea>
                 </div>
                 <Grid>
                     <Grid.Column textAlign="center">

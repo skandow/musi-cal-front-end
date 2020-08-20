@@ -47,9 +47,9 @@ class Ensemble extends Component {
         return (
             <div className="ensemble-profile">
                 <Header style={{marginTop: "10px"}} as="h1">{name} Profile</Header>
-                <Image src={image_url} style={{border: "10px ridge blue", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
-                <div style={{border: "10px ridge blue", display: "inline-block", height: "300px", width: "55%", textAlign: "left", padding: "2px"}}>
-                    <Header as='h1'>{name}
+                <Image src={image_url} style={{border: "10px ridge blue", display: "inline-block", height: "300px", width: "25%"}}/>
+                <div style={{border: "10px ridge blue", display: "inline-block", height: "300px", width: "55%", textAlign: "left", padding: "5px"}}>
+                    <Header as='h2'>{name}
                     {adminedEnsemble ?
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editLink} exact>Edit</NavLink> |
@@ -64,8 +64,8 @@ class Ensemble extends Component {
                     <Header as='h2'><NavLink className="App-link" to={eventsLink} exact>See Upcoming Ensemble Events</NavLink></Header>
                 </div>
                 <div>
-                    <Header as="h1" textAlign="left" style={{marginLeft: "150px"}}>Description:</Header>
-                    <div style={{border: "10px ridge blue", display: "inline-block", whiteSpace: "pre-line", minHeight: "100px", width: "80%", textAlign: "left", padding: "2px"}}>
+                    <Header as="h1" textAlign="left" style={{marginLeft: "150px", marginTop: "20px"}}>Description:</Header>
+                    <div style={{border: "10px ridge blue", display: "inline-block", whiteSpace: "pre-line", minHeight: "100px", width: "80%", textAlign: "left", padding: "5px"}}>
                         <Header as='h4'>{description}</Header>
                     </div>
                 </div>

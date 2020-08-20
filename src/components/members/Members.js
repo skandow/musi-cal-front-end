@@ -63,7 +63,7 @@ class Members extends Component {
             return (
                 <div key={member.id}>
                     <Image src={member.image_url} style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "25%"}}/>
-                    <div style={{border: "10px ridge green", display: "inline-block", width: "55%", height: "300px", padding: "5px", textAlign: "left"}}>
+                    <div style={{border: "10px ridge green", display: "inline-block", width: "75%", height: "300px", padding: "5px", textAlign: "left"}}>
                     <Header as="h1"> {member.user}
                         <span style={{float: "right"}}>
                             <NavLink className="App-link" to={editLink} exact>Edit</NavLink> |
@@ -109,7 +109,7 @@ class Members extends Component {
                     <Header id="admin-header" style={{display: "inline-block", margin: "auto"}} as='h1'>{this.props.ensemble.name} Members</Header>
                     <Button floated="right" onClick={this.renderSearchBar} color="blue" style={{display: "inline-block"}}>{this.state.showSearchBar ? "Hide Search Bar" : "Search for a Member"}</Button>
                 </div>
-                <div>
+                <div style={{width: "80%", margin: "auto"}}>
                     {this.renderMembers()}
                 </div>
             </div>                 
