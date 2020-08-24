@@ -112,7 +112,7 @@ class NewEventForm extends Component {
             body: JSON.stringify(payload)
         }
         
-        fetch("http://localhost:3001/events", reqObj)
+        fetch("https://musi-cal-back-end.herokuapp.com/events", reqObj)
         .then((resp) => resp.json())
         .then(data => {
             this.props.loginUser(data.user.data.attributes)

@@ -45,7 +45,7 @@ class Login extends Component {
             body: JSON.stringify(payload)
         }
         
-        fetch("http://localhost:3001/api/v1/login", reqObj)
+        fetch("https://musi-cal-back-end.herokuapp.com/api/v1/login", reqObj)
         .then((resp) => {
             if(resp.status === 401) {
                 throw Error("The email or password is incorrect")

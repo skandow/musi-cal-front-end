@@ -72,7 +72,7 @@ span.delete:hover {
 }
 
 .App-body {
-  min-height: calc(100vh - 70px)
+  min-height: calc(100vh - 100px)
 }
 
 body, h1, h2, h3 {

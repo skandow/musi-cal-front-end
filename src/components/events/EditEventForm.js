@@ -80,7 +80,7 @@ class EditEventForm extends Component {
 
     deleteEvent = id => {
         if (window.confirm("Are you sure you want to delete this event?")) {
-        const URL = "http://localhost:3001/events/" + id 
+        const URL = "https://musi-cal-back-end.herokuapp.com/events/" + id 
         const token = localStorage.getItem("token")
         this.setState({
             redirect: `/ensembles/${this.props.event.ensemble_id}/events`
