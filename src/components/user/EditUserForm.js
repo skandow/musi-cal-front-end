@@ -41,7 +41,7 @@ class EditUserForm extends Component {
     
     handleSubmit = event => {
         event.preventDefault()
-        const URL = "http://localhost:3001/api/v1/users/" + this.props.user.id
+        const URL = "https://musi-cal-back-end.herokuapp.com/api/v1/users/" + this.props.user.id
         const token = localStorage.getItem("token")
         let name = this.state.name === '' ? this.props.user.name : this.state.name 
         let email = this.state.email === '' ? this.props.user.email : this.state.email
@@ -88,7 +88,7 @@ class EditUserForm extends Component {
 
     deleteUser = () => {
         if (window.confirm("Are you sure you want to delete this user?")) {
-        const URL = "http://localhost:3001/api/v1/users/" + this.props.user.id 
+        const URL = "https://musi-cal-back-end.herokuapp.com/api/v1/users/" + this.props.user.id 
         const token = localStorage.getItem("token")
         localStorage.removeItem('token')
         this.setState({

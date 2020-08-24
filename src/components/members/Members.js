@@ -17,7 +17,7 @@ class Members extends Component {
 
     deleteMember = id => {
         if (window.confirm("Are you sure you want to delete this member?")) {
-        const URL = "http://localhost:3001/memberships/" + id 
+        const URL = "https://musi-cal-back-end.herokuapp.com/memberships/" + id 
         const token = localStorage.getItem("token")
         const reqObj = {
             method: "DELETE",

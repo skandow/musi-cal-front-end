@@ -14,7 +14,7 @@ class MyAdmin extends Component {
 
     deleteEnsemble = id => {
         if (window.confirm("Are you sure you want to delete this ensemble?")) {
-        const URL = "http://localhost:3001/ensembles/" + id 
+        const URL = "https://musi-cal-back-end.herokuapp.com/ensembles/" + id 
         const token = localStorage.getItem("token")
         this.setState({
             redirect: "/admin"

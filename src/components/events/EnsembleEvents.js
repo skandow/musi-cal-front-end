@@ -47,7 +47,7 @@ class EnsembleEvents extends Component {
 
     deleteEvent = id => {
         if (window.confirm("Are you sure you want to delete this event?")) {
-        const URL = "http://localhost:3001/events/" + id 
+        const URL = "https://musi-cal-back-end.herokuapp.com/events/" + id 
         const token = localStorage.getItem("token")
         const reqObj = {
             method: "DELETE",

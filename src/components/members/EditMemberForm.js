@@ -49,7 +49,7 @@ class EditMemberForm extends Component {
 
     deleteMember = id => {
         if (window.confirm("Are you sure you want to delete this member?")) {
-        const URL = "http://localhost:3001/memberships/" + id 
+        const URL = "https://musi-cal-back-end.herokuapp.com/memberships/" + id 
         const token = localStorage.getItem("token")
         this.setState({
             redirect: `/ensembles/${this.props.member.ensemble_id}/members`
@@ -73,7 +73,7 @@ class EditMemberForm extends Component {
     handleSubmit = event => {
         event.preventDefault()
         const token = localStorage.getItem("token")
-        const URL = `http://localhost:3001/memberships/${this.props.member.id}`
+        const URL = `https://musi-cal-back-end.herokuapp.com/memberships/${this.props.member.id}`
         let performing_roles = this.state.performing_roles === '' ? 'none' : this.state.performing_roles
         let administrative_roles = this.state.administrative_roles === '' ? 'none' : this.state.administrative_roles
             const payload = { 

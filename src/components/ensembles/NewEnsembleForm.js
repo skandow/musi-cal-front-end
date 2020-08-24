@@ -59,7 +59,7 @@ class NewEnsembleForm extends Component {
             body: JSON.stringify(payload)
         }
         
-        fetch("http://localhost:3001/ensembles", reqObj)
+        fetch("https://musi-cal-back-end.herokuapp.com/ensembles", reqObj)
         .then((resp) => resp.json())
         .then(data => {
             this.props.loginUser(data.user.data.attributes)

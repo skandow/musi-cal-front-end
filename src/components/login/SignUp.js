@@ -63,7 +63,7 @@ class SignUp extends Component {
             body: JSON.stringify(payload)
         }
         
-        fetch("http://localhost:3001/api/v1/users", reqObj)
+        fetch("https://musi-cal-back-end.herokuapp.com/api/v1/users", reqObj)
         .then((resp) => {
             if(resp.status === 406) {
                 throw Error("E-mail must be unique")

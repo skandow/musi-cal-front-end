@@ -15,7 +15,7 @@ class Events extends Component {
 
     deleteEvent = id => {
         if (window.confirm("Are you sure you want to delete this event?")) {
-        const URL = "http://localhost:3001/events/" + id 
+        const URL = "https://musi-cal-back-end.herokuapp.com/events/" + id 
         const token = localStorage.getItem("token")
         const reqObj = {
             method: "DELETE",
@@ -34,7 +34,7 @@ class Events extends Component {
 
     confirmAttendance = event => {
         console.log(event.target)
-        const URL = "http://localhost:3001/user_events/" + event.target.name 
+        const URL = "https://musi-cal-back-end.herokuapp.com/user_events/" + event.target.name 
         const token = localStorage.getItem("token")
         const payload = { user_event: {
             attending: event.target.value

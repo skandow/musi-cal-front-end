@@ -89,7 +89,7 @@ class NewMemberForm extends Component {
             },
             body: JSON.stringify(payload)
         }
-        fetch("http://localhost:3001/api/v1/search", reqObj)
+        fetch("https://musi-cal-back-end.herokuapp.com/api/v1/search", reqObj)
         .then((resp) => resp.json())
         .then(json => {
             if (json.error){
@@ -128,7 +128,7 @@ class NewMemberForm extends Component {
             body: JSON.stringify(payload)
         }
         
-        fetch("http://localhost:3001/memberships", reqObj)
+        fetch("https://musi-cal-back-end.herokuapp.com/memberships", reqObj)
         .then((resp) => resp.json())
         .then(data => {
             console.log(data)

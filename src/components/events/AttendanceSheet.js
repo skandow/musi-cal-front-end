@@ -37,7 +37,7 @@ class AttendanceSheet extends Component {
 
     changeAttendance = event => {
         let attendance = event.target.id === "present" ? true : false 
-        const URL = "http://localhost:3001/user_events/" + event.target.name 
+        const URL = "https://musi-cal-back-end.herokuapp.com/user_events/" + event.target.name 
         const token = localStorage.getItem("token")
         const payload = { user_event: {
             attended: attendance

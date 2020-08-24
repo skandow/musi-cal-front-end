@@ -41,7 +41,7 @@ class EditEnsembleForm extends Component {
 
     deleteEnsemble = id => {
         if (window.confirm("Are you sure you want to delete this ensemble?")) {
-        const URL = "http://localhost:3001/ensembles/" + id 
+        const URL = "https://musi-cal-back-end.herokuapp.com/ensembles/" + id 
         const token = localStorage.getItem("token")
         this.setState({
             redirect: "/admin"
@@ -65,7 +65,7 @@ class EditEnsembleForm extends Component {
     
     handleSubmit = event => {
         event.preventDefault()
-        const URL = "http://localhost:3001/ensembles/" + this.props.ensemble.id
+        const URL = "https://musi-cal-back-end.herokuapp.com/ensembles/" + this.props.ensemble.id
         const token = localStorage.getItem("token")
         let name = this.state.name === '' ? this.props.ensemble.name : this.state.name 
         let email_contact = this.state.email_contact === '' ? this.props.ensemble.email_contact : this.state.email_contact
