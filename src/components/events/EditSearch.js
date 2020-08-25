@@ -14,7 +14,7 @@ import '@reach/combobox/styles.css'
 
 export default function EditSearch(props) {
     const [address, setAddress] = useState(props.address)
-    const {ready, value, suggestions: {status, data}, setValue, clearSuggestions} = usePlacesAutocomplete({callbackName: "initMap"})
+    const {ready, value, suggestions: {status, data}, setValue, clearSuggestions} = usePlacesAutocomplete()
     function makeChange(event) {
         setAddress(event.target.value)
         setValue(event.target.value)
