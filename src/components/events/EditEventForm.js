@@ -103,7 +103,7 @@ class EditEventForm extends Component {
     handleSubmit = event => {
         event.preventDefault()
         const token = localStorage.getItem("token")
-        const URL = "http://localhost:3001/events/" + this.props.event.id
+        const URL = "https://musi-cal-back-end.herokuapp.com/events/" + this.props.event.id
         const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: "2-digit"}
         const start_date = new Date(this.state.start_time)
         const end_date = new Date(this.state.end_time)
