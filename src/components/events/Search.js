@@ -13,7 +13,7 @@ import {
 import '@reach/combobox/styles.css'
 
 export default function Search(props) {
-    const {ready, value, suggestions: {status, data}, setValue, clearSuggestions} = usePlacesAutocomplete()
+    const {ready, value, suggestions: {status, data}, setValue, clearSuggestions} = usePlacesAutocomplete({callbackName: "initMap"})
     return <Combobox onSelect={ async (address) => {
         setValue(address, false);
         clearSuggestions()
