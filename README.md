@@ -1,68 +1,76 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Welcome to Musi-Cal!
 
-## Available Scripts
+This SPA is designed for freelance musicians to be able to create and organize
+rehearsals, performances, and other events for which they are a part. Users have the
+ability to also create music ensembles and add other users to them as designated 
+members of said ensemble.
 
-In the project directory, you can run:
+Musi-Cal allows individuals to create accounts providing the following data:
 
-### `yarn start`
+# User Data: 
+  1.  Name
+  2.  Password
+  3.  Email address (the identifying component of each account)
+  4.  Phone Number
+  5.  Primary Instrument or Voice Part
+  6.  Secondary Instrument    
+  7.  Image url  
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Menu Highlights:
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Musi-Cal utilizes a menu NavBar that allows users to accomplish the following:
 
-### `yarn test`
+  1.  View a user's profile
+  2.  Edit a user's profile (the profile can also be deleted on this page)
+  3.  View a user's events for all music ensembles of which they are a part
+  4.  View a user's ensembles of which they are a part
+  5.  View all ensembles of which the user has administrative privileges 
+  6.  A 'log-out' button
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Profile Highlights:
 
-### `yarn build`
+User profiles contain the following
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  1.  User picture and information
+  2.  Notification of how many future events the user can confirm attendance for
+  3.  A calendar that contains all the user's future events
+  4.  A list of the user's next three events 
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+# Administrative Highlights:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+When a user creates a music ensemble, that user automatically is given administrative
+privileges related to the management of that ensemble on Musi-Cal. This bestows the
+user with the following abilities:
 
-### `yarn eject`
+  1.  Edit details for the music ensemble
+        Music Ensemble profiles are created with the following information
+            -Name
+            -Email contact
+            -Phone number
+            -Website
+            -Description
+            -Image url
+        Music ensembles also have events pages, highlighting the events that are unique
+        to that ensemble. This page is viewable by all members of an ensemble.
+  2.  View the list of members for each music ensemble
+            -Admins can add new members to an ensemble by utilizing the email address of the user
+            as registered on Musi-Cal. There is a search feature that allows admins to look for a 
+            particular member by name or email address.
+            -Admins can also define the performing and administrative roles for members in an ensemble and can also bestow administrative privileges for members either upon creation or during edits.
+            -Admins can email all the members of a particular music ensemble.
+            -Admins can delete a member from a music ensemble.
+  3.  Create, edit, and delete events for a particular ensemble.
+        Events are created with the following information
+            -Title
+            -Start Time
+            -End Time
+            -Location (determined using Google Places library autocomplete feature and rendered on 
+            an events page using the Google Maps API)
+            -Description
+            -Mandatory status
+        In addition, admins also have the ability to take attendance for an event past, present,
+            or future, and can see whether a member plans to attend the event or not. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+# Visit The Site!:
+  1.  This site is live! Visit https://musi-cal-front-end.herokuapp.com/
+  2.  To view the back end repo for this app, go to https://github.com/skandow/musi-cal-back-end
