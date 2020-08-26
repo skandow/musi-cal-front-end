@@ -154,7 +154,7 @@ class App extends Component {
           'Authorization': `Bearer ${token}`
         }
       }
-        fetch('http://localhost:3001/api/v1/profile', reqObj)
+        fetch('https://musi-cal-back-end.herokuapp.com/api/v1/profile', reqObj)
         .then(resp => resp.json())
         .then(data => {
           this.props.loginUser(data.user.data.attributes)
