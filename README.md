@@ -29,12 +29,27 @@ Musi-Cal utilizes a menu NavBar that allows users to accomplish the following:
 
 # Profile Highlights:
 
-User profiles contain the following
+User profiles contain the following:
 
   1.  User picture and information
   2.  Notification of how many future events the user can confirm attendance for
   3.  A calendar that contains all the user's future events
   4.  A list of the user's next three events 
+
+# Ensemble Pages:
+
+Ensemble profiles contain the following:
+
+  1.  Name
+  2.  Email contact
+  3.  Phone number
+  4.  Website
+  5.  Description
+  6.  A picture of the ensemble
+
+# Event Pages:
+
+Event profiles contain the following:
 
 # Administrative Highlights:
 
@@ -42,34 +57,17 @@ When a user creates a music ensemble, that user automatically is given administr
 privileges related to the management of that ensemble on Musi-Cal. This bestows the
 user with the following abilities:
 
-  1.  Edit details for the music ensemble
-        Music Ensemble profiles are created with the following information
-            -Name
-            -Email contact
-            -Phone number
-            -Website
-            -Description
-            -Image url
-        Music ensembles also have events pages, highlighting the events that are unique
-        to that ensemble. This page is viewable by all members of an ensemble.
+  1.  Edit details for the music ensemble:
   2.  View the list of members for each music ensemble
-            -Admins can add new members to an ensemble by utilizing the email address of the user
-            as registered on Musi-Cal. There is a search feature that allows admins to look for a 
+  3.  Add new members to an ensemble by utilizing the email address of the user
+      as registered on Musi-Cal. There is a search feature that allows admins to look for a 
             particular member by name or email address.
-            -Admins can also define the performing and administrative roles for members in an ensemble and can also bestow administrative privileges for members either upon creation or during edits.
-            -Admins can email all the members of a particular music ensemble.
-            -Admins can delete a member from a music ensemble.
-  3.  Create, edit, and delete events for a particular ensemble.
-        Events are created with the following information
-            -Title
-            -Start Time
-            -End Time
-            -Location (determined using Google Places library autocomplete feature and rendered on 
-            an events page using the Google Maps API)
-            -Description
-            -Mandatory status
-        In addition, admins also have the ability to take attendance for an event past, present,
-            or future, and can see whether a member plans to attend the event or not. 
+  4.  Define the performing and administrative roles for members in an ensemble and can also bestow administrative privileges for members either upon creation or during edits.
+  5.  Email all the members of a particular music ensemble.
+  6.  Delete a member from a music ensemble.
+  7.  Create, edit, and delete events for a particular ensemble.
+  8.  Take attendance for an event past, present, or future
+  9.  View whether a member plans to attend a future event or not. 
 
 # Visit The Site!:
   1.  This site is live! Visit https://musi-cal-front-end.herokuapp.com/
