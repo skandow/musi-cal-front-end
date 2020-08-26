@@ -51,6 +51,14 @@ Ensemble profiles contain the following:
 
 Event profiles contain the following:
 
+  1. Title
+  2. Start Time
+  3. End Time
+  4. Location (determined upon creation or editing using Google Places library autocomplete feature and rendered on 
+            an events page using the Google Maps API)
+  5. Description
+  6. Mandatory status
+
 # Administrative Highlights:
 
 When a user creates a music ensemble, that user automatically is given administrative
