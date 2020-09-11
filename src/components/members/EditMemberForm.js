@@ -27,7 +27,6 @@ class EditMemberForm extends Component {
     }
 
     renderField = event => {
-        console.log(event.target.name)
         this.setState({
             [event.target.name]: !this.state[event.target.name]
         })
@@ -94,7 +93,6 @@ class EditMemberForm extends Component {
         fetch(URL, reqObj)
         .then((resp) => resp.json())
         .then(data => {
-            console.log(data)
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
             this.props.loadMembers(data.user.data.attributes.admined_members)

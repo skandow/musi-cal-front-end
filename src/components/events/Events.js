@@ -33,7 +33,6 @@ class Events extends Component {
     }}
 
     confirmAttendance = event => {
-        console.log(event.target)
         const URL = "https://musi-cal-back-end.herokuapp.com/user_events/" + event.target.name 
         const token = localStorage.getItem("token")
         const payload = { user_event: {

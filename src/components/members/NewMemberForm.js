@@ -35,7 +35,6 @@ class NewMemberForm extends Component {
     }
 
     renderField = event => {
-        console.log(event.target.name)
         this.setState({
             [event.target.name]: !this.state[event.target.name]
         })
@@ -131,7 +130,6 @@ class NewMemberForm extends Component {
         fetch("https://musi-cal-back-end.herokuapp.com/memberships", reqObj)
         .then((resp) => resp.json())
         .then(data => {
-            console.log(data)
             this.props.loginUser(data.user.data.attributes)
             this.props.loadEnsembles(data.user.data.attributes.admin_for)
             this.props.loadMembers(data.user.data.attributes.admined_members)
