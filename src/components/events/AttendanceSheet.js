@@ -58,7 +58,6 @@ class AttendanceSheet extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <div className="attendance-sheet">
                 <Header style={{marginTop: "10px"}} as="h1">Attendance for: <br></br> {this.props.event.title} - {this.props.ensembleName}</Header>
