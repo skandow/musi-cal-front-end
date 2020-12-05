@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import NavBar from '../components/user/NavBar'
+import React, {Component} from 'react';
+import NavBar from '../components/user/NavBar';
 
 
 class UserContainer extends Component {

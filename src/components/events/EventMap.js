@@ -1,13 +1,13 @@
-import React from 'react'
-import { GoogleMap, Marker } from '@react-google-maps/api' 
+import React from 'react';
+import { GoogleMap, Marker } from '@react-google-maps/api'; 
 
-const mapContainerStyle = {height: "280px"}
+const mapContainerStyle = {height: "280px"};
 
 const options = {
     disableDefaultUI: true,
     zoomControl: true
-}
-const date = new Date().toISOString()
+};
+const date = new Date().toISOString();
 
 export default function EventMap(props) {
     const center = {

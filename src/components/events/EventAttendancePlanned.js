@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { Header } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { Header } from 'semantic-ui-react';
 
 class EventAttendancePlanned extends Component {
 
     renderDataRows = () => {
         return this.props.thisEventsUsers.map(user => {
-            let color
-            let backgroundColor
+            let color;
+            let backgroundColor;
             if (user.attending === "yes") {
                 color = "black"
                 backgroundColor = "green"
@@ -24,7 +24,7 @@ class EventAttendancePlanned extends Component {
                 </tr>
             ) 
         })
-    }
+    };
 
     render() {
         return (
@@ -44,7 +44,7 @@ class EventAttendancePlanned extends Component {
                 </table>
             </div>
         )
-    }
-}
+    };
+};
 
 export default EventAttendancePlanned

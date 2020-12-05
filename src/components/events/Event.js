@@ -1,48 +1,49 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { NavLink, Redirect } from 'react-router-dom'
-import { Header } from 'semantic-ui-react'
-import { loginUser } from '../../actions/user'
-import { loadEvents } from '../../actions/events'
-import EventMap from './EventMap'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { NavLink, Redirect } from 'react-router-dom';
+import { Header } from 'semantic-ui-react';
+import { loginUser } from '../../actions/user';
+import { loadEvents } from '../../actions/events';
+import EventMap from './EventMap';
 
 
 class Event extends Component {
     state = {
         redirect: null
-    }
+    };
 
     deleteEvent = id => {
         if (window.confirm("Are you sure you want to delete this event?")) {
-        const URL = "https://musi-cal-back-end.herokuapp.com/events/" + id 
-        const token = localStorage.getItem("token")
-        this.setState({
-            redirect: `/ensembles/${this.props.event.ensemble_id}/events`
-        })
-        const reqObj = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+            const URL = "https://musi-cal-back-end.herokuapp.com/events/" + id; 
+            const token = localStorage.getItem("token");
+            this.setState({
+                redirect: `/ensembles/${this.props.event.ensemble_id}/events`
+            })
+            const reqObj = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
             }
+            fetch(URL, reqObj)
+            .then(resp => resp.json())
+            .then(data => {
+                this.props.loginUser(data.user.data.attributes)
+                this.props.loadEvents(data.user.data.attributes.admined_events)
+            })
         }
-        fetch(URL, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-            this.props.loginUser(data.user.data.attributes)
-            this.props.loadEvents(data.user.data.attributes.admined_events)
-        })
-    }}
+    };
      
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
-        }
-        const {title, start_time, end_time, place, description, mandatory } = this.props.event
-        const adminedEvent = this.props.events.find(adminedEvent => adminedEvent.id === this.props.event.id)
-        const editEventLink = `/ensembles/${this.props.event.ensemble_id}/events/${this.props.event.id}/edit`
-        const plannedAttendanceLink = `/ensembles/${this.props.event.ensemble_id}/events/${this.props.event.id}/planned_attendance` 
-        const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === this.props.event.ensemble_id)).name
+        };
+        const {title, start_time, end_time, place, description, mandatory } = this.props.event;
+        const adminedEvent = this.props.events.find(adminedEvent => adminedEvent.id === this.props.event.id);
+        const editEventLink = `/ensembles/${this.props.event.ensemble_id}/events/${this.props.event.id}/edit`;
+        const plannedAttendanceLink = `/ensembles/${this.props.event.ensemble_id}/events/${this.props.event.id}/planned_attendance`; 
+        const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === this.props.event.ensemble_id)).name;
         return (
             <div className="event-profile">
                 <Header style={{marginTop: "10px"}} as="h1">Information for {title}</Header>
@@ -77,17 +78,17 @@ class Event extends Component {
                 </div>
             </div>                 
         )
-    }
-}
+    };
+};
 
 const mapStateToProps = state => {
     return { user: state.user,
     events: state.events }
-}
+};
 
 const mapDispatchToProps = {
     loginUser,
     loadEvents
-} 
+}; 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Event)

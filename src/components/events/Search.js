@@ -1,19 +1,19 @@
-import React from 'react'
+import React from 'react';
 import usePlacesAutocomplete, {
     getGeocode,
     getLatLng
-} from 'use-places-autocomplete'
+} from 'use-places-autocomplete';
 import {
     Combobox,
     ComboboxInput,
     ComboboxPopover,
     ComboboxList,
     ComboboxOption
-} from '@reach/combobox'
-import '@reach/combobox/styles.css'
+} from '@reach/combobox';
+import '@reach/combobox/styles.css';
 
 export default function Search(props) {
-    const {ready, value, suggestions: {status, data}, setValue, clearSuggestions} = usePlacesAutocomplete()
+    const {ready, value, suggestions: {status, data}, setValue, clearSuggestions} = usePlacesAutocomplete();
     return <Combobox onSelect={ async (address) => {
         setValue(address, false);
         clearSuggestions()
@@ -23,7 +23,8 @@ export default function Search(props) {
             props.handlePlaceSelection(address, lat, lng)
         } catch(error) {
             console.log("error!")
-        }}}>
+        }
+        }}>
         <ComboboxInput id="new-location-address" value={value} onChange={(e) => {setValue(e.target.value)}} disabled={!ready} placeholder="Enter an address" />
         <ComboboxPopover>
             <ComboboxList>

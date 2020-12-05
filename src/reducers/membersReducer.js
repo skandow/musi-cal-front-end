@@ -4,6 +4,9 @@ export default function membersReducer(
         switch (action.type) {
             case "LOAD_MEMBERS":
                 return action.members
+            case "CLEAR_MEMBERS":
+                let array = []
+                return array
         default:
             return state
     }

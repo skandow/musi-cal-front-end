@@ -1,49 +1,50 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { NavLink, Redirect } from 'react-router-dom'
-import { Image, Header } from 'semantic-ui-react'
-import { loadEnsembles } from '../../actions/ensembles'
-import { loginUser } from '../../actions/user'
-import { loadMembers } from '../../actions/members'
-import { loadEvents } from '../../actions/events'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { NavLink, Redirect } from 'react-router-dom';
+import { Image, Header } from 'semantic-ui-react';
+import { loadEnsembles } from '../../actions/ensembles';
+import { loginUser } from '../../actions/user';
+import { loadMembers } from '../../actions/members';
+import { loadEvents } from '../../actions/events';
 
 class Ensemble extends Component {
     state = {
         redirect: null
-    }
+    };
 
     deleteEnsemble = id => {
         if (window.confirm("Are you sure you want to delete this ensemble?")) {
-        const URL = "https://musi-cal-back-end.herokuapp.com/ensembles/" + id 
-        const token = localStorage.getItem("token")
-        this.setState({
-            redirect: "/admin"
-        })
-        const reqObj = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+            const URL = "https://musi-cal-back-end.herokuapp.com/ensembles/" + id; 
+            const token = localStorage.getItem("token");
+            this.setState({
+                redirect: "/admin"
+            })
+            const reqObj = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
             }
+            fetch(URL, reqObj)
+            .then(resp => resp.json())
+            .then(data => {
+                this.props.loginUser(data.user.data.attributes)
+                this.props.loadEnsembles(data.user.data.attributes.admin_for)
+                this.props.loadMembers(data.user.data.attributes.admined_members)
+                this.props.loadEvents(data.user.data.attributes.admined_events)
+            })
         }
-        fetch(URL, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-            this.props.loginUser(data.user.data.attributes)
-            this.props.loadEnsembles(data.user.data.attributes.admin_for)
-            this.props.loadMembers(data.user.data.attributes.admined_members)
-            this.props.loadEvents(data.user.data.attributes.admined_events)
-        })
-    }}    
+    };    
      
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
-        }
-        const {name, email_contact, website, phone_number, description, image_url } = this.props.ensemble
-        const adminedEnsemble = this.props.ensembles.find(ensemble => ensemble.id === this.props.ensemble.id)
-        const editLink = `/ensembles/${this.props.ensemble.id}/edit`
-        const eventsLink = `/ensembles/${this.props.ensemble.id}/events`
+        };
+        const {name, email_contact, website, phone_number, description, image_url } = this.props.ensemble;
+        const adminedEnsemble = this.props.ensembles.find(ensemble => ensemble.id === this.props.ensemble.id);
+        const editLink = `/ensembles/${this.props.ensemble.id}/edit`;
+        const eventsLink = `/ensembles/${this.props.ensemble.id}/events`;
         return (
             <div className="ensemble-profile">
                 <Header style={{marginTop: "10px"}} as="h1">{name} Profile</Header>
@@ -71,19 +72,19 @@ class Ensemble extends Component {
                 </div>
             </div>                 
         )
-    }
-}
+    };
+};
 
 const mapStateToProps = state => {
     return { user: state.user,
     ensembles: state.ensembles }
-}
+};
 
 const mapDispatchToProps = {
     loginUser,
     loadEnsembles,
     loadMembers,
     loadEvents
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Ensemble)

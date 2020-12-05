@@ -1,43 +1,46 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { NavLink, Redirect } from 'react-router-dom';
-import {Calendar, momentLocalizer} from 'react-big-calendar'
-import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { connect } from 'react-redux'
-import { Header, Button } from 'semantic-ui-react'
-import { loginUser } from '../../actions/user'
-import { loadEvents } from '../../actions/events'
+import {Calendar, momentLocalizer} from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { connect } from 'react-redux';
+import { Header, Button } from 'semantic-ui-react';
+import { loginUser } from '../../actions/user';
+import { loadEvents } from '../../actions/events';
 
 class Events extends Component {
     state = {
         redirect: null
-    }
+    };
 
     deleteEvent = id => {
         if (window.confirm("Are you sure you want to delete this event?")) {
-        const URL = "https://musi-cal-back-end.herokuapp.com/events/" + id 
-        const token = localStorage.getItem("token")
-        const reqObj = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+            const URL = "https://musi-cal-back-end.herokuapp.com/events/" + id;
+            const token = localStorage.getItem("token");
+            const reqObj = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
             }
+            fetch(URL, reqObj)
+            .then(resp => resp.json())
+            .then(data => {
+                this.props.loginUser(data.user.data.attributes)
+                this.props.loadEvents(data.user.data.attributes.admined_events)
+            })
         }
-        fetch(URL, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-            this.props.loginUser(data.user.data.attributes)
-            this.props.loadEvents(data.user.data.attributes.admined_events)
-        })
-    }}
+    };
 
     confirmAttendance = event => {
-        const URL = "https://musi-cal-back-end.herokuapp.com/user_events/" + event.target.name 
-        const token = localStorage.getItem("token")
-        const payload = { user_event: {
-            attending: event.target.value
-        }} 
+        const URL = "https://musi-cal-back-end.herokuapp.com/user_events/" + event.target.name;
+        const token = localStorage.getItem("token");
+        const payload = { 
+            user_event: {
+                attending: event.target.value
+            }
+        } 
         const reqObj = {
             method: "PATCH",
             headers: {
@@ -51,7 +54,7 @@ class Events extends Component {
         .then(data => {
             this.props.loginUser(data.user.data.attributes)
         })
-    }
+    };
 
     renderAttendanceStatus = userEvent => {
         if (userEvent.attending === "undeclared") {
@@ -71,11 +74,11 @@ class Events extends Component {
 
     renderEvents = (sortedEvents) => {
         return sortedEvents.map(event => {
-            const eventLink = `/ensembles/${event.ensemble_id}/events/${event.id}`
-            const adminedEvent = this.props.events.find(adminedEvent => adminedEvent.id === event.id)
-            const editEventLink = `${eventLink}/edit`
-            const userEvent = this.props.user.user_events.find(user_event => user_event.event_id === event.id)
-            const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name
+            const eventLink = `/ensembles/${event.ensemble_id}/events/${event.id}`;
+            const adminedEvent = this.props.events.find(adminedEvent => adminedEvent.id === event.id);
+            const editEventLink = `${eventLink}/edit`;
+            const userEvent = this.props.user.user_events.find(user_event => user_event.event_id === event.id);
+            const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name;
             return (
                 <div key={event.id}>
                     <div style={{border: "10px ridge red", display: "inline-block", width: "100%", height: "260px", padding: "5px", textAlign: "left"}}>
@@ -96,28 +99,27 @@ class Events extends Component {
                         {this.renderAttendanceStatus(userEvent)}
                         
                     </div>
-                </div>
-                
+                </div>   
             )
         })
-    }
+    };
 
     sortedEvents = () => {
-        const events = this.props.user.events
-        const date = new Date()
-        const futureEvents = events.filter(event => new Date(event.end_time) > date) 
+        const events = this.props.user.events;
+        const date = new Date();
+        const futureEvents = events.filter(event => new Date(event.end_time) > date); 
         const sortedEvents = futureEvents.slice().sort((a, b) => {
-            const dateA = new Date(a.start_time)
-            const dateB = new Date(b.start_time)
+            const dateA = new Date(a.start_time);
+            const dateB = new Date(b.start_time);
             return dateA - dateB
         })
         return sortedEvents
-    } 
+    }; 
 
     setDates = () => {
-        const events = this.props.user.events
-        const date = new Date()
-        const futureEvents = events.filter(event => new Date(event.end_time) > date) 
+        const events = this.props.user.events;
+        const date = new Date();
+        const futureEvents = events.filter(event => new Date(event.end_time) > date); 
         return futureEvents.map(event => {
             return {
                 start: new Date(event.start_time),
@@ -126,21 +128,21 @@ class Events extends Component {
                 allDay: false,
                 resource: event }
         })
-    }
+    };
 
     navToEvent = event => {
-        const eventLink = `/ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
+        const eventLink = `/ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`;
         this.setState({
             redirect: eventLink
         })
-    }
+    };
      
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
-        }
-        const sortedEvents = this.sortedEvents()
-        const localizer = momentLocalizer(moment)
+        };
+        const sortedEvents = this.sortedEvents();
+        const localizer = momentLocalizer(moment);
         return (
             <div className="events-page">
                 <div style={{margin: "5px", marginTop: "10px", marginBottom: "20px"}}>
@@ -152,17 +154,17 @@ class Events extends Component {
                 </div>
             </div>                 
         )
-    }
-}
+    };
+};
 
 const mapStateToProps = state => {
     return { user: state.user,
     events: state.events }
-}
+};
 
 const mapDispatchToProps = {
     loginUser,
     loadEvents
-} 
+}; 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Events)

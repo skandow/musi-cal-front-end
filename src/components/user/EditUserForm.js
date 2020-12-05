@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
-import { Form } from 'semantic-ui-react'
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
-import { editUser, logoutUser } from '../../actions/user'
-import { clearEnsembles } from '../../actions/ensembles'
+import React, { Component } from 'react';
+import { Form } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { editUser, logoutUser } from '../../actions/user';
+import { clearEvents } from '../../actions/events';
+import { clearMembers } from '../../actions/members';
+import { clearEnsembles } from '../../actions/ensembles';
 
 class EditUserForm extends Component {
     constructor() {
@@ -18,7 +20,7 @@ class EditUserForm extends Component {
             errorMessage: '',
             redirect: null
         }
-    }
+    };
 
     componentDidMount() {
         this.setState({
@@ -31,24 +33,24 @@ class EditUserForm extends Component {
             errorMessage: '',
             redirect: null
         })
-    }
+    };
 
     handleChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         })
-    }
+    };
     
     handleSubmit = event => {
         event.preventDefault()
-        const URL = "https://musi-cal-back-end.herokuapp.com/api/v1/users/" + this.props.user.id
-        const token = localStorage.getItem("token")
-        let name = this.state.name === '' ? this.props.user.name : this.state.name 
-        let email = this.state.email === '' ? this.props.user.email : this.state.email
-        let phone_number = this.state.phone_number === '' ? this.props.user.phone_number : this.state.phone_number
-        let primary_instrument_or_voice_part = this.state.primary_instrument_or_voice_part === '' ? this.props.user.primary_instrument_or_voice_part : this.state.primary_instrument_or_voice_part    
-        let secondary_instrument = this.state.secondary_instrument === '' ? this.props.user.secondary_instrument : this.state.secondary_instrument
-        let image_url = this.state.image_url === '' ? this.props.user.image_url : this.state.image_url
+        const URL = "https://musi-cal-back-end.herokuapp.com/api/v1/users/" + this.props.user.id;
+        const token = localStorage.getItem("token");
+        let name = this.state.name === '' ? this.props.user.name : this.state.name; 
+        let email = this.state.email === '' ? this.props.user.email : this.state.email;
+        let phone_number = this.state.phone_number === '' ? this.props.user.phone_number : this.state.phone_number;
+        let primary_instrument_or_voice_part = this.state.primary_instrument_or_voice_part === '' ? this.props.user.primary_instrument_or_voice_part : this.state.primary_instrument_or_voice_part;    
+        let secondary_instrument = this.state.secondary_instrument === '' ? this.props.user.secondary_instrument : this.state.secondary_instrument;
+        let image_url = this.state.image_url === '' ? this.props.user.image_url : this.state.image_url;
         const payload = {
             name: name,
             email: email,
@@ -84,30 +86,33 @@ class EditUserForm extends Component {
                 errorMessage: error.message
             })
         })
-    }
+    };
 
     deleteUser = () => {
         if (window.confirm("Are you sure you want to delete this user?")) {
-        const URL = "https://musi-cal-back-end.herokuapp.com/api/v1/users/" + this.props.user.id 
-        const token = localStorage.getItem("token")
-        localStorage.removeItem('token')
-        this.setState({
-            redirect: "/"
-        })
-        const reqObj = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+            const URL = "https://musi-cal-back-end.herokuapp.com/api/v1/users/" + this.props.user.id 
+            const token = localStorage.getItem("token")
+            localStorage.removeItem('token')
+            this.setState({
+                redirect: "/"
+            })
+            const reqObj = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
             }
+            fetch(URL, reqObj)
+            .then(resp => resp.json())
+            .then(data => {
+                this.props.logoutUser()
+                this.props.clearEnsembles()
+                this.props.clearEvents()
+                this.props.clearMembers()
+            })
         }
-        fetch(URL, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-            this.props.logoutUser()
-            this.props.clearEnsembles()
-        })
-    }}
+    };
     
     render() {
         if (this.state.redirect) {
@@ -153,19 +158,21 @@ class EditUserForm extends Component {
                 <button type="submit" className="ui green button">Submit</button>
                 <button type="button" className="ui button red delete" style={{float: "right"}} onClick={this.deleteUser}>Delete This Profile</button>
             </Form>
-            </div>
+        </div>
         )
-    }
-}
+    };
+};
 
 const mapStateToProps = state => {
     return { user: state.user }
-}
+};
 
 const mapDispatchToProps = {
     editUser,
     logoutUser,
-    clearEnsembles
-}
+    clearEnsembles,
+    clearEvents,
+    clearMembers
+};
   
 export default connect(mapStateToProps, mapDispatchToProps)(EditUserForm)

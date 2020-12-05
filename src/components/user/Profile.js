@@ -1,16 +1,16 @@
-import React, { Component } from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
-import {Calendar, momentLocalizer} from 'react-big-calendar'
-import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css'
-import { connect } from 'react-redux'
-import { Image, Header } from 'semantic-ui-react'
+import React, { Component } from 'react';
+import { NavLink, Redirect } from 'react-router-dom';
+import {Calendar, momentLocalizer} from 'react-big-calendar';
+import moment from 'moment';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { connect } from 'react-redux';
+import { Image, Header } from 'semantic-ui-react';
 
 class Profile extends Component {
 
     state = {
         redirect: null
-    }
+    };
 
     threeClosestEvents = () => {
         const events = this.props.user.events 
@@ -22,12 +22,12 @@ class Profile extends Component {
             return dateA - dateB
         })
         return sortedEvents.slice(0, 3)
-    } 
+    }; 
 
     renderThreeClosestEvents = threeClosestEvents => {
         return threeClosestEvents.map(event => {
-            const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name
-            const eventLink = `/ensembles/${event.ensemble_id}/events/${event.id}`
+            const ensembleName = (this.props.user.ensembles.find(ensemble => ensemble.id === event.ensemble_id)).name;
+            const eventLink = `/ensembles/${event.ensemble_id}/events/${event.id}`;
             return (
                 <div key={event.id} style={{border: "10px outset red", overflow: "auto", margin: "auto", padding: "5px", width: "100%", height: "32%", textAlign: "left"}}>
                     <Header as='h2'><NavLink className="App-link" to={eventLink} exact>{event.title} - {ensembleName}</NavLink></Header>
@@ -36,12 +36,12 @@ class Profile extends Component {
                 </div>
             )
         })
-    }
+    };
 
     setDates = () => {
-        const events = this.props.user.events
-        const date = new Date()
-        const futureEvents = events.filter(event => new Date(event.end_time) > date) 
+        const events = this.props.user.events;
+        const date = new Date();
+        const futureEvents = events.filter(event => new Date(event.end_time) > date);
         return futureEvents.map(event => {
             return {
                 start: new Date(event.start_time),
@@ -50,28 +50,28 @@ class Profile extends Component {
                 allDay: false,
                 resource: event }
         })
-    }
+    };
 
     navToEvent = event => {
         const eventLink = `/ensembles/${event.resource.ensemble_id}/events/${event.resource.id}`
         this.setState({
             redirect: eventLink
         })
-    }
+    };
      
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
-        }
-        const localizer = momentLocalizer(moment)
-        const threeClosestEvents = this.threeClosestEvents()
-        const {name, email, phone_number, primary_instrument_or_voice_part, secondary_instrument, image_url } = this.props.user
-        const unconfirmedUserEvents = this.props.user.user_events.filter(event => event.attending === "undeclared")
+        };
+        const localizer = momentLocalizer(moment);
+        const threeClosestEvents = this.threeClosestEvents();
+        const {name, email, phone_number, primary_instrument_or_voice_part, secondary_instrument, image_url } = this.props.user;
+        const unconfirmedUserEvents = this.props.user.user_events.filter(event => event.attending === "undeclared");
         const mappedEvents = unconfirmedUserEvents.map(user_event => {
             return this.props.user.events.find(event => event.id === user_event.event_id)
-        })
-        const date = new Date()
-        const unconfirmedEvents = mappedEvents.filter(event => new Date(event.end_time) > date).length
+        });
+        const date = new Date();
+        const unconfirmedEvents = mappedEvents.filter(event => new Date(event.end_time) > date).length;
         return (
             <div className="user-profile">
                 <Header style={{marginTop: "10px"}} as="h1">Welcome!</Header>
@@ -84,7 +84,7 @@ class Profile extends Component {
                     <Header as='h2'>Primary Instrument or Voice Part: {primary_instrument_or_voice_part}</Header>
                     <Header as='h2'>Secondary Instrument: {secondary_instrument}</Header>
                 </div>
-                <div style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "20%", verticalAlign: "top", padding: "5px"}}>
+                <div style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "20%", verticalAlign: "top", padding: "5px", overflow: "scroll"}}>
                     <Header as="h2">You have {unconfirmedEvents === 0 ? "no" : unconfirmedEvents} {unconfirmedEvents === 1 ? "event" : "events"} that require attendance confirmation. 
                     <hr style={{backgroundColor: "green", height: "2px"}}/>Go to <NavLink className="App-link" to="/my_events" exact>My Events</NavLink> to confirm attendance.</Header>
                 </div>
@@ -105,6 +105,6 @@ class Profile extends Component {
 
 const mapStateToProps = state => {
     return { user: state.user }
-}
+};
 
 export default connect(mapStateToProps)(Profile)

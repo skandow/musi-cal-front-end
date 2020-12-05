@@ -1,12 +1,12 @@
-import React, {Component} from 'react'
-import { Header, Form, Button, Grid } from 'semantic-ui-react'
+import React, {Component} from 'react';
+import { Header, Form, Button, Grid } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
-import { loginUser } from '../../actions/user'
-import { loadEnsembles } from '../../actions/ensembles'
-import { loadMembers } from '../../actions/members'
-import { loadEvents } from '../../actions/events'
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { loginUser } from '../../actions/user';
+import { loadEnsembles } from '../../actions/ensembles';
+import { loadMembers } from '../../actions/members';
+import { loadEvents } from '../../actions/events';
 
 
 class Login extends Component {
@@ -18,16 +18,16 @@ class Login extends Component {
             errorMessage: false,
             redirect: null
         }
-    }
+    };
 
     handleChange = event => {
         this.setState({
             [event.target.name]: event.target.value
         })
-    }
+    };
 
     handleSubmit = event => {
-        event.preventDefault()
+        event.preventDefault();
         const payload = {
             email: this.state.email,
             password: this.state.password
@@ -43,7 +43,6 @@ class Login extends Component {
             },
             body: JSON.stringify(payload)
         }
-        
         fetch("https://musi-cal-back-end.herokuapp.com/api/v1/login", reqObj)
         .then((resp) => {
             if(resp.status === 401) {
@@ -54,7 +53,7 @@ class Login extends Component {
                 })
                 return resp.json()
             }
-            })
+        })
         .then(data => {
             localStorage.setItem("token", data.jwt)
             this.props.loginUser(data.user.data.attributes)
@@ -67,12 +66,12 @@ class Login extends Component {
                 errorMessage: error.message
             })
         })
-    }
+    };
 
     render() {
         if (this.state.redirect) {
             return <Redirect to={this.state.redirect} />
-        }
+        };
         return (
             <div className="login-container" >
                 <div className="login-header" style={{border: "5px solid green", width: "80%", margin: "auto", marginBottom: "5px", padding: "10px", backgroundColor: "PowderBlue"}}>
@@ -106,12 +105,10 @@ class Login extends Component {
                             <Button color="blue"><NavLink style={{color: "white"}} to="/sign_up" exact>Sign Up To Create An Account</NavLink></Button>
                         </Grid.Column>
                     </Grid>
-                </Form>
-                
+                </Form>      
             </div>
         ) 
-
-    }
+    };
 }
 
 const mapDispatchToProps = {
@@ -119,6 +116,6 @@ const mapDispatchToProps = {
     loadEnsembles,
     loadMembers,
     loadEvents
-}
+};
   
 export default connect(null, mapDispatchToProps)(Login)

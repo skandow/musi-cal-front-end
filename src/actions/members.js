@@ -5,3 +5,8 @@ export const loadMembers = members => {
     }
 }
 
+export const clearMembers = () => {
+    return {
+        type: "CLEAR_MEMBERS"
+    }
+}

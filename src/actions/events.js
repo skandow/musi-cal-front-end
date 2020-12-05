@@ -5,3 +5,9 @@ export const loadEvents = events => {
     }
 }
 
+export const clearEvents = () => {
+    return {
+        type: "CLEAR_EVENTS"
+    }
+}
+

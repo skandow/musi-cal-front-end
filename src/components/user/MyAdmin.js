@@ -1,40 +1,41 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux'
-import { Image, Header, Button } from 'semantic-ui-react'
-import { loadEnsembles } from '../../actions/ensembles'
-import { loginUser } from '../../actions/user'
-import { loadMembers } from '../../actions/members'
-import { loadEvents } from '../../actions/events'
+import { connect } from 'react-redux';
+import { Image, Header, Button } from 'semantic-ui-react';
+import { loadEnsembles } from '../../actions/ensembles';
+import { loginUser } from '../../actions/user';
+import { loadMembers } from '../../actions/members';
+import { loadEvents } from '../../actions/events';
 
 class MyAdmin extends Component {
     state = {
         redirect: null
-    }
+    };
 
     deleteEnsemble = id => {
         if (window.confirm("Are you sure you want to delete this ensemble?")) {
-        const URL = "https://musi-cal-back-end.herokuapp.com/ensembles/" + id 
-        const token = localStorage.getItem("token")
-        this.setState({
-            redirect: "/admin"
-        })
-        const reqObj = {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
+            const URL = "https://musi-cal-back-end.herokuapp.com/ensembles/" + id 
+            const token = localStorage.getItem("token")
+            this.setState({
+                redirect: "/admin"
+            })
+            const reqObj = {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                }
             }
+            fetch(URL, reqObj)
+            .then(resp => resp.json())
+            .then(data => {
+                this.props.loginUser(data.user.data.attributes)
+                this.props.loadEnsembles(data.user.data.attributes.admin_for)
+                this.props.loadMembers(data.user.data.attributes.admined_members)
+                this.props.loadEvents(data.user.data.attributes.admined_events)
+            })
         }
-        fetch(URL, reqObj)
-        .then(resp => resp.json())
-        .then(data => {
-            this.props.loginUser(data.user.data.attributes)
-            this.props.loadEnsembles(data.user.data.attributes.admin_for)
-            this.props.loadMembers(data.user.data.attributes.admined_members)
-            this.props.loadEvents(data.user.data.attributes.admined_events)
-        })
-    }}
+    };
 
     renderAdminedEnsembles = () => {
         return this.props.ensembles.map(ensemble => {
@@ -72,7 +73,7 @@ class MyAdmin extends Component {
                 </div>
             )
         })
-    }
+    };
      
     render() {
         return (
@@ -86,19 +87,19 @@ class MyAdmin extends Component {
                 </div>
             </div>                 
         )
-    }
-}
+    };
+};
 
 const mapStateToProps = state => {
     return { user: state.user,
     ensembles: state.ensembles }
-}
+};
 
 const mapDispatchToProps = {
     loginUser,
     loadEnsembles,
     loadMembers,
     loadEvents
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyAdmin)
