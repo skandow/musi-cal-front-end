@@ -8,8 +8,8 @@ import { loadMembers } from '../../actions/members';
 import { loadEvents } from '../../actions/events';
 
 class EditEnsembleForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             name: this.props.ensemble.name,
             email_contact: this.props.ensemble.email_contact,

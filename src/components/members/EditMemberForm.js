@@ -7,8 +7,8 @@ import { loginUser } from '../../actions/user';
 import { loadMembers } from '../../actions/members';
 
 class EditMemberForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             admin: this.props.member.admin,
             performing_roles: this.props.member.performing_roles,

@@ -11,8 +11,8 @@ import { loadEvents } from '../../actions/events';
 import EditSearch from './EditSearch';
 
 class EditEventForm extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             title: this.props.event.title,
             start_time: new Date(this.props.event.start_time),
