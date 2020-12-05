@@ -85,7 +85,7 @@ class Profile extends Component {
                     <Header as='h2'>Secondary Instrument: {secondary_instrument}</Header>
                 </div>
                 <div style={{border: "10px ridge green", display: "inline-block", margin: "0", height: "300px", width: "20%", verticalAlign: "top", padding: "5px", overflow: "scroll"}}>
-                    <Header as="h2">You have {unconfirmedEvents === 0 ? "no" : unconfirmedEvents} {unconfirmedEvents === 1 ? "event" : "events"} that require attendance confirmation. 
+                    <Header as="h3">You have {unconfirmedEvents === 0 ? "no" : unconfirmedEvents} {unconfirmedEvents === 1 ? "event" : "events"} that require attendance confirmation. 
                     <hr style={{backgroundColor: "green", height: "2px"}}/>Go to <NavLink className="App-link" to="/my_events" exact>My Events</NavLink> to confirm attendance.</Header>
                 </div>
                 </div>
