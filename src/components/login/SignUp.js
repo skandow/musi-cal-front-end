@@ -97,7 +97,7 @@ class SignUp extends Component {
         };
         return (
             <div className="signup">
-                <Form error onSubmit={this.handleSubmit} style={{width: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
+                <Form error onSubmit={this.handleSubmit} style={{maxWidth: "50%", textAlign: "left", marginLeft: "auto", marginRight: "auto", marginTop: "10px", padding: "50px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
                     <h3 style={{textAlign: "center"}}>Create Your Account</h3>
                     {this.state.errorMessage ? 
                     <div className="ui error message">

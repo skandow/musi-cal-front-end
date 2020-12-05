@@ -78,7 +78,7 @@ class Login extends Component {
                     <Header textAlign="center" as='h1'>Welcome to Musi-Cal!</Header>
                     <Header textAlign="center" as='h2'>A One-Stop Site for Musicians to Organize Rehearsals, Performances, & Other Events</Header>
                 </div>
-                <Form error onSubmit={this.handleSubmit} style={{width: "25%", margin: "auto", marginTop: "50px", marginBottom: "50px", padding: "20px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
+                <Form error onSubmit={this.handleSubmit} style={{maxWidth: "50%", margin: "auto", marginTop: "50px", marginBottom: "50px", padding: "20px", border: "5px inset red", backgroundColor: "PowderBlue"}}>
                     <Header textAlign="center" as='h3'>Please Sign In</Header>
                     <div>{this.state.errorMessage ? 
                         <div className="ui error message">
