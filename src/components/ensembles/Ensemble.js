@@ -48,8 +48,8 @@ class Ensemble extends Component {
         return (
             <div className="ensemble-profile">
                 <Header style={{marginTop: "10px"}} as="h1">{name} Profile</Header>
-                <Image src={image_url} style={{border: "10px ridge blue", display: "inline-block", height: "300px", width: "25%"}}/>
-                <div style={{border: "10px ridge blue", display: "inline-block", height: "300px", width: "55%", textAlign: "left", padding: "5px"}}>
+                <Image src={image_url} style={{border: "10px ridge blue", display: "inline-block", minHeight: "300px", width: "25%"}}/>
+                <div style={{border: "10px ridge blue", display: "inline-block", minHeight: "300px", width: "55%", textAlign: "left", padding: "5px"}}>
                     <Header as='h2'>{name}
                     {adminedEnsemble ?
                         <span style={{float: "right"}}>
